@@ -1,4 +1,32 @@
+# Веб-приложение «Чат»
+
+## Запуск приложения
+
+### Установка и запуск
+```shell
+git clone git@github.com:yurylunev/middle.messenger.praktikum.yandex.git
+npm install
+npm start
+```
+
+http://localhost:3000
+
+### Запуск версии для разработчиков
+```shell
+npm run dev
+```
+http://localhost:1234
+
+### Сборка рабочей версии приложения
+```shell
+npm run build
+```
+
 ## Макеты приложения
 
 Прототипы экранов 
 [в Figma](https://www.figma.com/file/rNpBDNEm4kEzHS6TEgba2P/YANDEX.-CHAT?node-id=0%3A1)
+
+## Домен на Netlify
+
+https://cranky-blackwell-f477f2.netlify.app
