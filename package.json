@@ -3,7 +3,7 @@
   "version": "0.0.0-alpha1",
   "description": "Yandex Practicum. Project Chat",
   "scripts": {
-    "start": "node index.js",
+    "start": "parcel build src/index.html && node index.js",
     "dev": "parcel src/index.html",
     "build": "parcel build src/index.html"
   },
