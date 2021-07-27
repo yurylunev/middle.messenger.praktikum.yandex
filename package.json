@@ -5,7 +5,7 @@
   "scripts": {
     "start": "parcel build src/index.html && node index.js",
     "dev": "parcel src/index.html",
-    "build": "parcel build src/index.html"
+    "build": "parcel build src/index.html && cp -R static dist"
   },
   "author": "Yury Lunev",
   "license": "GPL-3.0",

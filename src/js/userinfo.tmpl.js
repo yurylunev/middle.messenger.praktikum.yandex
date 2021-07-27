@@ -25,7 +25,7 @@ const userinfoPageTemplate = () => `
 const avatarTemplate = () => `
 <div class="avatar-wrapper">
     <label for="avatar">
-        <img id="avatar-preview" src="/static/images/{{avatarUrl}}">
+        <img id="avatar-preview" src="../static/images/{{avatarUrl}}">
     </label>
     <input type="file" id="avatar" name="avatar" class="invisible position-absolute">
 </div>
