@@ -7,4 +7,4 @@
 
 [build]
 publish = "dist"
-command = "ln -s ../static dist/static"
+command = "cp -R static dist"
