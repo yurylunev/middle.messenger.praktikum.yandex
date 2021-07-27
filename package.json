@@ -1,6 +1,6 @@
 {
-  "name": "yandex-practicum-1-chats",
-  "version": "0.0.1",
+  "name": "yandex-practicum-1-chats1",
+  "version": "0.0.3",
   "description": "Yandex Practicum. Project Chat",
   "scripts": {
     "start": "parcel build src/index.html && node index.js",
