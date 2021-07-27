@@ -8,9 +8,9 @@ const chatsPageTemplate = () => `
                 <input type="text" name="search" id="search" placeholder="Поиск">
             </div>
         </div>
-        <div class="chats-area">
+        <ul class="chats-area">
             {{chats}}
-        </div>
+        </ul>
         </div>
         <div class="conversation-wrapper">
         <div class="header">
@@ -41,7 +41,7 @@ const chatsPageTemplate = () => `
 `;
 
 const chatsTemplate = () => `
-            <div class="chat">
+            <li class="chat">
                 <img src="/static/images/{{ avatarUrl }}" alt="" height="47px"
                      width="47px" class="avatar">
                 <div class="message-info">
@@ -54,7 +54,7 @@ const chatsTemplate = () => `
                         <div class="unread">{{unreadCount}}</div>
                     </div>
                 </div>
-            </div>
+            </li>
 `;
 const myMessageTemplate = () => `
             <div class="message">
