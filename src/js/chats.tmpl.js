@@ -14,7 +14,7 @@ const chatsPageTemplate = () => `
         </div>
         <div class="conversation-wrapper">
         <div class="header">
-            <img src="/static/images/avatar_placeholder.png" alt="" height="34px"
+            <img src="../static/images/avatar_placeholder.png" alt="" height="34px"
                  width="34px" class="avatar">
             <div class="username">Коля</div>
             <div class="time">
@@ -29,10 +29,10 @@ const chatsPageTemplate = () => `
             {{messages}}
         </div>
         <div class="sending-area">
-            <img src="/static/images/icon-attach.svg" alt="">
+            <img src="../static/images/icon-attach.svg" alt="">
             <input type="text" class="input-message" name="message" placeholder="Сообщение">
             <button class="send-message">
-                <img src="/static/images/icon-rocket.svg" alt="">
+                <img src="../static/images/icon-rocket.svg" alt="">
             </button>
 
         </div>
@@ -42,7 +42,7 @@ const chatsPageTemplate = () => `
 
 const chatsTemplate = () => `
             <div class="chat">
-                <img src="/static/images/{{ avatarUrl }}" alt="" height="47px"
+                <img src="../static/images/{{ avatarUrl }}" alt="" height="47px"
                      width="47px" class="avatar">
                 <div class="message-info">
                     <div class="message-header">
@@ -61,7 +61,7 @@ const myMessageTemplate = () => `
                 <div class="my-message">
                     <div>{{textMessage}}</div>
                     <div class="time">
-                        <img src="/static/images/msg-status-{{statusMessage}}.svg" alt="">
+                        <img src=../static/images/msg-status-{{statusMessage}}.svg" alt="">
                         {{timeMessage}}
                     </div>
                 </div>
@@ -78,7 +78,7 @@ const foreignMessageTemplate = () => `
 const foreignImageTemplate = () => `
             <div class="message">
                 <div class="foreign-message foreign-message_image">
-                    <img src="/static/images/{{imageURL}}" alt="">
+                    <img src="../static/images/{{imageURL}}" alt="">
                     <div class="time">
                         {{timeMessage}}
                     </div>
