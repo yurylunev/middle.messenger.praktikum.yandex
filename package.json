@@ -1,0 +1,25 @@
+{
+  "name": "yandex-practicum-1-chats1",
+  "version": "0.0.3",
+  "description": "Yandex Practicum. Project Chat",
+  "scripts": {
+    "start": "parcel build src/index.html && node index.js",
+    "dev": "parcel src/index.html",
+    "build": "parcel build src/index.html && cp -R static dist"
+  },
+  "author": "Yury Lunev",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "@parcel/transformer-image": "^2.0.0-nightly.2388",
+    "autoprefixer": "^10.3.0",
+    "parcel": "^2.0.0-beta.3.1",
+    "postcss": "^8.3.5",
+    "postcss-nested": "^5.0.5"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  }
+}

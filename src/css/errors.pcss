@@ -1,0 +1,38 @@
+body {
+    background-color: var(--main-background-color);
+    font-family: Inter;
+    overflow: hidden;
+}
+
+#root {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+}
+
+.error {
+    width: 180px;
+    text-align: center;
+    margin: auto;
+
+    .status-code-404 {
+        font-size: 40px;
+        color: var(--button-background-color);
+    }
+
+    .status-code-500 {
+        font-size: 40px;
+        color: var(--error-color);
+    }
+
+    .status-text {
+        padding: 20px 0 50px 0;
+        font-size: 20px;
+        color: var(--main-text-color);
+    }
+
+    .back-text {
+        font-size: 11px;
+        color: var(--second-color);
+    }
+}
