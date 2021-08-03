@@ -1,4 +1,4 @@
-const chatsPageTemplate = () => `
+const chatsPageTemplate = `
 <div class="chat-list">
         <div class="search-wrapper">
             <div class="profile-edit">
@@ -38,9 +38,9 @@ const chatsPageTemplate = () => `
         </div>
     </div>
 </div>
-`;
+`.trim();
 
-const chatsTemplate = () => `
+const chatsTemplate = `
             <li class="chat">
                 <img src="/static/images/{{ avatarUrl }}" alt="" height="47px"
                      width="47px" class="avatar">
@@ -55,8 +55,9 @@ const chatsTemplate = () => `
                     </div>
                 </div>
             </li>
-`;
-const myMessageTemplate = () => `
+`.trim();
+
+const myMessageTemplate = `
             <div class="message">
                 <div class="my-message">
                     <div>{{textMessage}}</div>
@@ -66,16 +67,18 @@ const myMessageTemplate = () => `
                     </div>
                 </div>
             </div>
-`;
-const foreignMessageTemplate = () => `
+`.trim();
+
+const foreignMessageTemplate = `
             <div class="message">
                 <div class="foreign-message">
                     <div>{{textMessage}}</div>
                     <div class="time">{{timeMessage}}</div>
                 </div>
             </div>
-`;
-const foreignImageTemplate = () => `
+`.trim();
+
+const foreignImageTemplate = `
             <div class="message">
                 <div class="foreign-message foreign-message_image">
                     <img src="/static/images/{{imageURL}}" alt="">
@@ -83,18 +86,22 @@ const foreignImageTemplate = () => `
                         {{timeMessage}}
                     </div>
                 </div>
-            </div>`;
-const dateHeaderTemplate = () => `
+            </div>`.trim();
+
+const dateHeaderTemplate = `
             <div class="message">
                 <div class="date">
                     {{date}}
                 </div>
             </div>
-`;
+`.trim();
 
-window.chatsTemplate = (chatsTemplate)().trim();
-window.dateHeaderTemplate = (dateHeaderTemplate()).trim();
-window.myMessageTemplate = (myMessageTemplate()).trim();
-window.foreignMessageTemplate = (foreignMessageTemplate()).trim();
-window.foreignImageTemplate = (foreignImageTemplate()).trim();
-window.chatsPageTemplate = (chatsPageTemplate)().trim();
+
+export {
+    chatsTemplate,
+    foreignImageTemplate,
+    foreignMessageTemplate,
+    chatsPageTemplate,
+    dateHeaderTemplate,
+    myMessageTemplate
+};

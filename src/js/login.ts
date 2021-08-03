@@ -1,5 +1,8 @@
-const loginWindow = new window.Templator(window.loginWindowTemplate);
-const inputFields = new window.Templator(window.inputFieldsTemplate);
+import Templator from './templator';
+import {loginWindowTemplate, inputFieldsTemplate} from './login-window.tmpl';
+
+const loginWindow = new Templator(loginWindowTemplate);
+const inputFields = new Templator(inputFieldsTemplate);
 
 const context = {
     headerText: `Вход`,

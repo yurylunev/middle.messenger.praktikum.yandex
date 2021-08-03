@@ -1,6 +1,9 @@
-const userinfoPage = new window.Templator(window.userinfoPageTemplate);
-const inputs = new window.Templator(window.inputsTemplate);
-const controls = new window.Templator(window.controlsButtonsTemplate);
+import Templator from "./templator";
+import {userinfoPageTemplate, inputsTemplate, controlsButtonsTemplate} from "./userinfo.tmpl";
+
+const userinfoPage = new Templator(userinfoPageTemplate);
+const inputs = new Templator(inputsTemplate);
+const controls = new Templator(controlsButtonsTemplate);
 
 const context = {
     headerText: `Сменить пароль`,

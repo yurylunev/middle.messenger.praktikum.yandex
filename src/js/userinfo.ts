@@ -1,12 +1,20 @@
-const userinfoPage = new window.Templator(window.userinfoPageTemplate);
-const avatar = new window.Templator(window.avatarTemplate);
-const inputs = new window.Templator(window.inputsTemplate);
-const controls = new window.Templator(window.controlsButtonsTemplate);
+import Templator from "./templator";
+
+import {
+    avatarTemplate,
+    controlsTemplate,
+    infoFieldTemplate,
+    userinfoPageTemplate
+} from './userinfo.tmpl';
+
+const userinfoPage = new Templator(userinfoPageTemplate);
+const avatar = new Templator(avatarTemplate);
+const inputs = new Templator(infoFieldTemplate);
+const controls = new Templator(controlsTemplate);
 
 const context = {
     headerText: `Иван`,
     avatar: avatar.compile({avatarUrl: `icon-image-placeholder.svg`}),
-    style: `editable`,
     inputs: [
         {
             name: `email`,
@@ -38,18 +46,21 @@ const context = {
             label: `Телефон`,
             value: `+7 (909) 967 30 30`
         }
-    ].map(item => inputs.compile(item)).join(``),
+    ].map((item) => inputs.compile(item)).join(``),
     controls: [
         {
-            label: `Сохранить`,
-            style: `yellow-button`,
-            onclick: () => console.log(`Сохранить`)
+            label: `Изменить данные`,
+            onclick: () => console.log(`Изменить данные`)
         },
         {
-            label: `Отмена`,
-            style: `transparent-button`,
-            onclick: () => console.log(`Отмена`)
-        }
+            label: `Изменить пароль`,
+            onclick: () => console.log(`Изменить пароль`)
+        },
+        {
+            label: `Выйти`,
+            style: `red-color`,
+            onclick: () => console.log(`Выйти`)
+        },
     ].map((item) => controls.compile(item)).join(``),
 };
 

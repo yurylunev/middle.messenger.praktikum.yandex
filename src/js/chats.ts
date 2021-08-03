@@ -1,9 +1,20 @@
-const chats = new window.Templator(window.chatsTemplate);
-const dateHeader = new window.Templator(window.dateHeaderTemplate);
-const myMessage = new window.Templator(window.myMessageTemplate);
-const foreignMessage = new window.Templator(window.foreignMessageTemplate);
-const foreignImage = new window.Templator(window.foreignImageTemplate);
-const chatsPage = new window.Templator(window.chatsPageTemplate);
+
+import Templator from './templator';
+import {
+    chatsTemplate,
+    foreignImageTemplate,
+    foreignMessageTemplate,
+    chatsPageTemplate,
+    dateHeaderTemplate,
+    myMessageTemplate
+} from './chats.tmpl';
+
+const chats = new Templator(chatsTemplate);
+const dateHeader = new Templator(dateHeaderTemplate);
+const myMessage = new Templator(myMessageTemplate);
+const foreignMessage = new Templator(foreignMessageTemplate);
+const foreignImage = new Templator(foreignImageTemplate);
+const chatsPage = new Templator(chatsPageTemplate);
 
 const context = {
     chats: [
@@ -143,31 +154,18 @@ const context = {
             statusMessage: `read`
         }
     ].reverse().map((item) => {
-        let result = ``;
-        console.log(item);
         switch (item.messageType) {
             case "dateHeader":
-                console.log(`dateHeader`);
-                result = dateHeader.compile(item);
-                break;
+                return dateHeader.compile(item);
             case "myMessage":
-                console.log(`myMessage`);
-                result = myMessage.compile(item);
-                break;
+                return myMessage.compile(item);
             case "foreignMessage":
-                console.log(`foreignMessage`);
-                result = foreignMessage.compile(item);
-                break;
+                return foreignMessage.compile(item);
             case "foreignImage":
-                console.log(`foreignImage`);
-                result = foreignImage.compile(item);
-                break;
+                return foreignImage.compile(item);
             default:
-                console.log(`default`);
-                result = ``;
+                return ``;
         }
-        console.log(result);
-        return result;
     }).join(``)
 };
 

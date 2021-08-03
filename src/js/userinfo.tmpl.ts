@@ -1,4 +1,4 @@
-const userinfoPageTemplate = () => `
+const userinfoPageTemplate = `
 <div class="back-menu">
         <button class="back">
             <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -20,43 +20,45 @@ const userinfoPageTemplate = () => `
             </div>
         </div>
     </div>
-`;
+`.trim();
 
-const avatarTemplate = () => `
+const avatarTemplate = `
 <div class="avatar-wrapper">
     <label for="avatar">
         <img id="avatar-preview" src="/static/images/{{avatarUrl}}">
     </label>
     <input type="file" id="avatar" name="avatar" class="invisible position-absolute">
 </div>
-`;
+`.trim();
 
-const inputsTemplate = () => `
+const inputsTemplate = `
 <div class="input-field">
     <label for="{{name}}">{{label}}</label>
     <input type="{{type}}" id="{{name}}" name="{{name}}" value="{{value}}">
 </div>
-`;
+`.trim();
 
-const infoFieldTemplate = () => `
+const infoFieldTemplate = `
 <div class="input-field">
     <label for="{{name}}">{{label}}</label>
     <div>{{value}}</div>
 </div>
-`;
+`.trim();
 
-const controlsTemplate = () => `
+const controlsTemplate = `
 <div class="control-field">
     <button onclick="{{onclick}}" class="{{style}}">{{label}}</button>
 </div>
-`;
-const controlsButtonsTemplate = () => `
+`.trim();
+const controlsButtonsTemplate = `
     <button onclick="{{onclick}}" class="{{style}}">{{label}}</button>
-`;
+`.trim();
 
-window.avatarTemplate = (avatarTemplate)().trim();
-window.controlsTemplate = (controlsTemplate)().trim();
-window.controlsButtonsTemplate = (controlsButtonsTemplate)().trim();
-window.inputsTemplate = (inputsTemplate)().trim();
-window.infoFieldTemplate = (infoFieldTemplate)().trim();
-window.userinfoPageTemplate = (userinfoPageTemplate)().trim();
+export {
+    avatarTemplate,
+    controlsButtonsTemplate,
+    controlsTemplate,
+    infoFieldTemplate,
+    inputsTemplate,
+    userinfoPageTemplate
+};

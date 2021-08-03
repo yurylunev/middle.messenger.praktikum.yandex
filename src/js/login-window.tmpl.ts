@@ -1,4 +1,4 @@
-const loginWindowTemplate = () => `
+const loginWindowTemplate = `
 <div class="login-window">
     <div class="login-window_header">
         <h2>{{headerText}}</h2>
@@ -9,9 +9,9 @@ const loginWindowTemplate = () => `
         <button class="noEntry">{{noEntryButtonText}}</button>
     </div>
 </div>
-`;
+`.trim();
 
-const inputFieldsTemplate = () => `
+const inputFieldsTemplate = `
 <div class="login-window_input-field">
         <div class="input-field">
             <label for="{{name}}">{{label}}</label>
@@ -19,8 +19,6 @@ const inputFieldsTemplate = () => `
         </div>
         <div class="error-message">{{errorMessage}}</div>
 </div>
-`;
+`.trim();
 
-window.loginWindowTemplate = (loginWindowTemplate)().trim();
-
-window.inputFieldsTemplate = (inputFieldsTemplate)().trim();
+export {loginWindowTemplate, inputFieldsTemplate};
