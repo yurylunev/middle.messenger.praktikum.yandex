@@ -1,4 +1,4 @@
-import Block from "./block";
+import Block from "../utils/block";
 
 class ErrorPage extends Block {
     constructor(props) {

@@ -1,5 +1,5 @@
-import EventBus from "../utils/event-bus";
-import Templator from "../utils/templator";
+import EventBus from "./event-bus";
+import Templator from "./templator";
 
 class Block {
     static EVENTS = {
