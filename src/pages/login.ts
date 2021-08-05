@@ -1,4 +1,4 @@
-import {LoginWindow, InputField} from '../js/login-window.tmpl';
+import {LoginWindow, InputField} from '../components/login-window.tmpl';
 import render from "../utils/renderDOM";
 
 render(new LoginWindow({

@@ -1,4 +1,4 @@
-import {ErrorPage} from '../js/errors.tmpl';
+import {ErrorPage} from '../components/errors.tmpl';
 import render from "../utils/renderDOM";
 
 render(new ErrorPage({

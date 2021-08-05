@@ -5,7 +5,7 @@ import {
     controlsTemplate,
     infoFieldTemplate,
     userinfoPageTemplate
-} from '../js/userinfo.tmpl';
+} from '../components/userinfo.tmpl';
 
 const userinfoPage = new Templator(userinfoPageTemplate);
 const avatar = new Templator(avatarTemplate);
