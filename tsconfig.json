@@ -5,7 +5,8 @@
     "sourceMap": true,
     "lib": [
       "es2020.string",
-      "dom"
+      "dom",
+      "es2015.proxy"
     ]
   },
   "exclude": [
