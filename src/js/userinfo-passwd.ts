@@ -1,4 +1,4 @@
-import Templator from "./templator";
+import Templator from "../utils/templator";
 import {userinfoPageTemplate, inputsTemplate, controlsButtonsTemplate} from "./userinfo.tmpl";
 
 const userinfoPage = new Templator(userinfoPageTemplate);

@@ -1,5 +1,5 @@
 
-import Templator from './templator';
+import Templator from '../utils/templator';
 import {
     chatsTemplate,
     foreignImageTemplate,
