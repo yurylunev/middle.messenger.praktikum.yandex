@@ -1,6 +1,6 @@
 import Block from "./block";
 
-class inputFields extends Block {
+class InputField extends Block {
     constructor(props) {
         super(undefined, props);
         this.props = props;
@@ -18,7 +18,7 @@ class inputFields extends Block {
     }
 }
 
-class loginWindow extends Block {
+class LoginWindow extends Block {
     constructor(props) {
         super(undefined, props);
         this.props = props;
@@ -39,4 +39,4 @@ class loginWindow extends Block {
     }
 }
 
-export {inputFields, loginWindow};
+export {InputField, LoginWindow};

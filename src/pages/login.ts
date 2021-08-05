@@ -1,7 +1,7 @@
-import {loginWindow, inputFields} from '../js/login-window.tmpl';
+import {LoginWindow, InputField} from '../js/login-window.tmpl';
 import render from "../utils/renderDOM";
 
-render(new loginWindow({
+render(new LoginWindow({
     headerText: `Вход`,
     inputFields: [
         {
@@ -15,7 +15,7 @@ render(new loginWindow({
             errorMessage: `Неверный пароль`,
             type: `password`
         }
-    ].map((item) => new inputFields(item).element),
+    ].map((item) => new InputField(item).element),
     entryButtonText: `Авторизоваться`,
     noEntryButtonText: `Нет аккаунта`
 }), `#root`);
