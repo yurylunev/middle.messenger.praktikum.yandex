@@ -1,14 +1,18 @@
 class Templator {
     private readonly _template: string;
+    private readonly _element: HTMLElement;
 
     constructor(template: string) {
         this._template = template;
+        this._element = this._createContainerElement();
     }
 
     _uuid(): string {
         return Math.random().toString().split('.')[1].slice(0, 8);
     }
-
+    protected _createContainerElement() {
+        return document.createElement('div');
+    }
     _getObjectFromContext(obj, path, defaultValue) {
         const keys = path.split(`.`);
 
@@ -26,9 +30,17 @@ class Templator {
         return f(obj);
     }
 
-    compile(ctx): string {
+    _insertHTMLElement({rule, contextObject}) {
+        const placeholder: XPathResult = document.evaluate(`//text()[contains(., '${rule}')]`, this._element, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+        if (placeholder.singleNodeValue) {
+            (<HTMLElement>placeholder.singleNodeValue).replaceWith(...contextObject);
+        }
+    }
+
+    compile(ctx): HTMLElement {
         const replaces = Array.from(this._template.matchAll(/{{(.*?)}}/ig));
-        return replaces.reduce((template: string, rulesMap: string[]) => {
+        const outerElements = [];
+        this._element.innerHTML = replaces.reduce((template: string, rulesMap: string[]) => {
             const [rule, objectName] = [...rulesMap];
             const contextObject = this._getObjectFromContext(ctx, objectName.trim(), ``);
             if (typeof contextObject === `function`) {
@@ -36,8 +48,16 @@ class Templator {
                 window[functionName] = contextObject;
                 return template.replace(rule, `window.${functionName}()`);
             }
+            if (typeof contextObject === `object`) {
+                outerElements.push({rule, contextObject});
+                return template;
+            }
             return template.replace(rule, contextObject);
         }, this._template);
+        outerElements.forEach((item) => {
+            this._insertHTMLElement(item);
+        });
+        return <HTMLElement>this._element.firstElementChild;
     }
 }
 

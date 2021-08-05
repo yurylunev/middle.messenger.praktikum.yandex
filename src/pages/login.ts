@@ -1,10 +1,7 @@
-import Templator from './templator';
-import {loginWindowTemplate, inputFieldsTemplate} from './login-window.tmpl';
+import {loginWindow, inputFields} from '../js/login-window.tmpl';
+import render from "../utils/renderDOM";
 
-const loginWindow = new Templator(loginWindowTemplate);
-const inputFields = new Templator(inputFieldsTemplate);
-
-const context = {
+render(new loginWindow({
     headerText: `Вход`,
     inputFields: [
         {
@@ -18,10 +15,7 @@ const context = {
             errorMessage: `Неверный пароль`,
             type: `password`
         }
-    ].map(item => inputFields.compile(item)).join(``),
+    ].map((item) => new inputFields(item).element),
     entryButtonText: `Авторизоваться`,
     noEntryButtonText: `Нет аккаунта`
-};
-
-const root = document.querySelector(`#root`);
-root.innerHTML = loginWindow.compile(context);
+}), `#root`);
