@@ -7,7 +7,7 @@ import {
     chatsPageTemplate,
     dateHeaderTemplate,
     myMessageTemplate
-} from './chats.tmpl';
+} from '../js/chats.tmpl';
 
 const chats = new Templator(chatsTemplate);
 const dateHeader = new Templator(dateHeaderTemplate);

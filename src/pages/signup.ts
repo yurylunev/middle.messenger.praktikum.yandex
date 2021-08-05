@@ -1,5 +1,5 @@
 import Templator from '../utils/templator';
-import {loginWindowTemplate, inputFieldsTemplate} from './login-window.tmpl';
+import {loginWindowTemplate, inputFieldsTemplate} from '../js/login-window.tmpl';
 
 const loginWindow = new Templator(loginWindowTemplate);
 const inputFields = new Templator(inputFieldsTemplate);
