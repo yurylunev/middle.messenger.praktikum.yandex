@@ -10,9 +10,11 @@ class Templator {
     _uuid(): string {
         return Math.random().toString().split('.')[1].slice(0, 8);
     }
+
     protected _createContainerElement() {
         return document.createElement('div');
     }
+
     _getObjectFromContext(obj, path, defaultValue) {
         const keys = path.split(`.`);
 
@@ -37,7 +39,7 @@ class Templator {
         }
     }
 
-    compile(ctx): HTMLElement {
+    compile(ctx): HTMLCollection {
         const replaces = Array.from(this._template.matchAll(/{{(.*?)}}/ig));
         const outerElements = [];
         this._element.innerHTML = replaces.reduce((template: string, rulesMap: string[]) => {
@@ -57,7 +59,7 @@ class Templator {
         outerElements.forEach((item) => {
             this._insertHTMLElement(item);
         });
-        return <HTMLElement>this._element.firstElementChild;
+        return this._element.children;
     }
 }
 

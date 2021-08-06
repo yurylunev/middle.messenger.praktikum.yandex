@@ -85,7 +85,8 @@ class Block {
     }
 
     _render() {
-        this._element = new Templator(this.render().trim()).compile(this.props);
+        const renderedElements = Array.from(new Templator(this.render().trim()).compile(this.props));
+        renderedElements.forEach((element) => this._element.appendChild(element));
     }
 
     render(): string {
@@ -116,7 +117,6 @@ class Block {
     }
 
     _createDocumentElement(tagName) {
-        //TODO Сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
         return document.createDocumentFragment();
     }
 
