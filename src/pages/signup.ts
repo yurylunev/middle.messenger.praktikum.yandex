@@ -1,10 +1,7 @@
-import Templator from '../utils/templator';
-import {loginWindowTemplate, inputFieldsTemplate} from '../components/login-window.tmpl';
+import {LoginWindow, InputField} from '../components/login-window.tmpl';
+import render from "../utils/renderDOM";
 
-const loginWindow = new Templator(loginWindowTemplate);
-const inputFields = new Templator(inputFieldsTemplate);
-
-const context = {
+render(new LoginWindow({
     headerText: `Регистрация`,
     inputFields: [
         {
@@ -49,10 +46,7 @@ const context = {
             errorMessage: `Пароли не совпадают`,
             type: `password`
         }
-    ].map(item => inputFields.compile(item)).join(``),
+    ].map(item => new InputField(item).element),
     entryButtonText: `Зарегистрироваться`,
     noEntryButtonText: `Войти`
-};
-
-const root = document.querySelector(`#root`);
-root.innerHTML = loginWindow.compile(context);
+}),`#root`);

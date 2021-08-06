@@ -1,4 +1,14 @@
-const chatsPageTemplate = `
+import Block from "../utils/block";
+
+class ChatsPage extends Block {
+    constructor(props) {
+        super(undefined, props);
+        this.props = props;
+        console.log(13, props);
+    }
+
+    render(): string {
+        return `
 <div class="chat-list">
         <div class="search-wrapper">
             <div class="profile-edit">
@@ -13,11 +23,11 @@ const chatsPageTemplate = `
         </ul>
         </div>
         <div class="conversation-wrapper">
-        <div class="header">
-            <img src="/static/images/avatar_placeholder.png" alt="" height="34px"
-                 width="34px" class="avatar">
-            <div class="username">Коля</div>
-            <div class="time">
+            <div class="header">
+                <img src="/static/images/avatar_placeholder.png" alt="" height="34px"
+                    width="34px" class="avatar">
+                <div class="username">Коля</div>
+                <div class="time">
                 <svg width="3" height="16" viewBox="0 0 3 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="1.5" cy="2" r="1.5" fill="#565856"/>
                     <circle cx="1.5" cy="8" r="1.5" fill="#565856"/>
@@ -38,9 +48,18 @@ const chatsPageTemplate = `
         </div>
     </div>
 </div>
-`.trim();
+`;
+    }
+}
 
-const chatsTemplate = `
+class ChatList extends Block {
+    constructor(props) {
+        super(undefined, props);
+        this.props = props;
+    }
+
+    render(): string {
+        return `
             <li class="chat">
                 <img src="/static/images/{{ avatarUrl }}" alt="" height="47px"
                      width="47px" class="avatar">
@@ -55,9 +74,18 @@ const chatsTemplate = `
                     </div>
                 </div>
             </li>
-`.trim();
+`;
+    }
+}
 
-const myMessageTemplate = `
+class MyMessage extends Block {
+    constructor(props) {
+        super(undefined, props);
+        this.props = props;
+    }
+
+    render(): string {
+        return `
             <div class="message">
                 <div class="my-message">
                     <div>{{textMessage}}</div>
@@ -67,18 +95,36 @@ const myMessageTemplate = `
                     </div>
                 </div>
             </div>
-`.trim();
+`;
+    }
+}
 
-const foreignMessageTemplate = `
+class ForeignMessage extends Block {
+    constructor(props) {
+        super(undefined, props);
+        this.props = props;
+    }
+
+    render(): string {
+        return `
             <div class="message">
                 <div class="foreign-message">
                     <div>{{textMessage}}</div>
                     <div class="time">{{timeMessage}}</div>
                 </div>
             </div>
-`.trim();
+`;
+    }
+}
 
-const foreignImageTemplate = `
+class ForeignImage extends Block {
+    constructor(props) {
+        super(undefined, props);
+        this.props = props;
+    }
+
+    render(): string {
+        return `
             <div class="message">
                 <div class="foreign-message foreign-message_image">
                     <img src="/static/images/{{imageURL}}" alt="">
@@ -86,22 +132,34 @@ const foreignImageTemplate = `
                         {{timeMessage}}
                     </div>
                 </div>
-            </div>`.trim();
+            </div>
+`;
+    }
+}
 
-const dateHeaderTemplate = `
+class DateHeader extends Block {
+    constructor(props) {
+        super(undefined, props);
+        this.props = props;
+    }
+
+    render(): string {
+        console.log(`DateHeader`, this.props);
+        return `
             <div class="message">
                 <div class="date">
                     {{date}}
                 </div>
             </div>
-`.trim();
-
+`;
+    }
+}
 
 export {
-    chatsTemplate,
-    foreignImageTemplate,
-    foreignMessageTemplate,
-    chatsPageTemplate,
-    dateHeaderTemplate,
-    myMessageTemplate
+    ChatList,
+    ForeignImage,
+    ForeignMessage,
+    ChatsPage,
+    DateHeader,
+    MyMessage
 };

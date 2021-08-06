@@ -1,22 +1,14 @@
-
-import Templator from '../utils/templator';
 import {
-    chatsTemplate,
-    foreignImageTemplate,
-    foreignMessageTemplate,
-    chatsPageTemplate,
-    dateHeaderTemplate,
-    myMessageTemplate
+    ChatsPage,
+    ChatList,
+    ForeignImage,
+    ForeignMessage,
+    DateHeader,
+    MyMessage
 } from '../components/chats.tmpl';
+import render from "../utils/renderDOM";
 
-const chats = new Templator(chatsTemplate);
-const dateHeader = new Templator(dateHeaderTemplate);
-const myMessage = new Templator(myMessageTemplate);
-const foreignMessage = new Templator(foreignMessageTemplate);
-const foreignImage = new Templator(foreignImageTemplate);
-const chatsPage = new Templator(chatsPageTemplate);
-
-const context = {
+render(new ChatsPage({
     chats: [
         {
             avatarUrl: `avatar_placeholder.png`,
@@ -130,7 +122,7 @@ const context = {
             unreadCount: `4`
 
         }
-    ].map((item) => chats.compile(item)).join(``),
+    ].map((item) => new ChatList(item).element),
     currentAccount: {username: `Коля`, avatarUrl: `avatar_placeholder.png`},
     messages: [
         {
@@ -154,20 +146,18 @@ const context = {
             statusMessage: `read`
         }
     ].reverse().map((item) => {
+        console.log(item);
         switch (item.messageType) {
             case "dateHeader":
-                return dateHeader.compile(item);
+                return new DateHeader(item).element;
             case "myMessage":
-                return myMessage.compile(item);
+                return new MyMessage(item).element;
             case "foreignMessage":
-                return foreignMessage.compile(item);
+                return new ForeignMessage(item).element;
             case "foreignImage":
-                return foreignImage.compile(item);
+                return new ForeignImage(item).element;
             default:
-                return ``;
+                return document.createElement(`div`);
         }
-    }).join(``)
-};
-
-const root = document.querySelector(`#root`);
-root.innerHTML = chatsPage.compile(context);
+    })
+}), `#root`);
