@@ -34,8 +34,9 @@ class Templator {
 
     _insertHTMLElement({rule, contextObject}) {
         const placeholder: XPathResult = document.evaluate(`//text()[contains(., '${rule}')]`, this._element, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
-        if (placeholder.singleNodeValue) {
-            (<HTMLElement>placeholder.singleNodeValue).replaceWith(...contextObject);
+        if (placeholder.singleNodeValue !== null) {
+            const replaceNodes = ((Symbol.iterator in Object(contextObject)) ? contextObject : [contextObject]);
+            (<HTMLElement>placeholder.singleNodeValue).replaceWith(...replaceNodes);
         }
     }
 
