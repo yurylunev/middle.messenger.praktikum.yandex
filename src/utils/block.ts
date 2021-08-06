@@ -43,8 +43,25 @@ class Block {
     }
 
     _createResources() {
-        const {tagName} = this._meta;
-        this._element = this._createDocumentElement(tagName);
+        const {tagName = `div`} = this._meta;
+        this._element = this._createContainerElement(tagName);
+    }
+
+    _addEvents() {
+        // @ts-ignore
+        const {events = {}} = this.props;
+        Object.keys(events).forEach((eventName) => {
+            this._element.firstChild.addEventListener(eventName, events[eventName]);
+        });
+    }
+
+    _removeEvents() {
+        // @ts-ignore
+        const {events = {}} = this.props;
+        Object.keys(events).forEach((eventName) => {
+            console.log(`remove `,eventName);
+            this._element.firstChild.removeEventListener(eventName, events[eventName]);
+        });
     }
 
     init() {
@@ -65,6 +82,7 @@ class Block {
         if (!response) {
             return;
         }
+        this._removeEvents();
         this._render();
     }
 
@@ -86,7 +104,8 @@ class Block {
 
     _render() {
         const renderedElements = Array.from(new Templator(this.render().trim()).compile(this.props));
-        renderedElements.forEach((element) => this._element.appendChild(element));
+        this._element.replaceChildren(...renderedElements);
+        this._addEvents();
     }
 
     render(): string {
@@ -116,7 +135,7 @@ class Block {
         });
     }
 
-    _createDocumentElement(tagName) {
+    _createContainerElement(tagName) {
         return document.createDocumentFragment();
     }
 
