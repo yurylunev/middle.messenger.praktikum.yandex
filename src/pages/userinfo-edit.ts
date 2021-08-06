@@ -1,14 +1,14 @@
-import Templator from "../utils/templator";
-import {avatarTemplate, userinfoPageTemplate, inputsTemplate, controlsButtonsTemplate} from "../components/userinfo.tmpl";
+import {
+    Avatar,
+    ControlsButton,
+    Inputs,
+    UserinfoPage
+} from '../components/userinfo.tmpl';
+import render from "../utils/renderDOM";
 
-const userinfoPage = new Templator(userinfoPageTemplate);
-const avatar = new Templator(avatarTemplate);
-const inputs = new Templator(inputsTemplate);
-const controls = new Templator(controlsButtonsTemplate);
-
-const context = {
+render(new UserinfoPage({
     headerText: `Иван`,
-    avatar: avatar.compile({avatarUrl: `icon-image-placeholder.svg`}),
+    avatar: new Avatar({avatarUrl: `icon-image-placeholder.svg`}).element,
     style: `editable`,
     inputs: [
         {
@@ -41,7 +41,7 @@ const context = {
             label: `Телефон`,
             value: `+7 (909) 967 30 30`
         }
-    ].map(item => inputs.compile(item)).join(``),
+    ].map(item => new Inputs(item).element),
     controls: [
         {
             label: `Сохранить`,
@@ -53,8 +53,5 @@ const context = {
             style: `transparent-button`,
             onclick: () => console.log(`Отмена`)
         }
-    ].map((item) => controls.compile(item)).join(``),
-};
-
-const root = document.querySelector(`#root`);
-root.innerHTML = userinfoPage.compile(context);
+    ].map((item) => new ControlsButton(item).element),
+}), `#root`);

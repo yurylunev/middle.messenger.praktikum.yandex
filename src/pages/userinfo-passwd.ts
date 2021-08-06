@@ -1,11 +1,7 @@
-import Templator from "../utils/templator";
-import {userinfoPageTemplate, inputsTemplate, controlsButtonsTemplate} from "../components/userinfo.tmpl";
+import {ControlsButton, Inputs, UserinfoPage} from '../components/userinfo.tmpl';
+import render from "../utils/renderDOM";
 
-const userinfoPage = new Templator(userinfoPageTemplate);
-const inputs = new Templator(inputsTemplate);
-const controls = new Templator(controlsButtonsTemplate);
-
-const context = {
+render(new UserinfoPage({
     headerText: `Сменить пароль`,
     avatarUrl: `icon-image-placeholder.svg`,
     style: `editable`,
@@ -25,7 +21,7 @@ const context = {
             label: `Повторите новый пароль`,
             type: `password`
         }
-    ].map(item => inputs.compile(item)).join(``),
+    ].map(item => new Inputs(item).element),
     controls: [
         {
             label: `Сохранить`,
@@ -37,8 +33,5 @@ const context = {
             style: `transparent-button`,
             onclick: () => console.log(`Отмена`)
         }
-    ].map((item) => controls.compile(item)).join(``),
-};
-
-const root = document.querySelector(`#root`);
-root.innerHTML = userinfoPage.compile(context);
+    ].map((item) => new ControlsButton(item).element),
+}), `#root`);

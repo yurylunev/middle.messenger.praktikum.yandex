@@ -1,4 +1,14 @@
-const userinfoPageTemplate = `
+import Block from "../utils/block";
+
+class UserinfoPage extends Block {
+    constructor(props) {
+        super(undefined, props);
+        this.props = props;
+        console.log(props);
+    }
+
+    render(): string {
+        return `
 <div class="back-menu">
         <button class="back">
             <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -20,45 +30,93 @@ const userinfoPageTemplate = `
             </div>
         </div>
     </div>
-`.trim();
+`;
+    }
+}
 
-const avatarTemplate = `
+class Avatar extends Block {
+    constructor(props) {
+        super(undefined, props);
+        this.props = props;
+    }
+
+    render(): string {
+        return `
 <div class="avatar-wrapper">
     <label for="avatar">
         <img id="avatar-preview" src="/static/images/{{avatarUrl}}">
     </label>
     <input type="file" id="avatar" name="avatar" class="invisible position-absolute">
 </div>
-`.trim();
+`;
+    }
+}
 
-const inputsTemplate = `
+class Inputs extends Block {
+    constructor(props) {
+        super(undefined, props);
+        this.props = props;
+    }
+
+    render(): string {
+        return `
 <div class="input-field">
     <label for="{{name}}">{{label}}</label>
     <input type="{{type}}" id="{{name}}" name="{{name}}" value="{{value}}">
 </div>
-`.trim();
+`;
+    }
+}
 
-const infoFieldTemplate = `
+class InfoField extends Block {
+    constructor(props) {
+        super(undefined, props);
+        this.props = props;
+    }
+
+    render(): string {
+        return `
 <div class="input-field">
     <label for="{{name}}">{{label}}</label>
     <div>{{value}}</div>
 </div>
-`.trim();
+`;
+    }
+}
 
-const controlsTemplate = `
+class ControlField extends Block {
+    constructor(props) {
+        super(undefined, props);
+        this.props = props;
+    }
+
+    render(): string {
+        return `
 <div class="control-field">
     <button onclick="{{onclick}}" class="{{style}}">{{label}}</button>
 </div>
-`.trim();
-const controlsButtonsTemplate = `
+`;
+    }
+}
+
+class ControlsButton extends Block {
+    constructor(props) {
+        super(undefined, props);
+        this.props = props;
+    }
+
+    render(): string {
+        return `
     <button onclick="{{onclick}}" class="{{style}}">{{label}}</button>
-`.trim();
+`;
+    }
+}
 
 export {
-    avatarTemplate,
-    controlsButtonsTemplate,
-    controlsTemplate,
-    infoFieldTemplate,
-    inputsTemplate,
-    userinfoPageTemplate
+    Avatar,
+    ControlsButton,
+    ControlField,
+    InfoField,
+    Inputs,
+    UserinfoPage
 };
