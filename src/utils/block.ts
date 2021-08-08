@@ -50,18 +50,21 @@ class Block {
     _addEvents() {
         // @ts-ignore
         const {events = {}} = this.props;
-        Object.keys(events).forEach((eventName) => {
-            this._element.firstChild.addEventListener(eventName, events[eventName]);
-        });
+        Object.keys(events).forEach((selector) =>
+            Object.keys(events[selector]).forEach((eventName) =>
+                this._element.querySelectorAll(selector).forEach((element) =>
+                    element.addEventListener(eventName, events[selector][eventName])))
+        );
     }
 
     _removeEvents() {
         // @ts-ignore
         const {events = {}} = this.props;
-        Object.keys(events).forEach((eventName) => {
-            console.log(`remove `,eventName);
-            this._element.firstChild.removeEventListener(eventName, events[eventName]);
-        });
+        Object.keys(events).forEach((selector) =>
+            Object.keys(events[selector]).forEach((eventName) =>
+                this._element.querySelectorAll(selector).forEach((element) =>
+                    element.removeEventListener(eventName, events[selector][eventName])))
+        );
     }
 
     init() {
@@ -95,7 +98,7 @@ class Block {
             return;
         }
 
-        this.props = Object.assign(this.props, nextProps);
+        Object.assign(this.props, nextProps);
     };
 
     get element() {
