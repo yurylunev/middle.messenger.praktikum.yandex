@@ -3,7 +3,6 @@ import Block from "../utils/block";
 class ErrorPage extends Block {
     constructor(props) {
         super(undefined, props);
-        this.props = props;
     }
 
     render(): string {

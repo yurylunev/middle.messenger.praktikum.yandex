@@ -3,8 +3,6 @@ import Block from "../utils/block";
 class UserinfoPage extends Block {
     constructor(props) {
         super(undefined, props);
-        this.props = props;
-        console.log(props);
     }
 
     render(): string {
@@ -37,7 +35,6 @@ class UserinfoPage extends Block {
 class Avatar extends Block {
     constructor(props) {
         super(undefined, props);
-        this.props = props;
     }
 
     render(): string {
@@ -55,7 +52,6 @@ class Avatar extends Block {
 class Inputs extends Block {
     constructor(props) {
         super(undefined, props);
-        this.props = props;
     }
 
     render(): string {
@@ -71,7 +67,6 @@ class Inputs extends Block {
 class InfoField extends Block {
     constructor(props) {
         super(undefined, props);
-        this.props = props;
     }
 
     render(): string {
@@ -87,7 +82,6 @@ class InfoField extends Block {
 class ControlField extends Block {
     constructor(props) {
         super(undefined, props);
-        this.props = props;
     }
 
     render(): string {
@@ -102,7 +96,6 @@ class ControlField extends Block {
 class ControlsButton extends Block {
     constructor(props) {
         super(undefined, props);
-        this.props = props;
     }
 
     render(): string {

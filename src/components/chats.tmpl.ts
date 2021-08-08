@@ -3,8 +3,6 @@ import Block from "../utils/block";
 class ChatsPage extends Block {
     constructor(props) {
         super(undefined, props);
-        this.props = props;
-        console.log(13, props);
     }
 
     render(): string {
@@ -55,7 +53,6 @@ class ChatsPage extends Block {
 class ChatList extends Block {
     constructor(props) {
         super(undefined, props);
-        this.props = props;
     }
 
     render(): string {
@@ -81,7 +78,6 @@ class ChatList extends Block {
 class MyMessage extends Block {
     constructor(props) {
         super(undefined, props);
-        this.props = props;
     }
 
     render(): string {
@@ -102,7 +98,6 @@ class MyMessage extends Block {
 class ForeignMessage extends Block {
     constructor(props) {
         super(undefined, props);
-        this.props = props;
     }
 
     render(): string {
@@ -120,7 +115,6 @@ class ForeignMessage extends Block {
 class ForeignImage extends Block {
     constructor(props) {
         super(undefined, props);
-        this.props = props;
     }
 
     render(): string {
@@ -140,7 +134,6 @@ class ForeignImage extends Block {
 class DateHeader extends Block {
     constructor(props) {
         super(undefined, props);
-        this.props = props;
     }
 
     render(): string {

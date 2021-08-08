@@ -3,7 +3,6 @@ import Block from "../utils/block";
 class InputField extends Block {
     constructor(props) {
         super(undefined, props);
-        this.props = props;
     }
 
     render(): string {
@@ -21,7 +20,6 @@ class InputField extends Block {
 class LoginWindow extends Block {
     constructor(props) {
         super(undefined, props);
-        this.props = props;
     }
 
     render(): string {
