@@ -87,7 +87,7 @@ class ControlField extends Block {
     render(): string {
         return `
 <div class="control-field">
-    <button onclick="{{onclick}}" class="{{style}}">{{label}}</button>
+    <button class="{{style}}">{{label}}</button>
 </div>
 `;
     }
@@ -100,7 +100,7 @@ class ControlsButton extends Block {
 
     render(): string {
         return `
-    <button onclick="{{onclick}}" class="{{style}}">{{label}}</button>
+    <button class="{{style}}">{{label}}</button>
 `;
     }
 }

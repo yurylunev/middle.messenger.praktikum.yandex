@@ -26,12 +26,10 @@ render(new UserinfoPage({
         {
             label: `Сохранить`,
             style: `yellow-button`,
-            onclick: () => console.log(`Сохранить`)
         },
         {
             label: `Отмена`,
             style: `transparent-button`,
-            onclick: () => console.log(`Отмена`)
         }
     ].map((item) => new ControlsButton(item).element),
 }), `#root`);

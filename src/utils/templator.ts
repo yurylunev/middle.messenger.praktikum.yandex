@@ -7,10 +7,6 @@ class Templator {
         this._element = this._createContainerElement();
     }
 
-    _uuid(): string {
-        return Math.random().toString().split('.')[1].slice(0, 8);
-    }
-
     protected _createContainerElement() {
         return document.createElement('div');
     }
@@ -46,11 +42,6 @@ class Templator {
         this._element.innerHTML = replaces.reduce((template: string, rulesMap: string[]) => {
             const [rule, objectName] = [...rulesMap];
             const contextObject = this._getObjectFromContext(ctx, objectName.trim(), ``);
-            if (typeof contextObject === `function`) {
-                const functionName = `${objectName}${this._uuid()}`;
-                window[functionName] = contextObject;
-                return template.replace(rule, `window.${functionName}()`);
-            }
             if (typeof contextObject === `object`) {
                 outerElements.push({rule, contextObject});
                 return template;

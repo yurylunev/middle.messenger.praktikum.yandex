@@ -44,16 +44,13 @@ render(new UserinfoPage({
     controls: [
         {
             label: `Изменить данные`,
-            onclick: () => console.log(`Изменить данные`)
         },
         {
             label: `Изменить пароль`,
-            onclick: () => console.log(`Изменить пароль`)
         },
         {
             label: `Выйти`,
             style: `red-color`,
-            onclick: () => console.log(`Выйти`)
         },
     ].map((item) => new ControlField(item).element),
 }), `#root`);
