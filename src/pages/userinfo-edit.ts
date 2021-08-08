@@ -5,7 +5,7 @@ import {
     UserinfoPage
 } from '../components/userinfo.tmpl';
 import render from "../utils/renderDOM";
-import {getInputsData} from "../utils/handlers";
+import {checkInputField, getInputsData} from "../utils/handlers";
 
 render(new UserinfoPage({
     headerText: `Иван`,
@@ -56,6 +56,9 @@ render(new UserinfoPage({
     events: {
         ".yellow-button": {
             click: getInputsData
+        },
+        "input": {
+            blur: checkInputField
         }
     }
 }), `#root`);

@@ -12,7 +12,7 @@ class InputField extends Block {
             <label for="{{name}}">{{label}}</label>
             <input type="{{type}}" placeholder="{{label}}" id="{{name}}" name="{{name}}"/>
         </div>
-        <div class="error-message">{{errorMessage}}</div>
+        <div class="error-message hidden">{{errorMessage}}</div>
 </div>`;
     }
 }

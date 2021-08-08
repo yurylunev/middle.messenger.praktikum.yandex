@@ -1,6 +1,6 @@
 import {LoginWindow, InputField} from '../components/login-window.tmpl';
 import render from "../utils/renderDOM";
-import {getInputsData} from "../utils/handlers";
+import {checkInputField, getInputsData, isValidInput} from "../utils/handlers";
 
 render(new LoginWindow({
     headerText: `Регистрация`,
@@ -33,7 +33,7 @@ render(new LoginWindow({
         {
             name: `password`,
             label: `Пароль`,
-            errorMessage: ``,
+            errorMessage: `Слишком короткий пароль`,
             type: `password`
         },
         {
@@ -48,6 +48,9 @@ render(new LoginWindow({
     events: {
         ".entry": {
             click: getInputsData
+        },
+        "input": {
+            blur: checkInputField
         }
     }
-}),`#root`);
+}), `#root`);

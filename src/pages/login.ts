@@ -1,6 +1,6 @@
 import {LoginWindow, InputField} from '../components/login-window.tmpl';
 import render from "../utils/renderDOM";
-import {getInputsData} from "../utils/handlers";
+import {checkInputField, getInputsData} from "../utils/handlers";
 
 render(new LoginWindow({
     headerText: `Вход`,
@@ -27,6 +27,9 @@ render(new LoginWindow({
     events: {
         ".entry": {
             click: getInputsData
+        },
+        "input": {
+            blur: checkInputField
         }
     }
 }), `#root`);
