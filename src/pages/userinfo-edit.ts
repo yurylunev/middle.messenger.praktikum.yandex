@@ -5,6 +5,7 @@ import {
     UserinfoPage
 } from '../components/userinfo.tmpl';
 import render from "../utils/renderDOM";
+import {getInputsData} from "../utils/handlers";
 
 render(new UserinfoPage({
     headerText: `Иван`,
@@ -52,4 +53,9 @@ render(new UserinfoPage({
             style: `transparent-button`,
         }
     ].map((item) => new ControlsButton(item).element),
+    events: {
+        ".yellow-button": {
+            click: getInputsData
+        }
+    }
 }), `#root`);

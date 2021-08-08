@@ -1,5 +1,6 @@
 import {LoginWindow, InputField} from '../components/login-window.tmpl';
 import render from "../utils/renderDOM";
+import {getInputsData} from "../utils/handlers";
 
 render(new LoginWindow({
     headerText: `Вход`,
@@ -22,5 +23,10 @@ render(new LoginWindow({
         }
     ].map((item) => new InputField(item).element),
     entryButtonText: `Авторизоваться`,
-    noEntryButtonText: `Нет аккаунта`
+    noEntryButtonText: `Нет аккаунта`,
+    events: {
+        ".entry": {
+            click: getInputsData
+        }
+    }
 }), `#root`);

@@ -1,5 +1,6 @@
 import {LoginWindow, InputField} from '../components/login-window.tmpl';
 import render from "../utils/renderDOM";
+import {getInputsData} from "../utils/handlers";
 
 render(new LoginWindow({
     headerText: `Регистрация`,
@@ -25,11 +26,6 @@ render(new LoginWindow({
             errorMessage: `Недопустимые символы`
         },
         {
-            name: `password`,
-            label: `Пароль`,
-            errorMessage: `Неверный пароль`
-        },
-        {
             name: `phone`,
             label: `Телефон`,
             errorMessage: `Телефон указан неверно`
@@ -48,5 +44,10 @@ render(new LoginWindow({
         }
     ].map(item => new InputField(item).element),
     entryButtonText: `Зарегистрироваться`,
-    noEntryButtonText: `Войти`
+    noEntryButtonText: `Войти`,
+    events: {
+        ".entry": {
+            click: getInputsData
+        }
+    }
 }),`#root`);

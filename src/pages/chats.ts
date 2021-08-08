@@ -7,6 +7,7 @@ import {
     MyMessage
 } from '../components/chats.tmpl';
 import render from "../utils/renderDOM";
+import {getSendMessage} from "../utils/handlers";
 
 render(new ChatsPage({
     chats: [
@@ -159,5 +160,10 @@ render(new ChatsPage({
             default:
                 return document.createElement(`div`);
         }
-    })
+    }),
+    events: {
+        ".send-message": {
+            click: getSendMessage
+        }
+    }
 }), `#root`);
