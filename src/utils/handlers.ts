@@ -1,17 +1,17 @@
-const getInputsData = (event) => {
-    const data = {};
+const getInputsData = () => {
+    const data: any = {};
     const inputFields = document.querySelectorAll(`.input-field input`);
     inputFields.forEach((input: HTMLInputElement) => data[input.name] = input.value);
     console.log(data);
 }
 
-const getSendMessage = (event) => {
-    const message: HTMLInputElement = document.querySelector(`input[name=message]`);
-    console.log(message.value);
+const getSendMessage = () => {
+    const message: HTMLInputElement | null = document.querySelector(`input[name=message]`);
+    if (message) console.log(message.value);
 }
 
-const isValidInput = (event): { status: boolean; value: string } => {
-    const inputElement: HTMLInputElement = event.target;
+const isValidInput = (event: Event): any => {
+    const inputElement = <HTMLInputElement>event.target;
 
     const checkEmail = (value: string) => {
         return {status: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test(value), value};
@@ -72,15 +72,25 @@ const isValidInput = (event): { status: boolean; value: string } => {
     }
 }
 
-const checkInputField = (event) => {
-    const errorArea = event.target.parentNode.parentNode.querySelector(`.error-message`);
-    const checkedValue = isValidInput(event);
-    if (errorArea)
-        errorArea.classList.toggle(`hidden`, checkedValue.status);
-    else
-        event.target.classList.toggle(`error-color`, !checkedValue.status)
-    console.log(event.target, checkedValue);
-    event.target.value = checkedValue.value;
+const checkInputField = (event: Event) => {
+    const checkedValue: { status: boolean; value: string } = isValidInput(event);
+    let errorArea;
+    if (event.target !== null) {
+        errorArea = ((<HTMLElement>event.target).parentNode !== null)
+            // @ts-ignore
+            ? (((<HTMLElement>event.target).parentNode.parentNode !== null)
+                // @ts-ignore
+                ? (<HTMLElement>event.target).parentNode.parentNode.querySelector(`.error-message`)
+                : null)
+            : null;
+
+        if (errorArea)
+            errorArea.classList.toggle(`hidden`, checkedValue.status);
+        else
+            (<HTMLElement>event.target).classList.toggle(`error-color`, !checkedValue.status)
+        console.log(event.target, checkedValue);
+        (<HTMLInputElement>event.target).value = checkedValue.value;
+    }
 }
 
 export {getInputsData, getSendMessage, isValidInput, checkInputField}

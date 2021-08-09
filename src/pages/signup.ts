@@ -1,6 +1,6 @@
 import {LoginWindow, InputField} from '../components/login-window.tmpl';
 import render from "../utils/renderDOM";
-import {checkInputField, getInputsData, isValidInput} from "../utils/handlers";
+import {checkInputField, getInputsData} from "../utils/handlers";
 
 render(new LoginWindow({
     headerText: `Регистрация`,

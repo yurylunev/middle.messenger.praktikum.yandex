@@ -10,7 +10,7 @@ render(new LoginWindow({
             label: `Логин`,
             errorMessage: `Неверный логин`,
             events: {
-                click: (event) => {
+                click: (event: Event) => {
                     console.log(event)
                 }
             }

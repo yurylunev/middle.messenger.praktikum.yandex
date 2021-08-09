@@ -9,8 +9,8 @@ class Block {
         FLOW_RENDER: "flow:render"
     };
 
-    _element = null;
-    _meta = null;
+    _element: DocumentFragment;
+    _meta = {tagName: {}, props: {}};
     protected props: object;
     private eventBus: () => EventBus;
 
@@ -20,7 +20,7 @@ class Block {
      *
      * @returns {void}
      */
-    constructor(tagName = "div", props = {}) {
+    constructor(tagName: string = "div", props: object = {}) {
         const eventBus = new EventBus();
         this._meta = {
             tagName,
@@ -35,7 +35,7 @@ class Block {
         eventBus.emit(Block.EVENTS.INIT);
     }
 
-    _registerEvents(eventBus) {
+    _registerEvents(eventBus: EventBus) {
         eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
         eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
         eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
@@ -43,8 +43,7 @@ class Block {
     }
 
     _createResources() {
-        const {tagName = `div`} = this._meta;
-        this._element = this._createContainerElement(tagName);
+        this._element = this._createContainerElement();
     }
 
     _addEvents() {
@@ -73,15 +72,15 @@ class Block {
     }
 
     _componentDidMount() {
-        this.componentDidMount(this.props);
+        this.componentDidMount();
         this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
 
-    componentDidMount(oldProps) {
+    componentDidMount() {
     }
 
-    _componentDidUpdate(oldProps, newProps) {
-        const response = this.componentDidUpdate(oldProps, newProps);
+    _componentDidUpdate() {
+        const response = this.componentDidUpdate();
         if (!response) {
             return;
         }
@@ -89,11 +88,11 @@ class Block {
         this._render();
     }
 
-    componentDidUpdate(oldProps, newProps) {
+    componentDidUpdate() {
         return true;
     }
 
-    setProps = (nextProps) => {
+    setProps = (nextProps: object) => {
         if (!nextProps) {
             return;
         }
@@ -107,47 +106,37 @@ class Block {
 
     _render() {
         const renderedElements = Array.from(new Templator(this.render().trim()).compile(this.props));
-        this._element.replaceChildren(...renderedElements);
+        // @ts-ignore
+        <HTMLElement>(this._element).replaceChildren(...renderedElements);
         this._addEvents();
     }
 
     render(): string {
-        return
+        return ``;
     }
 
     getContent() {
         return this.element;
     }
 
-    _makePropsProxy(props) {
+    _makePropsProxy(props: object) {
         const self = this;
 
         return new Proxy(props, {
-            get(target, prop) {
-                const value = target[prop];
+            get(target: any, prop: string) {
+                const value: object | string = target[prop];
                 return typeof value === "function" ? value.bind(target) : value;
             },
-            set(target, prop, value) {
+            set(target: any, prop, value) {
                 target[prop] = value;
                 self.eventBus().emit(Block.EVENTS.FLOW_CDU, {...target}, target);
                 return true;
-            },
-            deleteProperty(target, prop) {
-                throw Error('Нет доступа');
             }
         });
     }
 
-    _createContainerElement(tagName) {
+    _createContainerElement() {
         return document.createDocumentFragment();
-    }
-
-    show() {
-        this.getContent().style.display = "block";
-    }
-
-    hide() {
-        this.getContent().style.display = "none";
     }
 }
 
