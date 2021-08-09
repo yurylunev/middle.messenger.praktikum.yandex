@@ -1,4 +1,4 @@
-import Block from "../utils/block";
+import Block from "../../utils/block";
 
 class ErrorPage extends Block {
     constructor(props: object) {
@@ -16,4 +16,4 @@ class ErrorPage extends Block {
     }
 }
 
-export {ErrorPage};
+export default ErrorPage;

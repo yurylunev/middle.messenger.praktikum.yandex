@@ -1,9 +1,7 @@
-import {
-    Avatar,
-    ControlField,
-    Inputs,
-    UserinfoPage
-} from '../components/userinfo.tmpl';
+import Avatar from "../components/avatar/avatar";
+import Inputs from "../components/inputs/inputs";
+import ControlField from "../components/control-field/control-field";
+import UserinfoPage from "../components/userinfo-page/userinfo-page";
 import render from "../utils/renderDOM";
 
 render(new UserinfoPage({

@@ -1,10 +1,13 @@
-import {ControlsButton, Inputs, UserinfoPage} from '../components/userinfo.tmpl';
-import render from "../utils/renderDOM";
+import ControlsButton from '../components/controls-button/controls-button';
+import Inputs from "../components/inputs/inputs";
+import UserinfoPage from "../components/userinfo-page/userinfo-page";
 import {getInputsData} from "../utils/handlers";
+import render from "../utils/renderDOM";
+import Avatar from "../components/avatar/avatar";
 
 render(new UserinfoPage({
     headerText: `Сменить пароль`,
-    avatarUrl: `icon-image-placeholder.svg`,
+    avatar: new Avatar({avatarUrl: `icon-image-placeholder.svg`}).element,
     style: `editable`,
     inputs: [
         {

@@ -1,13 +1,11 @@
-import {
-    ChatsPage,
-    ChatList,
-    ForeignImage,
-    ForeignMessage,
-    DateHeader,
-    MyMessage
-} from '../components/chats.tmpl';
-import render from "../utils/renderDOM";
+import ChatsPage from '../components/chats-page/chats-page';
+import ChatList from "../components/chat-list/chat-list";
+import MyMessage from "../components/my-message/my-message";
+import ForeignMessage from "../components/foreign-message/foreign-message";
+import ForeignImage from "../components/foreign-image/foreign-image";
+import DateHeader from '../components/date-header/date-header';
 import {getSendMessage} from "../utils/handlers";
+import render from "../utils/renderDOM";
 
 render(new ChatsPage({
     chats: [

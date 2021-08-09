@@ -1,11 +1,9 @@
-import {
-    Avatar,
-    ControlsButton,
-    Inputs,
-    UserinfoPage
-} from '../components/userinfo.tmpl';
-import render from "../utils/renderDOM";
+import ControlsButton from '../components/controls-button/controls-button';
+import Avatar from "../components/avatar/avatar";
+import Inputs from "../components/inputs/inputs";
+import UserinfoPage from "../components/userinfo-page/userinfo-page";
 import {checkInputField, getInputsData} from "../utils/handlers";
+import render from "../utils/renderDOM";
 
 render(new UserinfoPage({
     headerText: `Иван`,
