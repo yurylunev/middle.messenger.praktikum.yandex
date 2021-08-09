@@ -1,179 +1,177 @@
 body {
-    margin: 0;
-    font-family: Inter;
-    box-sizing: border-box;
+  margin: 0;
+  font-family: Inter, serif;
+  box-sizing: border-box;
 }
 
 button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 #root {
-    height: 100vh;
-    width: 100vw;
-    display: flex;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
 }
 
 .back-menu {
-    flex-basis: 64px;
-    background-color: var(--main-stroke-color);
-    border-right: 1px solid var(--input-stroke-color);
-    box-sizing: border-box;
+  flex-basis: 64px;
+  background-color: var(--main-stroke-color);
+  border-right: 1px solid var(--input-stroke-color);
+  box-sizing: border-box;
+  display: flex;
+
+  .back {
+    width: 28px;
+    height: 28px;
+    margin: auto;
+    border-radius: 14px;
+    border: 1px solid var(--input-stroke-color);
+    background-color: var(--chatlist-selected-background-color);
     display: flex;
 
-    .back {
-        width: 28px;
-        height: 28px;
-        margin: auto;
-        border-radius: 14px;
-        border: 1px solid var(--input-stroke-color);
-        background-color: var(--chatlist-selected-background-color);
-        display: flex;
-
-        svg {
-            margin: auto;
-        }
+    svg {
+      margin: auto;
     }
+  }
 }
 
 .main-side {
-    flex: 1;
-    background-color: var(--main-background-color);
-    display: flex;
+  flex: 1;
+  background-color: var(--main-background-color);
+  display: flex;
 
-    .userinfo-area {
-        width: 510px;
-        margin: auto;
+  .userinfo-area {
+    width: 510px;
+    margin: auto;
 
-        .avatar-wrapper {
-            width: 130px;
-            height: 130px;
-            display: flex;
-            margin: 0 auto;
-            box-sizing: border-box;
-            border: 1px solid var(--input-stroke-color);
-            border-radius: calc(2 * var(--main-border-radius));
-            background-color: var(--avatar-background-color);
+    .avatar-wrapper {
+      width: 130px;
+      height: 130px;
+      display: flex;
+      margin: 0 auto;
+      box-sizing: border-box;
+      border: 1px solid var(--input-stroke-color);
+      border-radius: calc(2 * var(--main-border-radius));
+      background-color: var(--avatar-background-color);
 
-            label {
-                cursor: pointer;
-            }
+      label {
+        cursor: pointer;
+      }
 
-            input {
-                visibility: hidden;
-            }
+      input {
+        visibility: hidden;
+      }
 
-            &:hover {
-                transition: background-color 0.2s;
-                background-color: var(--second-color);
-                cursor: pointer;
-                content: "asd";
-            }
-        }
-
-        .username-header {
-            color: var(--main-text-color);
-            text-align: center;
-            margin: 33px 0 60px;
-        }
-
-        .controls {
-            margin-top: 80px;
-            display: flex;
-            flex-direction: column;
-            text-align: center;
-
-            button {
-                &.yellow-button {
-                    background-color: var(--button-background-color);
-                    width: 280px;
-                }
-
-                &.transparent-button {
-                    color: var(--error-color);
-                    background-color: transparent;
-                }
-
-                border-radius: var(--main-border-radius);
-                font-size: 13px;
-
-                margin: 0 auto;
-                display: block;
-                height: 37px;
-                border: none;
-            }
-
-            .entry {
-                background-color: var(--button-background-color);
-            }
-
-            .noEntry {
-                background-color: transparent;
-                color: var(--second-color);
-            }
-        }
-
-        .editable {
-            .input-field {
-                border-bottom: 1px solid var(--second-color);
-            }
-        }
-
-        .input-field {
-            color: var(--main-text-color);
-            display: flex;
-            border-bottom: 1px solid var(--placeholder-color);
-            box-sizing: border-box;
-            font-size: 13px;
-            padding: 10px 0;
-
-            input, div {
-                flex: 1;
-                text-align: right;
-                font-size: 13px;
-                color: var(--placeholder-color);
-                box-sizing: border-box;
-                border: 0;
-                background-color: transparent;
-
-                &:focus-visible {
-                    outline: none;
-                }
-
-            }
-
-            &:last-child {
-                border: none;
-                padding-bottom: 20px;
-            }
-        }
-
-        .control-field {
-            border-bottom: 1px solid var(--placeholder-color);
-            box-sizing: border-box;
-
-            button {
-                color: var(--second-color);
-                font-size: 13px;
-                background-color: transparent;
-                border: 0;
-                margin: 0;
-                padding: 0;
-            }
-
-            .red-color {
-                color: var(--error-color);
-            }
-
-            &:last-child {
-                border: none;
-                padding-bottom: 20px;
-            }
-        }
+      &:hover {
+        transition: background-color 0.2s;
+        background-color: var(--second-color);
+        cursor: pointer;
+        content: "asd";
+      }
     }
+
+    .username-header {
+      color: var(--main-text-color);
+      text-align: center;
+      margin: 33px 0 60px;
+    }
+
+    .controls {
+      margin-top: 80px;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+
+      button {
+        &.yellow-button {
+          background-color: var(--button-background-color);
+          width: 280px;
+        }
+
+        &.transparent-button {
+          color: var(--error-color);
+          background-color: transparent;
+        }
+
+        border-radius: var(--main-border-radius);
+        font-size: 13px;
+        margin: 0 auto;
+        display: block;
+        height: 37px;
+        border: none;
+      }
+
+      .entry {
+        background-color: var(--button-background-color);
+      }
+
+      .noEntry {
+        background-color: transparent;
+        color: var(--second-color);
+      }
+    }
+
+    .input-field {
+      color: var(--main-text-color);
+      display: flex;
+      border-bottom: 1px solid var(--placeholder-color);
+      box-sizing: border-box;
+      font-size: 13px;
+      padding: 10px 0;
+
+      input,
+      div {
+        flex: 1;
+        text-align: right;
+        font-size: 13px;
+        color: var(--placeholder-color);
+        box-sizing: border-box;
+        border: 0;
+        background-color: transparent;
+
+        &:focus-visible {
+          outline: none;
+        }
+      }
+
+      &:last-child {
+        border: none;
+        padding-bottom: 20px;
+      }
+
+      .editable {
+        .input-field {
+          border-bottom: 1px solid var(--second-color);
+        }
+      }
+    }
+
+    .control-field {
+      border-bottom: 1px solid var(--placeholder-color);
+      box-sizing: border-box;
+
+      button {
+        color: var(--second-color);
+        font-size: 13px;
+        background-color: transparent;
+        border: 0;
+        margin: 0;
+        padding: 0;
+      }
+
+      .red-color {
+        color: var(--error-color);
+      }
+
+      &:last-child {
+        border: none;
+        padding-bottom: 20px;
+      }
+    }
+  }
 }
 
-
 .error-color {
-    color: var(--error-color) !important;
+  color: var(--error-color) !important;
 }

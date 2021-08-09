@@ -1,100 +1,99 @@
 body {
-    background-color: var(--main-background-color);
-    font-family: Inter;
-    box-sizing: border-box;
+  background-color: var(--main-background-color);
+  font-family: Inter;
+  box-sizing: border-box;
 }
 
 .login-window {
-    margin: 0 auto;
-    background-color: var(--window-background-color);
-    border: 1px solid var(--window-stroke-color);
-    border-radius: var(--main-border-radius);
-    width: 340px;
-    min-height: 460px;
-    position: absolute;
-    padding-bottom: 100px;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    box-sizing: border-box;
-    box-shadow: 0 0 6px #8A8686;
+  margin: 0 auto;
+  background-color: var(--window-background-color);
+  border: 1px solid var(--window-stroke-color);
+  border-radius: var(--main-border-radius);
+  width: 340px;
+  min-height: 460px;
+  position: absolute;
+  padding-bottom: 100px;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  box-sizing: border-box;
+  box-shadow: 0 0 6px #8A8686;
 }
 
 .login-window_header {
-    color: var(--main-text-color);
-    text-align: center;
-    font-size: 20px;
-    line-height: 20px;
-    margin-top: 50px;
-    font-style: normal;
+  color: var(--main-text-color);
+  text-align: center;
+  font-size: 20px;
+  line-height: 20px;
+  margin-top: 50px;
+  font-style: normal;
 
-    h2 {
-        font-size: inherit;
-        font-weight: 500;
-    }
+  h2 {
+    font-size: inherit;
+    font-weight: 500;
+  }
 }
 
 .login-window_input-field {
-    margin: 0 auto 16px;
-    width: 280px;
-    font-size: 9px;
-    line-height: 9px;
+  margin: 0 auto 16px;
+  width: 280px;
+  font-size: 9px;
+  line-height: 9px;
 
-    .error-message {
-        color: var(--error-color);
-    }
+  .error-message {
+    color: var(--error-color);
+  }
 }
 
 .input-field {
-    border-bottom: 1px solid var(--second-color);
-    margin-bottom: 7px;
+  border-bottom: 1px solid var(--second-color);
+  margin-bottom: 7px;
 
-    label {
-        display: block;
-        color: var(--placeholder-color);
-        margin-bottom: 8px;
-    }
+  label {
+    display: block;
+    color: var(--placeholder-color);
+    margin-bottom: 8px;
+  }
 
-    input {
-        display: block;
-        width: 100%;
-        color: var(--input-text-color);
-        background-color: transparent;
-        border: none;
-        font-size: 13px;
-        line-height: 13px;
-    }
+  input {
+    display: block;
+    width: 100%;
+    color: var(--input-text-color);
+    background-color: transparent;
+    border: none;
+    font-size: 13px;
+    line-height: 13px;
+  }
 }
 
-
 .buttons-wrapper {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  height: 85px;
+  text-align: center;
+  width: 100%;
+
+  button {
     display: block;
-    position: absolute;
-    bottom: 0;
-    height: 85px;
-    text-align: center;
-    width: 100%;
+    width: 280px;
+    height: 37px;
+    margin: 0 auto;
+    border: none;
+    border-radius: var(--main-border-radius);
+    font-size: 13px;
+  }
 
-    button {
-        display: block;
-        width: 280px;
-        height: 37px;
-        margin: 0 auto;
-        border: none;
-        border-radius: var(--main-border-radius);
-        font-size: 13px;
-    }
+  .entry {
+    background-color: var(--button-background-color);
+  }
 
-    .entry {
-        background-color: var(--button-background-color);
-    }
-
-    .noEntry {
-        background-color: transparent;
-        color: var(--second-color);
-    }
+  .noEntry {
+    background-color: transparent;
+    color: var(--second-color);
+  }
 }
 
 .hidden {
-    visibility: hidden;
+  visibility: hidden;
 }
