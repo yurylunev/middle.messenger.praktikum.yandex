@@ -30,3 +30,12 @@ npm run build
 ## Домен на Netlify
 
 https://cranky-blackwell-f477f2.netlify.app
+
+### Версия 2:
+- Добавлен TypeScript
+- Компонентный подход и переработан шаблонизатор
+- Сбор данных из форм и их валидация
+- Добавлены линтеры для кода и стилей
+
+### Pull request:
+https://github.com/yurylunev/middle.messenger.praktikum.yandex/pull/7
