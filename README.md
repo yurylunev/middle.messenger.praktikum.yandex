@@ -1,4 +1,7 @@
 # Веб-приложение «Чат»
+В разработке. Последний пулл реквест:
+https://github.com/yurylunev/middle.messenger.praktikum.yandex/pull/7
+
 
 ## Запуск приложения
 
