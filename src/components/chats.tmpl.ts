@@ -1,7 +1,7 @@
 import Block from "../utils/block";
 
 class ChatsPage extends Block {
-    constructor(props) {
+    constructor(props: object) {
         super(undefined, props);
     }
 
@@ -51,7 +51,7 @@ class ChatsPage extends Block {
 }
 
 class ChatList extends Block {
-    constructor(props) {
+    constructor(props: object) {
         super(undefined, props);
     }
 
@@ -76,7 +76,7 @@ class ChatList extends Block {
 }
 
 class MyMessage extends Block {
-    constructor(props) {
+    constructor(props: object) {
         super(undefined, props);
     }
 
@@ -96,7 +96,7 @@ class MyMessage extends Block {
 }
 
 class ForeignMessage extends Block {
-    constructor(props) {
+    constructor(props: object) {
         super(undefined, props);
     }
 
@@ -113,7 +113,7 @@ class ForeignMessage extends Block {
 }
 
 class ForeignImage extends Block {
-    constructor(props) {
+    constructor(props: object) {
         super(undefined, props);
     }
 
@@ -132,7 +132,7 @@ class ForeignImage extends Block {
 }
 
 class DateHeader extends Block {
-    constructor(props) {
+    constructor(props: object) {
         super(undefined, props);
     }
 

@@ -1,7 +1,7 @@
 import Block from "../utils/block";
 
 class UserinfoPage extends Block {
-    constructor(props) {
+    constructor(props: object) {
         super(undefined, props);
     }
 
@@ -33,7 +33,7 @@ class UserinfoPage extends Block {
 }
 
 class Avatar extends Block {
-    constructor(props) {
+    constructor(props: object) {
         super(undefined, props);
     }
 
@@ -50,7 +50,7 @@ class Avatar extends Block {
 }
 
 class Inputs extends Block {
-    constructor(props) {
+    constructor(props: object) {
         super(undefined, props);
     }
 
@@ -65,7 +65,7 @@ class Inputs extends Block {
 }
 
 class InfoField extends Block {
-    constructor(props) {
+    constructor(props: object) {
         super(undefined, props);
     }
 
@@ -80,7 +80,7 @@ class InfoField extends Block {
 }
 
 class ControlField extends Block {
-    constructor(props) {
+    constructor(props: object) {
         super(undefined, props);
     }
 
@@ -94,7 +94,7 @@ class ControlField extends Block {
 }
 
 class ControlsButton extends Block {
-    constructor(props) {
+    constructor(props: object) {
         super(undefined, props);
     }
 

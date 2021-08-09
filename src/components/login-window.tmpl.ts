@@ -1,7 +1,7 @@
 import Block from "../utils/block";
 
 class InputField extends Block {
-    constructor(props) {
+    constructor(props: object) {
         super(undefined, props);
     }
 
@@ -18,7 +18,7 @@ class InputField extends Block {
 }
 
 class LoginWindow extends Block {
-    constructor(props) {
+    constructor(props: object) {
         super(undefined, props);
     }
 

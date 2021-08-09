@@ -1,7 +1,7 @@
 import Block from "../utils/block";
 
 class ErrorPage extends Block {
-    constructor(props) {
+    constructor(props: object) {
         super(undefined, props);
     }
 
