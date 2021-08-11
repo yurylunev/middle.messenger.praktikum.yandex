@@ -7,7 +7,7 @@ import Avatar from '../components/avatar/avatar';
 
 render(new UserinfoPage({
   headerText: `Сменить пароль`,
-  avatar: new Avatar({avatarUrl: `icon-image-placeholder.svg`}).element,
+  avatar: new Avatar({avatarUrl: `icon-image-placeholder.svg`, name: `avatar`}).element,
   style: `editable`,
   inputs: [
     {

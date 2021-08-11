@@ -6,7 +6,7 @@ import render from '../utils/renderDOM';
 
 render(new UserinfoPage({
   headerText: `Иван`,
-  avatar: new Avatar({avatarUrl: `icon-image-placeholder.svg`}).element,
+  avatar: new Avatar({avatarUrl: `icon-image-placeholder.svg`, name: `avatar`}).element,
   inputs: [
     {
       name: `email`,

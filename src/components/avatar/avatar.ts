@@ -8,10 +8,10 @@ class Avatar extends Block {
   render(): string {
     return `
 <div class="avatar-wrapper">
-    <label for="avatar">
-        <img id="avatar-preview" src="/static/images/{{avatarUrl}}">
+    <label for="{{name}}">
+        <img src="/static/images/{{avatarUrl}}">
     </label>
-    <input type="file" id="avatar" name="avatar" class="invisible position-absolute">
+    <input type="file" id="{{name}}" name="{{name}}" class="invisible position-absolute">
 </div>
 `;
   }
