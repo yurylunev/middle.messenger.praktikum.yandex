@@ -6,7 +6,6 @@ class DateHeader extends Block {
   }
 
   render(): string {
-    console.log(`DateHeader`, this.props);
     return `
 <div class="message">
     <div class="date">

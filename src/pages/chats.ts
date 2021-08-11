@@ -147,7 +147,6 @@ render(new ChatsPage({
       statusMessage: `read`,
     },
   ].reverse().map((item) => {
-    console.log(item);
     switch (item.messageType) {
       case 'dateHeader':
         return new DateHeader(item).element;

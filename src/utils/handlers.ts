@@ -88,7 +88,6 @@ const checkInputField = (event: Event) => {
     } else {
       (<HTMLElement>event.target).classList.toggle(`error-color`, !checkedValue.status);
     }
-    console.log(event.target, checkedValue);
     (<HTMLInputElement>event.target).value = checkedValue.value;
   }
 };
