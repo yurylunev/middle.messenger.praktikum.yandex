@@ -1,12 +1,12 @@
-import Block from "../../utils/block";
+import Block from '../../utils/block';
 
 class UserinfoPage extends Block {
-    constructor(props: object) {
-        super(undefined, props);
-    }
+  constructor(props: object) {
+    super(undefined, props);
+  }
 
-    render(): string {
-        return `
+  render(): string {
+    return `
 <div class="back-menu">
         <button class="back">
             <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -29,7 +29,7 @@ class UserinfoPage extends Block {
         </div>
     </div>
 `;
-    }
+  }
 }
 
 export default UserinfoPage;
