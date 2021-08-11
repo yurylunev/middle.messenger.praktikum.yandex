@@ -9,7 +9,7 @@ class ForeignImage extends Block {
     return `
 <div class="message">
     <div class="foreign-message foreign-message_image">
-        <img src="/static/images/{{imageURL}}" alt="">
+        <img src="/static/images/{{imageURL}}">
         <div class="time">
             {{timeMessage}}
         </div>

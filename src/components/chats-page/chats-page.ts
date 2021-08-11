@@ -22,7 +22,7 @@ class ChatsPage extends Block {
         </div>
         <div class="conversation-wrapper">
             <div class="header">
-                <img src="/static/images/avatar_placeholder.png" alt="" height="34px"
+                <img src="/static/images/avatar_placeholder.png" height="34px"
                     width="34px" class="avatar">
                 <div class="username">Коля</div>
                 <div class="time">
@@ -37,10 +37,10 @@ class ChatsPage extends Block {
             {{messages}}
         </div>
         <div class="sending-area">
-            <img src="/static/images/icon-attach.svg" alt="">
+            <img src="/static/images/icon-attach.svg">
             <input type="text" class="input-message" name="message" placeholder="Сообщение">
             <button class="send-message">
-                <img src="/static/images/icon-rocket.svg" alt="">
+                <img src="/static/images/icon-rocket.svg">
             </button>
 
         </div>
