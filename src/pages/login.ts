@@ -1,9 +1,10 @@
-import LoginWindow from '../components/login-window/login-window';
 import InputField from '../components/input-field/input-field';
 import {checkInputField, getInputsData} from '../utils/handlers';
-import render from '../utils/renderDOM';
+import Router from '../utils/router';
 
-render(new LoginWindow({
+const router = new Router('#root');
+
+const signInProps = {
   headerText: `Вход`,
   inputFields: [
     {
@@ -22,10 +23,18 @@ render(new LoginWindow({
   noEntryButtonText: `Нет аккаунта`,
   events: {
     '.entry': {
-      click: getInputsData,
+      click: () => {
+        getInputsData();
+        router.go('/messenger');
+      },
     },
     'input': {
       blur: checkInputField,
     },
+    '.noEntry': {
+      click: () => router.go('/sign-up'),
+    },
   },
-}), `#root`);
+};
+
+export default signInProps;

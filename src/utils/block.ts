@@ -98,7 +98,7 @@ class Block {
       return;
     }
 
-    Object.assign(this.props, nextProps);
+    this.props = Object.assign(this.props, nextProps);
   };
 
   get element() {
@@ -106,10 +106,8 @@ class Block {
   }
 
   _render() {
-    const renderedElements = Array.from(
-        new Templator(this.render().trim()).compile(this.props));
-    // @ts-ignore
-    <HTMLElement>(this._element).replaceChildren(...renderedElements);
+    const renderedElements = Array.from(new Templator(this.render().trim()).compile(this.props));
+    renderedElements.forEach((element) => this._element.appendChild(element));
     this._addEvents();
   }
 

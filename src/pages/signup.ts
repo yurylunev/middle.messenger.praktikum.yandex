@@ -1,9 +1,10 @@
-import LoginWindow from '../components/login-window/login-window';
 import InputField from '../components/input-field/input-field';
 import {checkInputField, getInputsData} from '../utils/handlers';
-import render from '../utils/renderDOM';
+import Router from '../utils/router';
 
-render(new LoginWindow({
+const router = new Router('#root');
+
+const signUpProps = {
   headerText: `Регистрация`,
   inputFields: [
     {
@@ -53,5 +54,10 @@ render(new LoginWindow({
     'input': {
       blur: checkInputField,
     },
+    '.noEntry': {
+      click: () => router.go('/'),
+    },
   },
-}), `#root`);
+};
+
+export default signUpProps;

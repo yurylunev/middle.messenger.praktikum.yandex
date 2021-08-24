@@ -1,13 +1,14 @@
-import ChatsPage from '../components/chats-page/chats-page';
 import ChatList from '../components/chat-list/chat-list';
 import MyMessage from '../components/my-message/my-message';
 import ForeignMessage from '../components/foreign-message/foreign-message';
 import ForeignImage from '../components/foreign-image/foreign-image';
 import DateHeader from '../components/date-header/date-header';
 import {getSendMessage} from '../utils/handlers';
-import render from '../utils/renderDOM';
+import Router from '../utils/router';
 
-render(new ChatsPage({
+const router = new Router('#root');
+
+const chatsPageProps = {
   chats: [
     {
       avatarUrl: `avatar_placeholder.png`,
@@ -164,5 +165,10 @@ render(new ChatsPage({
     '.send-message': {
       click: getSendMessage,
     },
+    '.profile-edit button': {
+      click: () => router.go('/settings'),
+    },
   },
-}), `#root`);
+};
+
+export default chatsPageProps;

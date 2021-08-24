@@ -1,10 +1,11 @@
 import Avatar from '../components/avatar/avatar';
 import Inputs from '../components/inputs/inputs';
 import ControlField from '../components/control-field/control-field';
-import UserinfoPage from '../components/userinfo-page/userinfo-page';
-import render from '../utils/renderDOM';
+import Router from '../utils/router';
 
-render(new UserinfoPage({
+const router = new Router('#root');
+
+const userinfoPageProps = {
   headerText: `Иван`,
   avatar: new Avatar({avatarUrl: `icon-image-placeholder.svg`, name: `avatar`}).element,
   inputs: [
@@ -42,13 +43,31 @@ render(new UserinfoPage({
   controls: [
     {
       label: `Изменить данные`,
+      style: `edit-profile`,
     },
     {
       label: `Изменить пароль`,
+      style: `change-password`,
     },
     {
       label: `Выйти`,
       style: `red-color`,
     },
   ].map((item) => new ControlField(item).element),
-}), `#root`);
+  events: {
+    'button.back': {
+      click: () => router.go('/messenger'),
+    },
+    'button.edit-profile': {
+      click: () => router.go('/settings/edit-profile'),
+    },
+    'button.change-password': {
+      click: () => router.go('/settings/change-password'),
+    },
+    'button.red-color': {
+      click: () => router.go('/'),
+    },
+  },
+};
+
+export default userinfoPageProps;

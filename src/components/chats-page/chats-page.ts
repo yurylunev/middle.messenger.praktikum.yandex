@@ -10,7 +10,7 @@ class ChatsPage extends Block {
 <div class="chat-list">
         <div class="search-wrapper">
             <div class="profile-edit">
-                <a href="#">Профиль</a>
+                <button>Профиль</button>
             </div>
             <div class="search">
                 <input type="text" name="search" id="search" placeholder="Поиск">

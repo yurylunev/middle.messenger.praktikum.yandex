@@ -1,11 +1,12 @@
 import ControlsButton from '../components/controls-button/controls-button';
 import Inputs from '../components/inputs/inputs';
-import UserinfoPage from '../components/userinfo-page/userinfo-page';
 import {getInputsData} from '../utils/handlers';
-import render from '../utils/renderDOM';
 import Avatar from '../components/avatar/avatar';
+import Router from '../utils/router';
 
-render(new UserinfoPage({
+const router = new Router('#root');
+
+const userinfoPasswdProps = {
   headerText: `Сменить пароль`,
   avatar: new Avatar({avatarUrl: `icon-image-placeholder.svg`, name: `avatar`}).element,
   style: `editable`,
@@ -37,8 +38,19 @@ render(new UserinfoPage({
     },
   ].map((item) => new ControlsButton(item).element),
   events: {
+    'button.back': {
+      click: () => router.go('/settings'),
+    },
     '.yellow-button': {
-      click: getInputsData,
+      click: () => {
+        getInputsData();
+        router.go('/settings');
+      },
+    },
+    '.transparent-button': {
+      click: () => router.go('/settings'),
     },
   },
-}), `#root`);
+};
+
+export default userinfoPasswdProps;
