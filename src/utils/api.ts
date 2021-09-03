@@ -1,3 +1,11 @@
+type TFetchOptions = {
+  method: string;
+  data?: any;
+  headers?: object;
+  retries?: number;
+  withCredentials?: boolean
+}
+
 const METHODS = {
   GET: 'GET',
   POST: 'POST',
@@ -14,24 +22,27 @@ function queryStringify(data: object) {
 }
 
 class HTTPTransport {
+  private readonly _baseURL: string;
+  constructor(baseURL:string) {
+    this._baseURL = baseURL;
+  }
   get = (url: string, options = {timeout: 0}) => {
-    return this.request(url, {...options, method: METHODS.GET}, options.timeout);
+    return this.request(this._baseURL + url, {...options, method: METHODS.GET}, options.timeout);
   };
   post = (url: string, options = {timeout: 0}) => {
-    return this.request(url, {...options, method: METHODS.POST}, options.timeout);
+    return this.request(this._baseURL + url, {...options, method: METHODS.POST}, options.timeout);
   };
   put = (url: string, options = {timeout: 0}) => {
-    return this.request(url, {...options, method: METHODS.PUT}, options.timeout);
+    return this.request(this._baseURL + url, {...options, method: METHODS.PUT}, options.timeout);
   };
   delete = (url: string, options = {timeout: 0}) => {
-    return this.request(url, {...options, method: METHODS.DELETE}, options.timeout);
+    return this.request(this._baseURL + url, {...options, method: METHODS.DELETE}, options.timeout);
   };
 
   request = (url: string,
-      options: { method: string; data?: any; headers?: object; retries?: number },
-      timeout = 5000) => {
-    const {method = 'GET', data, headers = {}} = options;
-
+      options: TFetchOptions,
+      timeout = 5000): Promise<XMLHttpRequest> => {
+    const {method = 'GET', data, headers = {}, withCredentials = false} = options;
     return new Promise((resolve, reject) => {
       if (!method) {
         // eslint-disable-next-line prefer-promise-reject-errors
@@ -43,8 +54,8 @@ class HTTPTransport {
       const isGET = (method === METHODS.GET);
 
       xhr.open(method, (isGET && !!data) ?
-        `${url}${queryStringify(data)}` :
-        url);
+        `${this._baseURL + url}${queryStringify(data)}` :
+        this._baseURL + url);
 
       Object.entries(headers).forEach((header) => {
         xhr.setRequestHeader(header[0], header[1]);
@@ -59,21 +70,21 @@ class HTTPTransport {
 
       xhr.timeout = timeout;
       xhr.ontimeout = reject;
+      xhr.withCredentials = withCredentials;
 
       if (isGET || !data) {
         xhr.send();
       } else {
-        xhr.send(data);
+        xhr.send(JSON.stringify(data));
       }
     });
   };
 }
 
-const http = new HTTPTransport;
+const http = new HTTPTransport('https://ya-praktikum.tech/api/v2');
 
 // eslint-disable-next-line no-unused-vars
-function fetchWithRetry(url: string,
-    options: { method: string; data?: any; headers?: object; retries?: number }) {
+async function fetchWithRetry(url: string, options: TFetchOptions): Promise<XMLHttpRequest> {
   const {retries = 2} = options;
 
   function onError(error: ErrorEvent): any {
@@ -88,3 +99,5 @@ function fetchWithRetry(url: string,
 
   return http.request(url, options).catch(onError);
 }
+
+export default fetchWithRetry;
