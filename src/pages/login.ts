@@ -1,8 +1,10 @@
 import InputField from '../components/input-field/input-field';
 import {checkInputField, getInputsData} from '../utils/handlers';
 import Router from '../utils/router';
+import HTTPTransport from '../utils/http-transport';
 
 const router = new Router('#root');
+const loginAPI = new HTTPTransport('/auth/signin');
 
 const signInProps = {
   headerText: `Вход`,
@@ -23,13 +25,23 @@ const signInProps = {
   noEntryButtonText: `Нет аккаунта`,
   events: {
     '.entry': {
-      click: () => {
-        getInputsData();
-        router.go('/messenger');
+      'click': async () => {
+        const data = getInputsData();
+        if (data.login !== '' && data.password !== '') {
+          loginAPI
+              .post('', {
+                headers: {'Content-Type': 'application/json'},
+                withCredentials: true,
+                data,
+              })
+              .then((response) => (response.status === 200) ? router.go('/messenger') : null);
+        }
       },
     },
     'input': {
-      blur: checkInputField,
+      blur: (e: Event) => {
+        checkInputField(e);
+      },
     },
     '.noEntry': {
       click: () => router.go('/sign-up'),

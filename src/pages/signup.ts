@@ -1,8 +1,10 @@
 import InputField from '../components/input-field/input-field';
 import {checkInputField, getInputsData} from '../utils/handlers';
 import Router from '../utils/router';
+import HTTPTransport from '../utils/http-transport';
 
 const router = new Router('#root');
+const signupAPI = new HTTPTransport('/auth/signup');
 
 const signUpProps = {
   headerText: `Регистрация`,
@@ -49,7 +51,15 @@ const signUpProps = {
   noEntryButtonText: `Войти`,
   events: {
     '.entry': {
-      click: getInputsData,
+      click: async () => {
+        signupAPI
+            .post('', {
+              withCredentials: true,
+              data: getInputsData(),
+              headers: {'Content-Type': 'application/json'},
+            })
+            .then((response) => (response.status === 200) ? router.go('/') : null);
+      },
     },
     'input': {
       blur: checkInputField,

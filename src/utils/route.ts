@@ -47,6 +47,10 @@ class Route {
     return isEqual(pathname, this._pathname);
   }
 
+  get getInstance() {
+    return this._block;
+  }
+
   render() {
     if (!this._block) {
       this._block = new this._blockClass(this._props.blockProps);

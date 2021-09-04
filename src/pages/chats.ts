@@ -18,112 +18,9 @@ const chatsPageProps = {
       unreadCount: ``,
 
     },
-    {
-      avatarUrl: `avatar_placeholder.png`,
-      username: `Андрей`,
-      lastMessage: `Друзья, у меня`,
-      messageTime: `13:00`,
-      unreadCount: `24`,
-
-    },
-    {
-      avatarUrl: `avatar_placeholder.png`,
-      username: `Андрей`,
-      lastMessage: `Друзья, у меня`,
-      messageTime: `13:00`,
-      unreadCount: `24`,
-
-    },
-    {
-      avatarUrl: `avatar_placeholder.png`,
-      username: `Андрей`,
-      lastMessage: `Друзья, у меня`,
-      messageTime: `13:00`,
-      unreadCount: `24`,
-
-    },
-    {
-      avatarUrl: `avatar_placeholder.png`,
-      username: `Саша`,
-      lastMessage: `Друзья, у меня`,
-      messageTime: `13:00`,
-      unreadCount: `24`,
-
-    },
-    {
-      avatarUrl: `avatar_placeholder.png`,
-      username: `Коля`,
-      lastMessage: `Друзья, у меня для вас особенный выпуск новостей...`,
-      messageTime: `1 мая 2020`,
-      unreadCount: `4`,
-
-    },
-    {
-      avatarUrl: `avatar_placeholder.png`,
-      username: `Андрей`,
-      lastMessage: `Друзья, у меня`,
-      messageTime: `13:00`,
-      unreadCount: `24`,
-
-    },
-    {
-      avatarUrl: `avatar_placeholder.png`,
-      username: `Саша`,
-      lastMessage: `Друзья, у меня`,
-      messageTime: `13:00`,
-      unreadCount: `24`,
-
-    },
-    {
-      avatarUrl: `avatar_placeholder.png`,
-      username: `Коля`,
-      lastMessage: `Друзья, у меня для вас особенный выпуск новостей...`,
-      messageTime: `1 мая 2020`,
-      unreadCount: `4`,
-
-    },
-    {
-      avatarUrl: `avatar_placeholder.png`,
-      username: `Коля`,
-      lastMessage: `Друзья, у меня для вас особенный выпуск новостей...`,
-      messageTime: `1 мая 2020`,
-      unreadCount: `4`,
-
-    },
-    {
-      avatarUrl: `avatar_placeholder.png`,
-      username: `Коля`,
-      lastMessage: `Друзья, у меня для вас особенный выпуск новостей...`,
-      messageTime: `1 мая 2020`,
-      unreadCount: `4`,
-
-    },
-    {
-      avatarUrl: `avatar_placeholder.png`,
-      username: `Коля`,
-      lastMessage: `Друзья, у меня для вас особенный выпуск новостей...`,
-      messageTime: `1 мая 2020`,
-      unreadCount: `4`,
-
-    },
-    {
-      avatarUrl: `avatar_placeholder.png`,
-      username: `Коля`,
-      lastMessage: `Друзья, у меня для вас особенный выпуск новостей...`,
-      messageTime: `1 мая 2020`,
-      unreadCount: `4`,
-
-    },
-    {
-      avatarUrl: `avatar_placeholder.png`,
-      username: `Коля`,
-      lastMessage: `Друзья, у меня для вас особенный выпуск новостей...`,
-      messageTime: `1 мая 2020`,
-      unreadCount: `4`,
-
-    },
   ].map((item) => new ChatList(item).element),
-  currentAccount: {username: `Коля`, avatarUrl: `avatar_placeholder.png`},
+  username: 'Колян',
+  avatarUrl: '/static/images/avatar_placeholder.png',
   messages: [
     {
       messageType: `dateHeader`,
@@ -142,8 +39,13 @@ const chatsPageProps = {
     },
     {
       messageType: `myMessage`,
-      // eslint-disable-next-line max-len
-      textMessage: `Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой. Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.`,
+      textMessage: `Привет! Смотри, тут всплыл интересный кусок лунной космической истории — 
+      НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. 
+      Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки 
+      этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали 
+      только кассеты с пленкой. Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло 
+      не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну 
+      из них недавно продали на аукционе за 45000 евро.`,
       timeMessage: `11:00`,
       statusMessage: `read`,
     },

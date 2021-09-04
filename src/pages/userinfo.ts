@@ -2,8 +2,10 @@ import Avatar from '../components/avatar/avatar';
 import Inputs from '../components/inputs/inputs';
 import ControlField from '../components/control-field/control-field';
 import Router from '../utils/router';
+import HTTPTransport from '../utils/http-transport';
 
 const router = new Router('#root');
+const logoutAPI = new HTTPTransport('/auth/logout');
 
 const userinfoPageProps = {
   headerText: `Иван`,
@@ -65,7 +67,11 @@ const userinfoPageProps = {
       click: () => router.go('/settings/change-password'),
     },
     'button.red-color': {
-      click: () => router.go('/'),
+      click: async () => {
+        logoutAPI
+            .post('', {withCredentials: true})
+            .then((response) => (response.status === 200) ? router.go('/') : null);
+      },
     },
   },
 };

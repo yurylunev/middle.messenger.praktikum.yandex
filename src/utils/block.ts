@@ -62,7 +62,6 @@ class Block {
     Object.keys(events).forEach((selector) =>
       Object.keys(events[selector]).forEach((eventName) =>
         this._element.querySelectorAll(selector).forEach((element) =>
-          // eslint-disable-next-line max-len
           element.removeEventListener(eventName, events[selector][eventName]))),
     );
   }
@@ -97,8 +96,7 @@ class Block {
     if (!nextProps) {
       return;
     }
-
-    this.props = Object.assign(this.props, nextProps);
+    Object.assign(this.props, nextProps);
   };
 
   get element() {

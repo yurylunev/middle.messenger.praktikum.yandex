@@ -22,9 +22,9 @@ class ChatsPage extends Block {
         </div>
         <div class="conversation-wrapper">
             <div class="header">
-                <img src="/static/images/avatar_placeholder.png" height="34px"
+                <img src="{{avatarUrl}}" height="34px"
                     width="34px" class="avatar">
-                <div class="username">Коля</div>
+                <div class="username">{{username}}</div>
                 <div class="time">
                 <svg width="3" height="16" viewBox="0 0 3 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="1.5" cy="2" r="1.5" fill="#565856"/>
