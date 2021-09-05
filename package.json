@@ -5,19 +5,25 @@
   "scripts": {
     "start": "parcel build src/index.html && node index.js",
     "dev": "parcel src/index.html",
-    "build": "parcel build src/index.html && cp -R static dist"
+    "build": "parcel build src/index.html && cp -R static dist",
+    "test": "./node_modules/.bin/mocha"
   },
   "author": "Yury Lunev",
   "license": "GPL-3.0",
   "devDependencies": {
+    "@babel/register": "^7.15.3",
     "@parcel/transformer-html": "^2.0.0-alpha.3",
     "@parcel/transformer-image": "^2.0.0-nightly.2388",
     "@parcel/transformer-posthtml": "^2.0.0-alpha.3",
+    "@types/chai": "^4.2.21",
+    "@types/mocha": "^9.0.0",
     "@typescript-eslint/eslint-plugin": "^4.29.0",
     "@typescript-eslint/parser": "^4.29.0",
     "autoprefixer": "^10.3.0",
+    "chai": "^4.3.4",
     "eslint": "^7.32.0",
     "eslint-config-google": "^0.14.0",
+    "mocha": "^9.1.1",
     "parcel": "^2.0.0-beta.3.1",
     "postcss": "^8.3.5",
     "postcss-nested": "^5.0.5",
