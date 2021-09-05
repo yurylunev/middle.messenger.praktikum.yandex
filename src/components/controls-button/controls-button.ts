@@ -1,4 +1,5 @@
 import Block from '../../utils/block';
+import controlsButtonTemplate from './controls-button.tmpl';
 
 class ControlsButton extends Block {
   constructor(props: object) {
@@ -6,9 +7,7 @@ class ControlsButton extends Block {
   }
 
   render(): string {
-    return `
-<button class="{{style}}">{{label}}</button>
-`;
+    return controlsButtonTemplate;
   }
 }
 

@@ -1,0 +1,25 @@
+.avatar-wrapper {
+  width: 130px;
+  height: 130px;
+  display: flex;
+  margin: 0 auto;
+  box-sizing: border-box;
+  border: 1px solid var(--input-stroke-color);
+  border-radius: calc(2 * var(--main-border-radius));
+  background-color: var(--avatar-background-color);
+
+  label {
+    cursor: pointer;
+  }
+
+  input {
+    visibility: hidden;
+  }
+
+  &:hover {
+    transition: background-color 0.2s;
+    background-color: var(--second-color);
+    cursor: pointer;
+    content: "asd";
+  }
+}

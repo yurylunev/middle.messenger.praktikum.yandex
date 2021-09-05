@@ -1,13 +1,21 @@
 import render from './renderDOM';
-import LoginWindow from '../components/login-window/login-window';
-import UserinfoPage from '../components/userinfo-page/userinfo-page';
-import ChatsPage from '../components/chats-page/chats-page';
 import {isEqual} from './helpers';
+import SignInPage from '../pages/auth/signin';
+import SignupPage from '../pages/auth/signup';
+import MessengerPage from '../pages/messenger/messenger';
+import SettingsPage from '../pages/settings/settings';
+import ChangePasswordPage from '../pages/settings/change-password';
+import EditProfilePage from '../pages/settings/edit-profile';
 
-type TBlock = LoginWindow | UserinfoPage | ChatsPage;
+type TBlock = SignInPage |
+  SignupPage |
+  MessengerPage |
+  SettingsPage |
+  ChangePasswordPage |
+  EditProfilePage;
 
 type TBlockConstructor = {
-  new(props: object): TBlock
+  new(): TBlock
 }
 
 class Route {
@@ -17,13 +25,12 @@ class Route {
 
   private _block: null | TBlock;
   private _props: {
-    blockProps: object;
     rootQuery: string
   };
 
   constructor(pathname: string,
       view: TBlockConstructor,
-      props: { rootQuery: string, blockProps: object }) {
+      props: { rootQuery: string }) {
     this._pathname = pathname;
     this._blockClass = view;
     this._block = null;
@@ -53,11 +60,11 @@ class Route {
 
   render() {
     if (!this._block) {
-      this._block = new this._blockClass(this._props.blockProps);
+      this._block = new this._blockClass();
       render(this._block, this._props.rootQuery);
       return;
     }
-    this._block = new this._blockClass(this._props.blockProps);
+    this._block = new this._blockClass();
     render(this._block, this._props.rootQuery);
   }
 }

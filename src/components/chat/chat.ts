@@ -1,14 +1,14 @@
 import Block from '../../utils/block';
-import avatarTemplate from './avatar.tmpl';
+import chatTemplate from './chat.tmpl';
 
-class Avatar extends Block {
+class Chat extends Block {
   constructor(props: object) {
     super(undefined, props);
   }
 
   render(): string {
-    return avatarTemplate;
+    return chatTemplate;
   }
 }
 
-export default Avatar;
+export default Chat;

@@ -1,17 +1,19 @@
 import Block from '../../utils/block';
+import inputFieldTemplate from './inputs.tmpl';
 
 class Inputs extends Block {
   constructor(props: object) {
     super(undefined, props);
+    this.props = props;
   }
 
-  render(): string {
-    return `
-<div class="input-field">
-    <label for="{{name}}">{{label}}</label>
-    <input type="{{type}}" id="{{name}}" name="{{name}}" value="{{value}}">
-</div>
-`;
+  render() {
+    const nullAttributes = ['type', 'name', 'label', 'value'].filter(
+        (attr) => !this.props.hasOwnProperty(attr));
+    const rule = new RegExp(`\\s\\w*="{{\\s*(${nullAttributes.join('|')})\\s*}}"`, 'ig');
+    return (nullAttributes.length) ?
+      inputFieldTemplate.replace(rule, '') :
+      inputFieldTemplate;
   }
 }
 

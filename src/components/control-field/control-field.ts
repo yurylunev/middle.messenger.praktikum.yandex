@@ -1,4 +1,5 @@
 import Block from '../../utils/block';
+import controlFieldTemplate from './control-field.tmpl';
 
 class ControlField extends Block {
   constructor(props: object) {
@@ -6,11 +7,7 @@ class ControlField extends Block {
   }
 
   render(): string {
-    return `
-<div class="control-field">
-    <button class="{{style}}">{{label}}</button>
-</div>
-`;
+    return controlFieldTemplate;
   }
 }
 

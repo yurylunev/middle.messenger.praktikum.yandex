@@ -8,7 +8,7 @@ class Router {
   private _currentRoute: undefined | Route;
   private readonly _rootQuery: string;
 
-  constructor(rootQuery: string) {
+  constructor(rootQuery = '#root') {
     if (Router.__instance) {
       return Router.__instance;
     }
@@ -21,8 +21,8 @@ class Router {
     Router.__instance = this;
   }
 
-  use(pathname: string, block: TBlockConstructor, blockProps: object) {
-    const route = new Route(pathname, block, {rootQuery: this._rootQuery, blockProps});
+  use(pathname: string, block: TBlockConstructor) {
+    const route = new Route(pathname, block, {rootQuery: this._rootQuery});
     this.routes.push(route);
     return this;
   }

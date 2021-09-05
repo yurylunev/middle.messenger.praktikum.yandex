@@ -1,4 +1,5 @@
 import Block from '../../utils/block';
+import foreignImageTemplate from './foreign-image.tmpl';
 
 class ForeignImage extends Block {
   constructor(props: object) {
@@ -6,16 +7,7 @@ class ForeignImage extends Block {
   }
 
   render(): string {
-    return `
-<div class="message">
-    <div class="foreign-message foreign-message_image">
-        <img src="/static/images/{{imageURL}}">
-        <div class="time">
-            {{timeMessage}}
-        </div>
-    </div>
-</div>
-`;
+    return foreignImageTemplate;
   }
 }
 

@@ -1,4 +1,5 @@
 import Block from '../../utils/block';
+import foreignMessageTemplate from './foreign-message.tmpl';
 
 class ForeignMessage extends Block {
   constructor(props: object) {
@@ -6,14 +7,7 @@ class ForeignMessage extends Block {
   }
 
   render(): string {
-    return `
-<div class="message">
-    <div class="foreign-message">
-        <div>{{textMessage}}</div>
-        <div class="time">{{timeMessage}}</div>
-    </div>
-</div>
-`;
+    return foreignMessageTemplate;
   }
 }
 
