@@ -1,12 +1,11 @@
 import Block from '../../utils/block';
 import Router from '../../utils/router';
-import HTTPTransport from '../../utils/http-transport';
 import InputField from '../../components/input-field/input-field';
 import {checkInputField, getInputsData} from '../../utils/handlers';
 import signupTemplate from './signup.tmpl';
+import AuthController from '../../controllers/auth-controller';
 
 const router = new Router();
-const authAPI = new HTTPTransport('/auth');
 
 class SignupPage extends Block {
   constructor() {
@@ -55,15 +54,7 @@ class SignupPage extends Block {
       noEntryButtonText: `Войти`,
       events: {
         '.entry': {
-          click: async () => {
-            authAPI
-                .post('/signup', {
-                  withCredentials: true,
-                  data: getInputsData(),
-                  headers: {'Content-Type': 'application/json'},
-                })
-                .then((response) => (response.status === 200) ? router.go('/') : null);
-          },
+          click: async () => new AuthController().signup(getInputsData(), '/messenger'),
         },
         'input': {
           blur: checkInputField,

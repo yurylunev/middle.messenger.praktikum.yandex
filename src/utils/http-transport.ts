@@ -30,27 +30,32 @@ function queryStringify(data: object) {
 
 class HTTPTransport {
   private readonly _baseURL: string;
+  private readonly options: object;
 
-  constructor(url = '') {
+  constructor(url = '', options?: object) {
     this._baseURL = 'https://ya-praktikum.tech/api/v2' + url;
+    this.options = options || {};
   }
 
   get = (url = '', options: TOptions = {}) => {
-    const {timeout = 0} = options;
-    return this.request(this._baseURL + url, {...options, method: METHODS.GET}, timeout);
+    const requestOptions = Object.assign({}, this.options, options);
+    const {timeout = 0} = requestOptions;
+    return this.request(this._baseURL + url, {...requestOptions, method: METHODS.GET}, timeout);
   };
   post = (url = '', options: TOptions = {}) => {
-    console.log(`POST: `, this._baseURL, {url});
+    const requestOptions = Object.assign({}, this.options, options);
     const {timeout = 0} = options;
-    return this.request(this._baseURL + url, {...options, method: METHODS.POST}, timeout);
+    return this.request(this._baseURL + url, {...requestOptions, method: METHODS.POST}, timeout);
   };
   put = (url = '', options: TOptions = {}) => {
+    const requestOptions = Object.assign({}, this.options, options);
     const {timeout = 0} = options;
-    return this.request(this._baseURL + url, {...options, method: METHODS.PUT}, timeout);
+    return this.request(this._baseURL + url, {...requestOptions, method: METHODS.PUT}, timeout);
   };
   delete = (url = '', options: TOptions = {}) => {
+    const requestOptions = Object.assign({}, this.options, options);
     const {timeout = 0} = options;
-    return this.request(this._baseURL + url, {...options, method: METHODS.DELETE}, timeout);
+    return this.request(this._baseURL + url, {...requestOptions, method: METHODS.DELETE}, timeout);
   };
 
   request = (url: string,
@@ -89,6 +94,7 @@ class HTTPTransport {
       if (isGET || !data) {
         xhr.send();
       } else {
+        console.log(1111, JSON.stringify(data));
         xhr.send(JSON.stringify(data));
       }
     });

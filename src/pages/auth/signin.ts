@@ -1,12 +1,11 @@
 import Block from '../../utils/block';
 import Router from '../../utils/router';
-import HTTPTransport from '../../utils/http-transport';
 import InputField from '../../components/input-field/input-field';
 import {checkInputField, getInputsData} from '../../utils/handlers';
 import signInTemplate from './signin.tmpl';
+import AuthController from '../../controllers/auth-controller';
 
 const router = new Router();
-const authAPI = new HTTPTransport('/auth');
 
 class SignInPage extends Block {
   constructor() {
@@ -29,18 +28,8 @@ class SignInPage extends Block {
       noEntryButtonText: `Нет аккаунта`,
       events: {
         '.entry': {
-          'click': async () => {
-            const data = getInputsData();
-            if (data.login !== '' && data.password !== '') {
-              authAPI
-                  .post('/signin', {
-                    headers: {'Content-Type': 'application/json'},
-                    withCredentials: true,
-                    data,
-                  })
-                  .then((response) => (response.status === 200) ? router.go('/messenger') : null);
-            }
-          },
+          'click': async () =>
+            new AuthController().signIn(getInputsData(), '/messenger'),
         },
         'input': {
           blur: (e: Event) => {
