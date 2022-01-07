@@ -1,20 +1,14 @@
-import Block from "../../utils/block";
+import Block from '../../utils/block';
+import dateHeaderTemplate from './date-header.tmpl';
 
 class DateHeader extends Block {
-    constructor(props: object) {
-        super(undefined, props);
-    }
+  constructor(props: object) {
+    super(undefined, props);
+  }
 
-    render(): string {
-        console.log(`DateHeader`, this.props);
-        return `
-            <div class="message">
-                <div class="date">
-                    {{date}}
-                </div>
-            </div>
-`;
-    }
+  render(): string {
+    return dateHeaderTemplate;
+  }
 }
 
 export default DateHeader;

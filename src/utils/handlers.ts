@@ -2,7 +2,7 @@ const getInputsData = () => {
   const data: any = {};
   const inputFields = document.querySelectorAll(`.input-field input`);
   inputFields.forEach((input: HTMLInputElement) => data[input.name] = input.value);
-  console.log(data);
+  return data;
 };
 
 const getSendMessage = () => {
@@ -29,7 +29,7 @@ const isValidInput = (event: Event): any => {
     value = value.replace(/\D/ig, ``);
     return {
       status: (value.length === 11),
-      value: value.replace(/(^\d)(\d{3})(\d{3})(\d{2})(\d{2})$/i, `+$1 ($2) $3-$4-$5`),
+      value: value.replace(/(^\d)(\d{3})(\d{3})(\d{2})(\d{2})$/i, `+$1 $2 $3-$4-$5`),
     };
   };
 
@@ -88,7 +88,6 @@ const checkInputField = (event: Event) => {
     } else {
       (<HTMLElement>event.target).classList.toggle(`error-color`, !checkedValue.status);
     }
-    console.log(event.target, checkedValue);
     (<HTMLInputElement>event.target).value = checkedValue.value;
   }
 };

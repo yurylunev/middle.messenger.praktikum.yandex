@@ -1,0 +1,68 @@
+.chat {
+  display: flex;
+  flex-direction: row;
+  color: white;
+  margin: 0 10px;
+  border-bottom: 1px solid var(--main-stroke-color);
+
+  .avatar {
+    box-sizing: border-box;
+    border: 1px solid var(--input-stroke-color);
+    border-radius: var(--main-border-radius);
+    margin: 12px 0;
+  }
+
+  .message-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin: 12px 0 12px 12px;
+
+    .message-header {
+      display: flex;
+      flex-direction: row;
+
+      .username {
+        flex: 1;
+        font-size: 13px;
+        font-weight: bold;
+      }
+
+      .time {
+        text-align: right;
+        flex-basis: 60px;
+        font-size: 9px;
+        color: var(--placeholder-color);
+      }
+    }
+
+    .message-short {
+      display: flex;
+      flex-direction: row;
+      flex-basis: 25px;
+      flex-shrink: 0;
+      font-size: 9px;
+      margin-top: 2px;
+
+      .last-message {
+        flex: 1;
+        font-size: 12px;
+        color: var(--placeholder-color);
+      }
+
+      .unread {
+        flex-basis: 20px;
+        box-sizing: border-box;
+        border-radius: 10px;
+        font-size: 11px;
+        text-align: center;
+        height: 20px;
+        background-color: var(--button-background-color);
+        color: var(--button-text-color);
+        padding-top: 3px;
+        font-weight: bold;
+        margin-top: 10px;
+      }
+    }
+  }
+}

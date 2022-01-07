@@ -1,17 +1,14 @@
-import Block from "../../utils/block";
+import Block from '../../utils/block';
+import controlFieldTemplate from './control-field.tmpl';
 
 class ControlField extends Block {
-    constructor(props: object) {
-        super(undefined, props);
-    }
+  constructor(props: object) {
+    super(undefined, props);
+  }
 
-    render(): string {
-        return `
-<div class="control-field">
-    <button class="{{style}}">{{label}}</button>
-</div>
-`;
-    }
+  render(): string {
+    return controlFieldTemplate;
+  }
 }
 
 export default ControlField;
