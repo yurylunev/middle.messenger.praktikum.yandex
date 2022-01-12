@@ -1,18 +1,35 @@
-import HTTPTransport from '../utils/http-transport';
+import {TSignin, TSignup, TUserInfo} from './auth-api.d';
 
-const authAPIInstance = new HTTPTransport('/auth', {
-  headers: {'Content-Type': 'application/json'},
-  withCredentials: true,
-});
+import BaseAPI from './base-api';
 
-class AuthAPI {
-  public signup = (data: object) => authAPIInstance.post('/signup', {data});
+export class AuthAPI extends BaseAPI {
+  constructor() {
+    super('/auth', {
+      headers: {'Content-Type': 'application/json'},
+      withCredentials: true,
+    });
+  }
 
-  public signIn = (data: object) => authAPIInstance.post('/signin', {data});
+  getUserInfo(): Promise<TUserInfo> {
+    return this.http.get('/user');
+  }
 
-  public getUserInfo = () => authAPIInstance.get('/user');
+  signup(data: TSignup): Promise<{ id: number }> {
+    return this.http.post('/signup', {data});
+  }
 
-  public logout = () => authAPIInstance.post('/logout');
+  signin(data: TSignin): Promise<void> {
+    return this.http.post('/signin', {data});
+  }
+
+  logout(): Promise<void> {
+    return this.http.post('/logout');
+  }
+
+  read: undefined;
+  delete: undefined;
+  create: undefined;
+  update: undefined;
 }
 
 export default AuthAPI;

@@ -54,7 +54,7 @@ class SignupPage extends Block {
       noEntryButtonText: `Войти`,
       events: {
         '.entry': {
-          click: async () => new AuthController().signup(getInputsData(), '/messenger'),
+          click: async () => AuthController.signup(getInputsData()),
         },
         'input': {
           blur: checkInputField,

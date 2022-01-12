@@ -29,7 +29,9 @@ class SignInPage extends Block {
       events: {
         '.entry': {
           'click': async () =>
-            new AuthController().signIn(getInputsData(), '/messenger'),
+            AuthController.signin(getInputsData())
+                .then(() => router.go('/messenger'))
+                .catch((e) => console.error(e)),
         },
         'input': {
           blur: (e: Event) => {
