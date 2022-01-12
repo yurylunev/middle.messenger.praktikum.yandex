@@ -5,8 +5,6 @@ import {checkInputField, getInputsData} from '../../utils/handlers';
 import signInTemplate from './signin.tmpl';
 import AuthController from '../../controllers/auth-controller';
 
-const router = new Router();
-
 class SignInPage extends Block {
   constructor() {
     super(undefined, {
@@ -30,7 +28,7 @@ class SignInPage extends Block {
         '.entry': {
           'click': async () =>
             AuthController.signin(getInputsData())
-                .then(() => router.go('/messenger'))
+                .then(() => Router.go('/messenger'))
                 .catch((e) => console.error(e)),
         },
         'input': {
@@ -39,7 +37,7 @@ class SignInPage extends Block {
           },
         },
         '.noEntry': {
-          click: () => router.go('/sign-up'),
+          click: () => Router.go('/sign-up'),
         },
       },
     });

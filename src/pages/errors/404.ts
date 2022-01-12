@@ -2,8 +2,6 @@ import Block from '../../utils/block';
 import Router from '../../utils/router';
 import './errors.pcss';
 
-const router = new Router();
-
 class ErrorPage404 extends Block {
   constructor() {
     super(undefined, {
@@ -11,7 +9,7 @@ class ErrorPage404 extends Block {
       statusText: `Не нашлось такого`,
       events: {
         '.back-text': {
-          click: () => router.go('/messenger'),
+          click: () => Router.go('/messenger'),
         },
       },
     });

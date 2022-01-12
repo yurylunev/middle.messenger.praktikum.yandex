@@ -17,8 +17,6 @@ type TMessages = {
   statusMessage?: string;
 }
 
-const router = new Router();
-
 const createMessage = (item: TMessages) => {
   switch (item.messageType) {
     case 'dateHeader':
@@ -87,7 +85,7 @@ class MessengerPage extends Block {
           click: getSendMessage,
         },
         '.profile-edit button': {
-          click: () => router.go('/settings'),
+          click: () => Router.go('/settings'),
         },
       },
     });

@@ -9,9 +9,7 @@ import ErrorPage500 from './pages/errors/5xx';
 import ErrorPage404 from './pages/errors/404';
 import './css/palette.pcss';
 
-const router = new Router('#root');
-
-router
+Router
     .use('/', SignInPage)
     .use('/sign-up', SignupPage)
     .use('/settings', SettingsPage)

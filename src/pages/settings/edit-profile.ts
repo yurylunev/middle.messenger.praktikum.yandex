@@ -6,8 +6,6 @@ import {checkInputField, getInputsData} from '../../utils/handlers';
 import Router from '../../utils/router';
 import editProfileTemplate from './edit-profile.tmpl';
 
-const router = new Router();
-
 class EditProfilePage extends Block {
   constructor() {
     super(undefined, {
@@ -58,16 +56,16 @@ class EditProfilePage extends Block {
       ].map((item) => new ControlsButton(item).element),
       events: {
         'button.back': {
-          click: () => router.go('/settings'),
+          click: () => Router.go('/settings'),
         },
         '.yellow-button': {
           click: () => {
             getInputsData();
-            router.go('/settings');
+            Router.go('/settings');
           },
         },
         '.transparent-button': {
-          click: () => router.go('/settings'),
+          click: () => Router.go('/settings'),
         },
         'input': {
           blur: checkInputField,

@@ -5,8 +5,6 @@ import {checkInputField, getInputsData} from '../../utils/handlers';
 import signupTemplate from './signup.tmpl';
 import AuthController from '../../controllers/auth-controller';
 
-const router = new Router();
-
 class SignupPage extends Block {
   constructor() {
     super(undefined, {
@@ -60,7 +58,7 @@ class SignupPage extends Block {
           blur: checkInputField,
         },
         '.noEntry': {
-          click: () => router.go('/'),
+          click: () => Router.go('/'),
         },
       },
     });

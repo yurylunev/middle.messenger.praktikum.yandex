@@ -3,11 +3,8 @@ import Avatar from '../../components/avatar/avatar';
 import Inputs from '../../components/inputs/inputs';
 import ControlField from '../../components/control-field/control-field';
 import Router from '../../utils/router';
-import HTTPTransport from '../../utils/http-transport';
 import settingsPageTemplate from './settings.tmpl';
-
-const router = new Router();
-const authAPI = new HTTPTransport('/auth');
+import AuthController from '../../controllers/auth-controller';
 
 class SettingsPage extends Block {
   constructor() {
@@ -62,19 +59,18 @@ class SettingsPage extends Block {
       ].map((item) => new ControlField(item).element),
       events: {
         'button.back': {
-          click: () => router.go('/messenger'),
+          click: () => Router.go('/messenger'),
         },
         'button.edit-profile': {
-          click: () => router.go('/settings/edit-profile'),
+          click: () => Router.go('/settings/edit-profile'),
         },
         'button.change-password': {
-          click: () => router.go('/settings/change-password'),
+          click: () => Router.go('/settings/change-password'),
         },
         'button.red-color': {
           click: async () => {
-            authAPI
-                .post('/logout', {withCredentials: true})
-                .then((response) => (response.status === 200) ? router.go('/') : null);
+            await AuthController.logout();
+            Router.go('/');
           },
         },
       },

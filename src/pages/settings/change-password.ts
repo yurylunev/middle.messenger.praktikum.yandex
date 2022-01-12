@@ -6,8 +6,6 @@ import {getInputsData} from '../../utils/handlers';
 import Router from '../../utils/router';
 import changePasswordTemplate from './change-password.tmpl';
 
-const router = new Router();
-
 class ChangePasswordPage extends Block {
   constructor() {
     super(undefined, {
@@ -43,16 +41,16 @@ class ChangePasswordPage extends Block {
       ].map((item) => new ControlsButton(item).element),
       events: {
         'button.back': {
-          click: () => router.go('/settings'),
+          click: () => Router.go('/settings'),
         },
         '.yellow-button': {
           click: () => {
             getInputsData();
-            router.go('/settings');
+            Router.go('/settings');
           },
         },
         '.transparent-button': {
-          click: () => router.go('/settings'),
+          click: () => Router.go('/settings'),
         },
       },
     });

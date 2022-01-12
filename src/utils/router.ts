@@ -2,23 +2,16 @@ import Route from './route';
 import {TBlockConstructor} from './route';
 
 class Router {
-  private static __instance: any;
   private routes: Route[];
   private history: History;
   private _currentRoute: undefined | Route;
   private readonly _rootQuery: string;
 
   constructor(rootQuery = '#root') {
-    if (Router.__instance) {
-      return Router.__instance;
-    }
-
     this.routes = [];
     this.history = window.history;
     this._currentRoute = undefined;
     this._rootQuery = rootQuery;
-
-    Router.__instance = this;
   }
 
   use(pathname: string, block: TBlockConstructor) {
@@ -66,4 +59,4 @@ class Router {
   }
 }
 
-export default Router;
+export default new Router();
