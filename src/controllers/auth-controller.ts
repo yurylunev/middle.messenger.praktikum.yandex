@@ -21,7 +21,6 @@ class AuthController {
     try {
       await this.api.signin(data);
       await this.api.getUserInfo();
-      // new Router().go(link);
     } catch (e) {
       console.log(e);
     }
@@ -47,7 +46,6 @@ class AuthController {
     };
     try {
       userInfo = await this.api.getUserInfo();
-      // new Router().go(link);
     } catch (e) {
       console.log(e);
     }
