@@ -78,11 +78,16 @@ class HTTPTransport {
       xhr.open(method, (isGET && !!data) ?
         `${url}${queryStringify(data)}` :
         url);
-
+      let isJSON = false;
       Object.entries(headers).forEach((header) => {
         xhr.setRequestHeader(header[0], header[1]);
+        if (header[0] === 'Content-Type' && header[1] === 'application/json') {
+          isJSON = true;
+        }
       });
-
+      if (isJSON) {
+        xhr.responseType = 'json';
+      }
       xhr.onreadystatechange = () => {
         if (xhr.readyState === XMLHttpRequest.DONE) {
           if (xhr.status < 400) {

@@ -1,5 +1,6 @@
 import AuthAPI from '../api/auth-api';
 import {TSignup, TSignin, TUserInfo} from '../api/auth-api.d';
+import {store} from '../store/store';
 
 class AuthController {
   private api: AuthAPI;
@@ -11,7 +12,7 @@ class AuthController {
   public async signup(data: TSignup) {
     try {
       await this.api.signup(data);
-      await this.api.getUserInfo();
+      await this.getUserInfo();
     } catch (e) {
       console.log(e);
     }
@@ -20,7 +21,7 @@ class AuthController {
   public async signin(data: TSignin) {
     try {
       await this.api.signin(data);
-      await this.api.getUserInfo();
+      await this.getUserInfo();
     } catch (e) {
       console.log(e);
     }
@@ -29,6 +30,9 @@ class AuthController {
   public async logout() {
     try {
       await this.api.logout();
+      store.dispatch({
+        type: 'user/DELETE',
+      });
     } catch (e) {
       console.log(e);
     }
@@ -46,6 +50,10 @@ class AuthController {
     };
     try {
       userInfo = await this.api.getUserInfo();
+      store.dispatch({
+        type: 'user/SET',
+        payload: userInfo,
+      });
     } catch (e) {
       console.log(e);
     }
