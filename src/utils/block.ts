@@ -12,7 +12,8 @@ class Block {
   _element: DocumentFragment;
   _meta = {tagName: {}, props: {}};
   protected props: object;
-  private eventBus: () => EventBus;
+  protected eventBus: () => EventBus;
+  private state: any = {};
 
   /** JSDoc
    * @param {string} tagName
@@ -28,6 +29,7 @@ class Block {
     };
 
     this.props = this._makePropsProxy(props);
+    this.state = this._makePropsProxy(this.state);
 
     this.eventBus = () => eventBus;
 
@@ -66,6 +68,10 @@ class Block {
     );
   }
 
+  protected getStateFromProps(): void {
+    this.state = {};
+  }
+
   init() {
     this._createResources();
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
@@ -97,6 +103,13 @@ class Block {
       return;
     }
     Object.assign(this.props, nextProps);
+  };
+
+  setState = (nextState: any) => {
+    if (!nextState) {
+      return;
+    }
+    Object.assign(this.state, nextState);
   };
 
   get element() {

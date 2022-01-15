@@ -55,7 +55,7 @@ class AuthController {
         payload: userInfo,
       });
     } catch (e) {
-      console.log(e);
+      throw new Error(e);
     }
     return userInfo;
   }

@@ -7,6 +7,7 @@ import DateHeader from '../../components/date-header/date-header';
 import MyMessage from '../../components/my-message/my-message';
 import ForeignMessage from '../../components/foreign-message/foreign-message';
 import ForeignImage from '../../components/foreign-image/foreign-image';
+import {store} from '../../store/store';
 
 type TMessages = {
   messageType: string;
@@ -89,6 +90,10 @@ class MessengerPage extends Block {
         },
       },
     });
+  }
+
+  async componentDidMount() {
+    store.on('Changed', () => this.eventBus().emit('flow:render'));
   }
 
   render() {

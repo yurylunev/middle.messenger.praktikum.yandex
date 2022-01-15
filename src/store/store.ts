@@ -1,3 +1,5 @@
+import EventBus from '../utils/event-bus';
+
 interface Action {
   type: string;
   payload?: any;
@@ -7,17 +9,19 @@ type Reducer<S = any> = (state: S, action: Action) => S;
 
 type Indexed = { [key: string]: any };
 
-class Store {
+class Store extends EventBus {
   private state: Indexed = {};
   private readonly reducer: Reducer;
 
   constructor(reducers: Indexed) {
+    super();
     this.reducer = this.combineReducers(reducers);
     this.dispatch({type: '@@INIT'});
   }
 
   public dispatch(action: Action) {
     this.state = this.reducer(this.state, action);
+    this.emit('Changed');
   }
 
   public getState() {
