@@ -21,7 +21,7 @@ class Store extends EventBus {
 
   public dispatch(action: Action) {
     this.state = this.reducer(this.state, action);
-    this.emit('Changed');
+    this.emit('changed');
   }
 
   public getState() {

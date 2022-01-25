@@ -79,4 +79,4 @@ class Router {
   }
 }
 
-export default new Router();
+export default new Router('#root');

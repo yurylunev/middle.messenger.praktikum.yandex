@@ -32,6 +32,7 @@ const createMessage = (item: TMessages) => {
       return '';
   }
 };
+
 class MessengerPage extends Block {
   constructor() {
     super(undefined, {
@@ -93,7 +94,7 @@ class MessengerPage extends Block {
   }
 
   async componentDidMount() {
-    store.on('Changed', () => this.eventBus().emit('flow:render'));
+    store.on('changed', () => this.componentShouldUpdate());
   }
 
   render() {

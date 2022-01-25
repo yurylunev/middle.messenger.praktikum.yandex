@@ -47,7 +47,6 @@ class Route {
 
   leave() {
     if (this._block) {
-      // this._block.hide();
     }
   }
 
@@ -64,11 +63,6 @@ class Route {
   }
 
   render() {
-    if (!this._block) {
-      this._block = new this._blockClass();
-      render(this._block, this._props.rootQuery);
-      return;
-    }
     this._block = new this._blockClass();
     render(this._block, this._props.rootQuery);
   }

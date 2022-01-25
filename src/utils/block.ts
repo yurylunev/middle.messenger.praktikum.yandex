@@ -11,16 +11,10 @@ class Block {
 
   _element: DocumentFragment;
   _meta = {tagName: {}, props: {}};
-  protected props: object;
+  protected props;
   protected eventBus: () => EventBus;
   private state: any = {};
 
-  /** JSDoc
-   * @param {string} tagName
-   * @param {Object} props
-   *
-   * @return {void}
-   */
   constructor(tagName: string = 'div', props: object = {}) {
     const eventBus = new EventBus();
     this._meta = {
@@ -49,7 +43,6 @@ class Block {
   }
 
   _addEvents() {
-    // @ts-ignore
     const {events = {}} = this.props;
     Object.keys(events).forEach((selector) =>
       Object.keys(events[selector]).forEach((eventName) =>
@@ -59,7 +52,6 @@ class Block {
   }
 
   _removeEvents() {
-    // @ts-ignore
     const {events = {}} = this.props;
     Object.keys(events).forEach((selector) =>
       Object.keys(events[selector]).forEach((eventName) =>
@@ -90,8 +82,13 @@ class Block {
     if (!response) {
       return;
     }
-    this._removeEvents();
-    this._render();
+    this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+  }
+
+  componentShouldUpdate() {
+    console.count('CSU');
+    console.log(this._element);
+    this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
   componentDidUpdate() {
@@ -102,7 +99,8 @@ class Block {
     if (!nextProps) {
       return;
     }
-    Object.assign(this.props, nextProps);
+    Object.assign(this._meta.props, nextProps);
+    this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   };
 
   setState = (nextState: any) => {
@@ -117,6 +115,7 @@ class Block {
   }
 
   _render() {
+    this._removeEvents();
     const renderedElements = Array.from(new Templator(this.render().trim()).compile(this.props));
     renderedElements.forEach((element) => this._element.appendChild(element));
     this._addEvents();
