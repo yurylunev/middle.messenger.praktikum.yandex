@@ -9,13 +9,15 @@ import ErrorPage500 from './pages/errors/5xx';
 import ErrorPage404 from './pages/errors/404';
 import './css/palette.pcss';
 
-Router
-    .use('/', SignInPage)
-    .use('/sign-up', SignupPage)
-    .use('/settings', SettingsPage)
-    .use('/settings/change-password', ChangePasswordPage)
-    .use('/settings/edit-profile', EditProfilePage)
-    .use('/messenger', MessengerPage)
-    .use('/404', ErrorPage404)
-    .use('/5xx', ErrorPage500)
-    .start();
+Router.checkAuth()
+    .then((Router) => Router
+        .use('/', SignInPage, false)
+        .use('/sign-up', SignupPage, false)
+        .use('/settings', SettingsPage)
+        .use('/settings/change-password', ChangePasswordPage)
+        .use('/settings/edit-profile', EditProfilePage)
+        .use('/messenger', MessengerPage)
+        .use('/404', ErrorPage404)
+        .use('/5xx', ErrorPage500)
+        .start(),
+    );

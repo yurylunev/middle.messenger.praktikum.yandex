@@ -25,12 +25,13 @@ class Route {
 
   private _block: null | TBlock;
   private _props: {
-    rootQuery: string
+    rootQuery: string;
+    isSecure: boolean;
   };
 
   constructor(pathname: string,
       view: TBlockConstructor,
-      props: { rootQuery: string }) {
+      props: { rootQuery: string; isSecure: boolean }) {
     this._pathname = pathname;
     this._blockClass = view;
     this._block = null;
@@ -52,6 +53,10 @@ class Route {
 
   match(pathname: string) {
     return isEqual(pathname, this._pathname);
+  }
+
+  get isSecure(): boolean {
+    return this._props.isSecure;
   }
 
   get getInstance() {

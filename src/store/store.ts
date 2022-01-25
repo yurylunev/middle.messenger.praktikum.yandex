@@ -45,7 +45,7 @@ export const store = new Store({
       case 'user/SET':
         return action.payload;
       case 'user/DELETE':
-        return null;
+        return {user: {isAuthorized: false}};
       default:
         return state;
     }

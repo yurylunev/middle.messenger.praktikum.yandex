@@ -1,5 +1,7 @@
 import Route from './route';
 import {TBlockConstructor} from './route';
+import AuthController from '../controllers/auth-controller';
+import {store} from '../store/store';
 
 class Router {
   private routes: Route[];
@@ -7,16 +9,21 @@ class Router {
   private _currentRoute: undefined | Route;
   private readonly _rootQuery: string;
 
-  constructor(rootQuery = '#root') {
+  constructor(rootQuery: string) {
     this.routes = [];
     this.history = window.history;
     this._currentRoute = undefined;
     this._rootQuery = rootQuery;
   }
 
-  use(pathname: string, block: TBlockConstructor) {
-    const route = new Route(pathname, block, {rootQuery: this._rootQuery});
+  use(pathname: string, block: TBlockConstructor, isSecure = true) {
+    const route = new Route(pathname, block, {rootQuery: this._rootQuery, isSecure});
     this.routes.push(route);
+    return this;
+  }
+
+  async checkAuth() {
+    await AuthController.checkAuth();
     return this;
   }
 
@@ -26,7 +33,9 @@ class Router {
         this._onRoute((<Window>event.currentTarget).location.pathname);
       }
     };
+
     this._onRoute(window.location.pathname);
+    return this;
   }
 
   _onRoute(pathname: string) {
@@ -38,6 +47,16 @@ class Router {
     this._currentRoute = route;
     if (route) {
       route.render();
+    } else {
+      if (store.getState().user.isAuthorized) {
+        if (pathname === '/' || pathname === '/sign-up') {
+          window.location.pathname = '/messenger';
+        } else {
+          window.location.pathname = '/404';
+        }
+      } else {
+        window.location.pathname = '/';
+      }
     }
   }
 
@@ -55,7 +74,8 @@ class Router {
   }
 
   getRoute(pathname: string): Route | undefined {
-    return this.routes.find((route) => route.match(pathname));
+    return this.routes.find((route) => route.match(pathname) &&
+      store.getState().user.isAuthorized === route.isSecure);
   }
 }
 

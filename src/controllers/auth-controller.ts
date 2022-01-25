@@ -38,24 +38,36 @@ class AuthController {
     }
   }
 
-  public async getUserInfo(): Promise<TUserInfo> {
-    let userInfo: TUserInfo = {
-      first_name: '',
-      second_name: '',
-      login: '',
-      email: '',
-      phone: '',
-      avatar: '',
-      display_name: '',
-    };
+  public async checkAuth(): Promise<boolean> {
+    console.count('authCheck');
+    let userInfo = {};
+    let isAuthorized = true;
     try {
-      userInfo = await this.api.getUserInfo();
-      store.dispatch({
-        type: 'user/SET',
-        payload: userInfo,
-      });
+      Object.assign(userInfo, await this.getUserInfo(), {isAuthorized});
+      console.log({userInfo});
     } catch (e) {
-      throw new Error(e);
+      isAuthorized = false;
+      userInfo = {isAuthorized};
+    }
+    store.dispatch({
+      type: 'user/SET',
+      payload: userInfo,
+    });
+    return isAuthorized;
+  }
+
+  public async getUserInfo(): Promise<TUserInfo> {
+    let userInfo: TUserInfo = store.getState().user;
+    if (!userInfo) {
+      try {
+        userInfo = await this.api.getUserInfo();
+        store.dispatch({
+          type: 'user/SET',
+          payload: userInfo,
+        });
+      } catch (e) {
+        throw new Error(e);
+      }
     }
     return userInfo;
   }
