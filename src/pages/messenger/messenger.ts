@@ -35,7 +35,7 @@ const createMessage = (item: TMessages) => {
 
 class MessengerPage extends Block {
   constructor() {
-    super(undefined, {
+    super({
       chats: [
         {
           avatarUrl: `avatar_placeholder.png`,

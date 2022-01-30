@@ -7,7 +7,7 @@ import SettingsPage from '../pages/settings/settings';
 import ChangePasswordPage from '../pages/settings/change-password';
 import EditProfilePage from '../pages/settings/edit-profile';
 
-type TBlock = SignInPage |
+export type TBlock = SignInPage |
   SignupPage |
   MessengerPage |
   SettingsPage |
@@ -63,7 +63,9 @@ class Route {
   }
 
   render() {
-    this._block = new this._blockClass();
+    if (!this._block) {
+      this._block = new this._blockClass();
+    }
     render(this._block, this._props.rootQuery);
   }
 }

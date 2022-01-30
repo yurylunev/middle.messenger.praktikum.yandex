@@ -3,7 +3,7 @@ import myMessageTemplate from './my-message.tmpl';
 
 class MyMessage extends Block {
   constructor(props: object) {
-    super(undefined, props);
+    super(props);
   }
 
   render(): string {

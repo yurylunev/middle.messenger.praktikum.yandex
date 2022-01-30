@@ -3,12 +3,12 @@ import Avatar from '../../components/avatar/avatar';
 import Inputs from '../../components/inputs/inputs';
 import ControlsButton from '../../components/controls-button/controls-button';
 import {checkInputField, getInputsData} from '../../utils/handlers';
-import Router from '../../utils/router';
+// import Router from '../../utils/router';
 import editProfileTemplate from './edit-profile.tmpl';
 
 class EditProfilePage extends Block {
-  constructor() {
-    super(undefined, {
+  protected getStateFromProps() {
+    this.state = {
       headerText: `Иван`,
       avatar: new Avatar({avatarUrl: `icon-image-placeholder.svg`, name: `avatar`}).element,
       style: `editable`,
@@ -56,22 +56,22 @@ class EditProfilePage extends Block {
       ].map((item) => new ControlsButton(item).element),
       events: {
         'button.back': {
-          click: () => Router.go('/settings'),
+          // click: () => Router.go('/settings'),
         },
         '.yellow-button': {
           click: () => {
             getInputsData();
-            Router.go('/settings');
+            // Router.go('/settings');
           },
         },
         '.transparent-button': {
-          click: () => Router.go('/settings'),
+          // click: () => Router.go('/settings'),
         },
         'input': {
           blur: checkInputField,
         },
       },
-    });
+    };
   }
 
   render(): string {

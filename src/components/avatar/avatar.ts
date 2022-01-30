@@ -3,7 +3,7 @@ import avatarTemplate from './avatar.tmpl';
 
 class Avatar extends Block {
   constructor(props: object) {
-    super(undefined, props);
+    super(props);
   }
 
   render(): string {

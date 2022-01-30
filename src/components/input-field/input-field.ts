@@ -4,7 +4,7 @@ import Inputs from '../inputs/inputs';
 
 class InputField extends Block {
   constructor(props: { errorMessage?: string }) {
-    super(undefined, {
+    super({
       inputs: new Inputs(props).getContent(),
       errorMessage: props.errorMessage,
     });

@@ -41,7 +41,7 @@ class Templator {
     }
   }
 
-  compile(ctx: object): HTMLCollection {
+  compile(ctx: any): HTMLCollection {
     const replaces = Array.from(this._template.matchAll(/{{(.*?)}}/ig));
     const outerElements: { rule: string; contextObject: any; }[] = [];
     this._element.innerHTML = replaces.reduce((template: string, rulesMap: string[]) => {

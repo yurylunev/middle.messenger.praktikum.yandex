@@ -1,6 +1,6 @@
 import AuthAPI from '../api/auth-api';
 import {TSignup, TSignin, TUserInfo} from '../api/auth-api.d';
-import {store} from '../store/store';
+import {store} from '../store';
 
 class AuthController {
   private api: AuthAPI;
@@ -39,25 +39,24 @@ class AuthController {
   }
 
   public async checkAuth(): Promise<boolean> {
-    console.count('authCheck');
-    let userInfo = {};
-    let isAuthorized = true;
     try {
-      Object.assign(userInfo, await this.getUserInfo(), {isAuthorized});
-      console.log({userInfo});
+      store.dispatch({
+        type: 'user/SET',
+        payload: await this.getUserInfo(),
+      });
     } catch (e) {
-      isAuthorized = false;
-      userInfo = {isAuthorized};
+      store.dispatch({
+        type: 'user/SET_ERROR',
+        payload: e,
+      });
+      return false;
     }
-    store.dispatch({
-      type: 'user/SET',
-      payload: userInfo,
-    });
-    return isAuthorized;
+
+    return true;
   }
 
   public async getUserInfo(): Promise<TUserInfo> {
-    let userInfo: TUserInfo = store.getState().user;
+    let userInfo: TUserInfo = store.getState().user.profile;
     if (!userInfo) {
       try {
         userInfo = await this.api.getUserInfo();
@@ -66,6 +65,10 @@ class AuthController {
           payload: userInfo,
         });
       } catch (e) {
+        store.dispatch({
+          type: 'user/SET',
+          payload: {error: 'Can\'t get a user info!'},
+        });
         throw new Error(e);
       }
     }

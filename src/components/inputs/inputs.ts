@@ -3,7 +3,7 @@ import inputFieldTemplate from './inputs.tmpl';
 
 class Inputs extends Block {
   constructor(props: object) {
-    super(undefined, props);
+    super( props);
     this.props = props;
   }
 

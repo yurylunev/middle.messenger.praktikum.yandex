@@ -7,7 +7,7 @@ import AuthController from '../../controllers/auth-controller';
 
 class SignupPage extends Block {
   constructor() {
-    super(undefined, {
+    super({
       headerText: `Регистрация`,
       inputFields: [
         {

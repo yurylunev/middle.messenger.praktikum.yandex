@@ -1,6 +1,6 @@
 import EventBus from '../utils/event-bus';
 
-interface Action {
+export interface Action {
   type: string;
   payload?: any;
 }
@@ -9,7 +9,7 @@ type Reducer<S = any> = (state: S, action: Action) => S;
 
 type Indexed = { [key: string]: any };
 
-class Store extends EventBus {
+export class Store extends EventBus {
   private state: Indexed = {};
   private readonly reducer: Reducer;
 
@@ -21,10 +21,11 @@ class Store extends EventBus {
 
   public dispatch(action: Action) {
     this.state = this.reducer(this.state, action);
-    this.emit('changed');
+    this.emit('store:changed');
   }
 
   public getState() {
+    console.log(this.state);
     return this.state;
   }
 
@@ -38,18 +39,3 @@ class Store extends EventBus {
     };
   }
 }
-
-export const store = new Store({
-  user: (state = null, action: Action) => {
-    switch (action.type) {
-      case 'user/SET':
-        return action.payload;
-      case 'user/DELETE':
-        return {user: {isAuthorized: false}};
-      default:
-        return state;
-    }
-  },
-});
-
-(window as any).store = store;

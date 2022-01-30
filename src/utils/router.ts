@@ -1,29 +1,25 @@
 import Route from './route';
-import {TBlockConstructor} from './route';
-import AuthController from '../controllers/auth-controller';
-import {store} from '../store/store';
+import {store} from '../store';
+import Block from './block';
 
 class Router {
-  private routes: Route[];
-  private history: History;
-  private _currentRoute: undefined | Route;
-  private readonly _rootQuery: string;
+  private static __instance: Router;
+  private routes: Route[] = [];
+  private history: History = window.history;
+  private _currentRoute: Route | null = null;
+  private readonly _rootQuery = '#root';
 
-  constructor(rootQuery: string) {
-    this.routes = [];
-    this.history = window.history;
-    this._currentRoute = undefined;
-    this._rootQuery = rootQuery;
+  constructor() {
+    if (Router.__instance) {
+      return Router.__instance;
+    }
+
+    Router.__instance = this;
   }
 
-  use(pathname: string, block: TBlockConstructor, isSecure = true) {
+  use(pathname: string, block: typeof Block, isSecure = true) {
     const route = new Route(pathname, block, {rootQuery: this._rootQuery, isSecure});
     this.routes.push(route);
-    return this;
-  }
-
-  async checkAuth() {
-    await AuthController.checkAuth();
     return this;
   }
 
@@ -50,12 +46,12 @@ class Router {
     } else {
       if (store.getState().user.isAuthorized) {
         if (pathname === '/' || pathname === '/sign-up') {
-          window.location.pathname = '/messenger';
+          // window.location.pathname = '/messenger';
         } else {
-          window.location.pathname = '/404';
+          // window.location.pathname = '/404';
         }
       } else {
-        window.location.pathname = '/';
+        // window.location.pathname = '/';
       }
     }
   }
@@ -73,10 +69,21 @@ class Router {
     this.history.forward();
   }
 
-  getRoute(pathname: string): Route | undefined {
-    return this.routes.find((route) => route.match(pathname) &&
-      store.getState().user.isAuthorized === route.isSecure);
+  getRoute(pathname: string) {
+    return this.routes.find((route) => route.match(pathname)) || null;
+    // &&
+    //   store.getState().user.isAuthorized === route.isSecure) ;
   }
 }
 
-export default new Router('#root');
+export default Router;
+
+export function withRouter(Component: typeof Block) {
+  return class WithRouter extends Component {
+    constructor(props: any) {
+      const router = new Router();
+
+      super({...props, router: router});
+    }
+  };
+}
