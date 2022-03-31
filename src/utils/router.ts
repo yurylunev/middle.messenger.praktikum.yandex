@@ -4,7 +4,7 @@ import Block from './block';
 
 class Router {
   private static __instance: Router;
-  private routes: Route[] = [];
+  private readonly routes: Route[] = [];
   private history: History = window.history;
   private _currentRoute: Route | null = null;
   private readonly _rootQuery = '#root';
@@ -13,6 +13,10 @@ class Router {
     if (Router.__instance) {
       return Router.__instance;
     }
+
+    this.routes = [];
+    this.history = window.history;
+    this._currentRoute = null;
 
     Router.__instance = this;
   }
@@ -31,27 +35,28 @@ class Router {
     };
 
     this._onRoute(window.location.pathname);
-    return this;
   }
 
   _onRoute(pathname: string) {
     const route = this.getRoute(pathname);
+
     if (this._currentRoute) {
       this._currentRoute.leave();
     }
 
     this._currentRoute = route;
+    console.log(888, this._currentRoute, route);
     if (route) {
       route.render();
     } else {
       if (store.getState().user.isAuthorized) {
         if (pathname === '/' || pathname === '/sign-up') {
-          // window.location.pathname = '/messenger';
+          window.location.pathname = '/messenger';
         } else {
-          // window.location.pathname = '/404';
+          window.location.pathname = '/404';
         }
       } else {
-        // window.location.pathname = '/';
+        window.location.pathname = '/';
       }
     }
   }
@@ -69,6 +74,10 @@ class Router {
     this.history.forward();
   }
 
+  get currentPage() {
+    return this.getRoute(this._currentRoute?.pathname || '');
+  }
+
   getRoute(pathname: string) {
     return this.routes.find((route) => route.match(pathname)) || null;
     // &&
@@ -76,14 +85,15 @@ class Router {
   }
 }
 
-export default Router;
+export default new Router();
 
 export function withRouter(Component: typeof Block) {
   return class WithRouter extends Component {
     constructor(props: any) {
       const router = new Router();
 
-      super({...props, router: router});
+      super({...props, router});
+      // console.log(props);
     }
   };
 }

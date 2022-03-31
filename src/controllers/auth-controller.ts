@@ -1,6 +1,7 @@
 import AuthAPI from '../api/auth-api';
 import {TSignup, TSignin, TUserInfo} from '../api/auth-api.d';
 import {store} from '../store';
+import Router from '../utils/router';
 
 class AuthController {
   private api: AuthAPI;
@@ -13,6 +14,7 @@ class AuthController {
     try {
       await this.api.signup(data);
       await this.getUserInfo();
+      Router.go('/messenger');
     } catch (e) {
       console.log(e);
     }
@@ -33,6 +35,7 @@ class AuthController {
       store.dispatch({
         type: 'user/DELETE',
       });
+      Router.go('/messenger');
     } catch (e) {
       console.log(e);
     }

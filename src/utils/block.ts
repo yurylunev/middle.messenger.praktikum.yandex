@@ -30,7 +30,6 @@ export default class Block<P = any> {
     const eventBus = new EventBus<Events>();
     if (props) {
       this._meta = Object.assign(this._meta, {props});
-      console.log(this._meta);
     }
     this.props = this._makePropsProxy(this._meta.props);
     this.state = this._makePropsProxy(this.state);
@@ -95,10 +94,15 @@ export default class Block<P = any> {
 
   _componentDidUpdate(oldProps: P, newProps: P) {
     const response = this.componentDidUpdate(oldProps, newProps);
+    console.count('CDU');
+    // console.log( {oldProps, newProps});
     if (!response) {
       return;
     }
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+    // @ts-ignore
+    // TODO Too much stranger
+    this.props.router.currentPage.render();
   }
 
   // @ts-ignore
@@ -111,7 +115,8 @@ export default class Block<P = any> {
       return;
     }
     Object.assign(this.props, nextProps);
-    console.log('SetProps: ', nextProps, this.props);
+    // console.log('SetProps: ', nextProps, this);
+    this.eventBus().emit(Block.EVENTS.FLOW_CDU);
   };
 
   setState = (nextState: any) => {
@@ -127,9 +132,12 @@ export default class Block<P = any> {
 
   _render() {
     this._removeEvents();
+    // this._element = this._createContainerElement();
     const fragments = new Templator(this.render().trim()).compile(this.props);
+    console.log('Fragments', fragments[1]?.innerHTML);
     Array.from(fragments).forEach((element) => this._element!.appendChild(element));
     this._addEvents();
+    this.render();
   }
 
   render(): string {
@@ -141,7 +149,7 @@ export default class Block<P = any> {
   }
 
   _makePropsProxy(props: any): ProxyHandler<any> {
-    const self = this;
+    // const self = this;
     if (props) {
       return new Proxy(props, {
         get(target: Record<string, unknown>, prop: string) {
@@ -150,7 +158,7 @@ export default class Block<P = any> {
         },
         set(target: Record<string, unknown>, prop: string, value: any) {
           target[prop] = value;
-          self.eventBus().emit(Block.EVENTS.FLOW_CDU, {...target}, target);
+          // self.eventBus().emit(Block.EVENTS.FLOW_CDU, {...target}, target);
           return true;
         },
       }) as P;
@@ -160,6 +168,7 @@ export default class Block<P = any> {
   }
 
   _createContainerElement(tagName?: string) {
+    console.log(`Container ${tagName}`);
     if (tagName) {
       return document.createElement(tagName);
     }

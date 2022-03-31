@@ -30,11 +30,13 @@ class Templator {
   }
 
   _insertHTMLElement({rule, contextObject}:
-    { rule: string, contextObject: DocumentFragment | DocumentFragment[] }) {
+    { rule: string,
+      contextObject: DocumentFragment | DocumentFragment[] | HTMLElement | HTMLElement[] }) {
     const placeholder: XPathResult = document.evaluate(`//text()[contains(., '${rule}')]`,
         this._element, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+    // console.log({rule, contextObject});
     if (placeholder.singleNodeValue !== null) {
-      const replaceNodes: DocumentFragment[] = Array.isArray(contextObject) ?
+      const replaceNodes: (DocumentFragment | HTMLElement)[] = Array.isArray(contextObject) ?
         contextObject : [contextObject];
       (<HTMLElement>placeholder.singleNodeValue).replaceWith(...replaceNodes.map(
           (node) => document.importNode(node, true)));
@@ -43,13 +45,18 @@ class Templator {
 
   compile(ctx: any): HTMLCollection {
     const replaces = Array.from(this._template.matchAll(/{{(.*?)}}/ig));
+    // console.log(replaces);
     const outerElements: { rule: string; contextObject: any; }[] = [];
     this._element.innerHTML = replaces.reduce((template: string, rulesMap: string[]) => {
       const [rule, objectName] = [...rulesMap];
       const contextObject = this._getObjectFromContext(ctx, objectName.trim(), {});
-      if (typeof contextObject === `object`) {
+      if (typeof contextObject === `object` && contextObject.constructor.name !== 'Object') {
         outerElements.push({rule, contextObject});
         return template;
+      } else {
+        if (contextObject.constructor.name === 'Object') {
+          return template.replace(rule, '');
+        }
       }
       return template.replace(rule, contextObject);
     }, this._template);

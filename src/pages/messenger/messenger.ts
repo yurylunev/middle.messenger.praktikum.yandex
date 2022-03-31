@@ -1,13 +1,13 @@
 import Block from '../../utils/block';
 import Chat from '../../components/chat/chat';
 import {getSendMessage} from '../../utils/handlers';
-import Router from '../../utils/router';
+// import Router from '../../utils/router';
 import messengerTemplate from './messenger.tmpl';
 import DateHeader from '../../components/date-header/date-header';
 import MyMessage from '../../components/my-message/my-message';
 import ForeignMessage from '../../components/foreign-message/foreign-message';
 import ForeignImage from '../../components/foreign-image/foreign-image';
-import {store} from '../../store/store';
+// import {store} from '../../store/store';
 
 type TMessages = {
   messageType: string;
@@ -34,8 +34,8 @@ const createMessage = (item: TMessages) => {
 };
 
 class MessengerPage extends Block {
-  constructor() {
-    super({
+  getStateFromProps() {
+    this.setProps({
       chats: [
         {
           avatarUrl: `avatar_placeholder.png`,
@@ -81,20 +81,18 @@ class MessengerPage extends Block {
           timeMessage: `11:00`,
           statusMessage: `read`,
         },
-      ].reverse().map(createMessage),
+      ].map(createMessage),
       events: {
         '.send-message': {
           click: getSendMessage,
         },
         '.profile-edit button': {
-          click: () => Router.go('/settings'),
+          // @ts-ignore
+          // click: () => this.props.router.go('/settings'),
         },
       },
     });
-  }
-
-  async componentDidMount() {
-    store.on('changed', () => this.componentShouldUpdate());
+    // console.log(this.props);
   }
 
   render() {

@@ -16,9 +16,9 @@ export function connect(stateToProps: (state: any) => any, Component: typeof Blo
 
     componentDidMount(props: any) {
       super.componentDidMount(props);
-      console.log('CONNECT: CDM', stateToProps(store.getState()));
+      // console.log('CONNECT: CDM', stateToProps(store.getState()));
       store.on('store:changed', () => {
-        console.log('store change');
+        // console.log('store change', store);
         this.setProps({
           ...props,
           ...stateToProps(store.getState()),
@@ -27,3 +27,6 @@ export function connect(stateToProps: (state: any) => any, Component: typeof Blo
     }
   };
 }
+
+// @ts-ignore
+window['store'] = store;

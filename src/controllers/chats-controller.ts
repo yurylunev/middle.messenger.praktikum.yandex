@@ -9,7 +9,7 @@ class ChatsController {
         console.log(response);
       }
     }).catch((error) => {
-      new Router().go(`/`);
+      Router.go(`/`);
       console.log(error);
     });
   }

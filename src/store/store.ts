@@ -25,7 +25,7 @@ export class Store extends EventBus {
   }
 
   public getState() {
-    console.log(this.state);
+    // console.log(this.state);
     return this.state;
   }
 

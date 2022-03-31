@@ -4,7 +4,7 @@ import SignupPage from './pages/auth/signup';
 import SettingsPage from './pages/settings/index';
 import ChangePasswordPage from './pages/settings/change-password';
 import EditProfilePage from './pages/settings/edit-profile';
-import MessengerPage from './pages/messenger/messenger';
+import MessengerPage from './pages/messenger';
 import ErrorPage500 from './pages/errors/5xx';
 import ErrorPage404 from './pages/errors/404';
 import './css/palette.pcss';
@@ -12,8 +12,7 @@ import AuthController from './controllers/auth-controller';
 
 AuthController.checkAuth()
     .then(() => {
-      const router = new Router();
-      router
+      Router
           .use('/', SignInPage, false)
           .use('/sign-up', SignupPage, false)
           .use('/settings', SettingsPage)

@@ -1,5 +1,5 @@
 import Block from '../../utils/block';
-// import Router from '../../utils/router';
+import Router from '../../utils/router';
 import InputField from '../../components/input-field/input-field';
 import {checkInputField, getInputsData} from '../../utils/handlers';
 import signInTemplate from './signin.tmpl';
@@ -28,7 +28,7 @@ class SignInPage extends Block {
         '.entry': {
           'click': async () =>
             AuthController.signin(getInputsData())
-                // .then(() => Router.go('/messenger'))
+                .then(() => Router.go('/settings'))
                 .catch((e) => console.error(e)),
         },
         'input': {
@@ -37,7 +37,7 @@ class SignInPage extends Block {
           },
         },
         '.noEntry': {
-          // click: () => Router.go('/sign-up'),
+          click: () => Router.go('/sign-up'),
         },
       },
     });
