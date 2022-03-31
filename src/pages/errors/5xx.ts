@@ -1,5 +1,5 @@
 import Block from '../../utils/block';
-// import Router from '../../utils/router';
+import Router from '../../utils/router';
 import './errors.pcss';
 
 class ErrorPage500 extends Block {
@@ -9,7 +9,7 @@ class ErrorPage500 extends Block {
       statusText: `Капец какой-то на сервере`,
       events: {
         '.back-text': {
-          // click: () => Router.go('/messenger'),
+          click: () => Router.go('/messenger'),
         },
       },
     });
