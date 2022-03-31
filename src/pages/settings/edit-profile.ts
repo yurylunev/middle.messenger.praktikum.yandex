@@ -10,71 +10,73 @@ import {connect} from '../../store';
 import AuthController from '../../controllers/auth-controller';
 
 class EditProfilePage extends Block {
-  protected getStateFromProps() {
-    this.state = {
-      headerText: `Иван`,
-      avatar: new Avatar({avatarUrl: `icon-image-placeholder.svg`, name: `avatar`}).element,
-      style: `editable`,
-      inputs: [
-        {
-          name: `email`,
-          label: `Почта`,
-          value: `pochta@yandex.ru`,
-        },
-        {
-          name: `login`,
-          label: `Логин`,
-          value: `ivanivanov`,
-        },
-        {
-          name: `first_name`,
-          label: `Имя`,
-          value: `Иван`,
-        },
-        {
-          name: `second_name`,
-          label: `Фамилия`,
-          value: `Иванов`,
-        },
-        {
-          name: `display_name`,
-          label: `Имя в чате`,
-          value: `Иван`,
-        },
-        {
-          name: `phone`,
-          label: `Телефон`,
-          value: `+7 (909) 967 30 30`,
-        },
-      ].map((item) => new Inputs(item).element),
-      controls: [
-        {
-          label: `Сохранить`,
-          style: `yellow-button`,
-        },
-        {
-          label: `Отмена`,
-          style: `transparent-button`,
-        },
-      ].map((item) => new ControlsButton(item).element),
-      events: {
-        'button.back': {
-          // click: () => Router.go('/settings'),
-        },
-        '.yellow-button': {
-          click: () => {
-            getInputsData();
-            // Router.go('/settings');
+  async getStateFromProps() {
+    AuthController.getUserInfo().then((userInfo) => {
+      this.setProps({
+        headerText: userInfo.display_name || '',
+        avatar: new Avatar({avatarUrl: `icon-image-placeholder.svg`, name: `avatar`}).element,
+        style: `editable`,
+        inputs: [
+          {
+            name: `email`,
+            label: `Почта`,
+            value: userInfo.email,
+          },
+          {
+            name: `login`,
+            label: `Логин`,
+            value: userInfo.login,
+          },
+          {
+            name: `first_name`,
+            label: `Имя`,
+            value: userInfo.first_name,
+          },
+          {
+            name: `second_name`,
+            label: `Фамилия`,
+            value: userInfo.second_name,
+          },
+          {
+            name: `display_name`,
+            label: `Имя в чате`,
+            value: userInfo.display_name || '',
+          },
+          {
+            name: `phone`,
+            label: `Телефон`,
+            value: userInfo.phone,
+          },
+        ].map((item) => new Inputs(item).element),
+        controls: [
+          {
+            label: `Сохранить`,
+            style: `yellow-button`,
+          },
+          {
+            label: `Отмена`,
+            style: `transparent-button`,
+          },
+        ].map((item) => new ControlsButton(item).element),
+        events: {
+          'button.back': {
+            click: () => Router.back(),
+          },
+          '.yellow-button': {
+            click: () => {
+              getInputsData();
+              Router.go('/settings');
+            },
+          },
+          '.transparent-button': {
+            click: () => Router.go('/settings'),
+          },
+          'input': {
+            blur: checkInputField,
           },
         },
-        '.transparent-button': {
-          // click: () => Router.go('/settings'),
-        },
-        'input': {
-          blur: checkInputField,
-        },
-      },
-    };
+      });
+    });
   }
 
   render(): string {
@@ -82,4 +84,5 @@ class EditProfilePage extends Block {
   }
 }
 
-export default EditProfilePage;
+export {EditProfilePage};
+export default withRouter(connect((state) => ({user: state.user}), EditProfilePage));

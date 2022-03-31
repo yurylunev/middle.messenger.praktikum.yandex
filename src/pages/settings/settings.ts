@@ -4,6 +4,7 @@ import Inputs from '../../components/inputs/inputs';
 import ControlField from '../../components/control-field/control-field';
 import settingsPageTemplate from './settings.tmpl';
 import AuthController from '../../controllers/auth-controller';
+import Router from '../../utils/router';
 
 class SettingsPage extends Block {
   async getStateFromProps() {
@@ -59,22 +60,18 @@ class SettingsPage extends Block {
         ].map((item) => new ControlField(item).element),
         events: {
           'button.back': {
-            // @ts-ignore
-            click: () => this.props.router.go('/settings'),
+            click: () => Router.go('/messenger'),
           },
           'button.edit-profile': {
-            // @ts-ignore
-            click: () => this.props.router.go('/settings/edit-profile'),
+            click: () => Router.go('/settings/edit-profile'),
           },
           'button.change-password': {
-            // @ts-ignore
-            click: () => this.props.router.go('/settings/change-password'),
+            click: () => Router.go('/settings/change-password'),
           },
           'button.red-color': {
             click: async () => {
               await AuthController.logout();
-              // @ts-ignore
-              this.props.router.go('/');
+              Router.go('/');
             },
           },
         },

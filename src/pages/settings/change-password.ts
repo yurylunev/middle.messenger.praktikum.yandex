@@ -3,7 +3,7 @@ import Avatar from '../../components/avatar/avatar';
 import Inputs from '../../components/inputs/inputs';
 import ControlsButton from '../../components/controls-button/controls-button';
 import {getInputsData} from '../../utils/handlers';
-// import Router from '../../utils/router';
+import Router from '../../utils/router';
 import changePasswordTemplate from './change-password.tmpl';
 
 class ChangePasswordPage extends Block {
@@ -41,16 +41,16 @@ class ChangePasswordPage extends Block {
       ].map((item) => new ControlsButton(item).element),
       events: {
         'button.back': {
-          // click: () => Router.go('/settings'),
+          click: () => Router.back(),
         },
         '.yellow-button': {
           click: () => {
             getInputsData();
-            // Router.go('/settings');
+            Router.go('/settings');
           },
         },
         '.transparent-button': {
-          // click: () => Router.go('/settings'),
+          click: () => Router.go('/settings'),
         },
       },
     });

@@ -5,7 +5,7 @@ import SignupPage from '../pages/auth/signup';
 import MessengerPage from '../pages/messenger/messenger';
 import SettingsPage from '../pages/settings/settings';
 import ChangePasswordPage from '../pages/settings/change-password';
-import EditProfilePage from '../pages/settings/edit-profile';
+import {EditProfilePage} from '../pages/settings/edit-profile';
 
 export type TBlock = SignInPage |
   SignupPage |
