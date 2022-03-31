@@ -3,8 +3,11 @@ import Avatar from '../../components/avatar/avatar';
 import Inputs from '../../components/inputs/inputs';
 import ControlsButton from '../../components/controls-button/controls-button';
 import {checkInputField, getInputsData} from '../../utils/handlers';
-// import Router from '../../utils/router';
-import editProfileTemplate from './edit-profile.tmpl';
+import Router from '../../utils/router';
+import editProfileTemplate from './settings.tmpl';
+import {withRouter} from '../../utils/router';
+import {connect} from '../../store';
+import AuthController from '../../controllers/auth-controller';
 
 class EditProfilePage extends Block {
   protected getStateFromProps() {
