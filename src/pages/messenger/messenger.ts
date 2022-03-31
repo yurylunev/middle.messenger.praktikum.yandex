@@ -1,7 +1,6 @@
 import Block from '../../utils/block';
 import Chat from '../../components/chat/chat';
 import {getSendMessage} from '../../utils/handlers';
-// import Router from '../../utils/router';
 import messengerTemplate from './messenger.tmpl';
 import DateHeader from '../../components/date-header/date-header';
 import MyMessage from '../../components/my-message/my-message';
@@ -9,7 +8,6 @@ import ForeignMessage from '../../components/foreign-message/foreign-message';
 import ForeignImage from '../../components/foreign-image/foreign-image';
 import AuthController from '../../controllers/auth-controller';
 import Router from '../../utils/router';
-// import {store} from '../../store/store';
 
 type TMessages = {
   messageType: string;
@@ -94,7 +92,6 @@ class MessengerPage extends Block {
           },
         },
       });
-    // console.log(this.props);
     });
   }
 

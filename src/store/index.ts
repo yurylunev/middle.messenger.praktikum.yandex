@@ -16,9 +16,7 @@ export function connect(stateToProps: (state: any) => any, Component: typeof Blo
 
     componentDidMount(props: any) {
       super.componentDidMount(props);
-      // console.log('CONNECT: CDM', stateToProps(store.getState()));
       store.on('store:changed', () => {
-        // console.log('store change', store);
         this.setProps({
           ...props,
           ...stateToProps(store.getState()),

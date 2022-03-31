@@ -34,7 +34,6 @@ class Templator {
       contextObject: DocumentFragment | DocumentFragment[] | HTMLElement | HTMLElement[] }) {
     const placeholder: XPathResult = document.evaluate(`//text()[contains(., '${rule}')]`,
         this._element, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
-    // console.log({rule, contextObject});
     if (placeholder.singleNodeValue !== null) {
       const replaceNodes: (DocumentFragment | HTMLElement)[] = Array.isArray(contextObject) ?
         contextObject : [contextObject];
@@ -45,7 +44,6 @@ class Templator {
 
   compile(ctx: any): HTMLCollection {
     const replaces = Array.from(this._template.matchAll(/{{(.*?)}}/ig));
-    // console.log(replaces);
     const outerElements: { rule: string; contextObject: any; }[] = [];
     this._element.innerHTML = replaces.reduce((template: string, rulesMap: string[]) => {
       const [rule, objectName] = [...rulesMap];

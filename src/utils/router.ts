@@ -45,7 +45,6 @@ class Router {
     }
 
     this._currentRoute = route;
-    console.log(888, this._currentRoute, route);
     if (route) {
       route.render();
     } else {
@@ -92,7 +91,6 @@ export function withRouter(Component: typeof Block) {
       const router = new Router();
 
       super({...props, router});
-      // console.log(props);
     }
   };
 }

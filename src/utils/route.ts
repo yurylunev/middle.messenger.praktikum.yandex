@@ -47,8 +47,6 @@ class Route {
 
   leave() {
     if (this._block) {
-      console.log(`Leave`, this._block);
-      console.log(`ROOT Element`);
     }
   }
 
@@ -69,19 +67,14 @@ class Route {
   }
 
   render() {
-    console.count('Route render');
     if (!this._block) {
-      console.log(`Create Instance`);
       this._block = new this._blockClass();
     } else {
       if (!this.getInstance?.element?.childNodes.length) {
         this._block._render();
       }
     }
-    console.log('BEFORE RENDER Block', this._block);
-    console.log('Block element children', this._block.element);
     render(this._block, this._props.rootQuery);
-    console.log('AFTER RENDER Block', this._block);
     return;
   }
 }

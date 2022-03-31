@@ -23,7 +23,6 @@ export default class EventBus<E extends string = string,
     }
 
     emit(event: E, ...args: M[E]) {
-      console.log('emit: ', event, this.listeners[event]);
       if (!this.listeners[event]) {
         return;
       }

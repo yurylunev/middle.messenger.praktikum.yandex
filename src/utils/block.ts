@@ -94,8 +94,6 @@ export default class Block<P = any> {
 
   _componentDidUpdate(oldProps: P, newProps: P) {
     const response = this.componentDidUpdate(oldProps, newProps);
-    console.count('CDU');
-    // console.log( {oldProps, newProps});
     if (!response) {
       return;
     }
@@ -115,7 +113,6 @@ export default class Block<P = any> {
       return;
     }
     Object.assign(this.props, nextProps);
-    // console.log('SetProps: ', nextProps, this);
     this.eventBus().emit(Block.EVENTS.FLOW_CDU);
   };
 
@@ -132,9 +129,7 @@ export default class Block<P = any> {
 
   _render() {
     this._removeEvents();
-    // this._element = this._createContainerElement();
     const fragments = new Templator(this.render().trim()).compile(this.props);
-    console.log('Fragments', fragments[1]?.innerHTML);
     Array.from(fragments).forEach((element) => this._element!.appendChild(element));
     this._addEvents();
     this.render();
@@ -168,7 +163,6 @@ export default class Block<P = any> {
   }
 
   _createContainerElement(tagName?: string) {
-    console.log(`Container ${tagName}`);
     if (tagName) {
       return document.createElement(tagName);
     }
