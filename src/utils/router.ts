@@ -79,9 +79,8 @@ class Router {
   }
 
   getRoute(pathname: string) {
-    return this.routes.find((route) => route.match(pathname)) || null;
-    // &&
-    //   store.getState().user.isAuthorized === route.isSecure) ;
+    return this.routes.find((route) => route.match(pathname) &&
+      store.getState().user.isAuthorized === route.isSecure) || null;
   }
 }
 
