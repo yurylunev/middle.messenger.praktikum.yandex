@@ -79,7 +79,6 @@ class EditProfilePage extends Block {
               const avatarData = getAvatarFormData();
               const inputsData = getInputsData();
               if (avatarData) {
-                console.log(avatarData);
                 await UsersController.updateUserAvatar(avatarData);
               }
               if (inputsData) {

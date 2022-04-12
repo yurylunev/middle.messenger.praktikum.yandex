@@ -88,7 +88,6 @@ class HTTPTransport {
       if (isJSON) {
         xhr.responseType = 'json';
       }
-      console.log(options, {isJSON});
       xhr.onreadystatechange = () => {
         if (xhr.readyState === XMLHttpRequest.DONE) {
           if (xhr.status < 400) {
@@ -109,7 +108,7 @@ class HTTPTransport {
       if (isGET || !data) {
         xhr.send();
       } else {
-        xhr.send(JSON.stringify(data));
+        xhr.send(data instanceof FormData ? data : JSON.stringify(data));
       }
     });
   };

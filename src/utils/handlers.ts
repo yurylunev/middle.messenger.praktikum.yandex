@@ -8,7 +8,6 @@ const getInputsData = () => {
 const getAvatarFormData = (): FormData | null => {
   // @ts-ignore
   const avatarForm: HTMLFormElement | null = document.querySelector('.avatar-wrapper form');
-  console.log(avatarForm);
   if (avatarForm !== null) {
     return new FormData(avatarForm);
   }
@@ -104,9 +103,8 @@ const checkInputField = (event: Event) => {
 
 const changeAvatar = function() {
   const avatarImage = this.previousElementSibling.getElementsByTagName('img')[0];
-  console.log('Avatar changed', this.previousElementSibling.getElementsByTagName('img')[0]);
   if (this.files && this.files[0]) {
-    console.log(avatarImage.attributes.src.value = URL.createObjectURL(this.files[0]));
+    avatarImage.attributes.src.value = URL.createObjectURL(this.files[0]);
   }
 };
 
