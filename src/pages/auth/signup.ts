@@ -52,7 +52,10 @@ class SignupPage extends Block {
       noEntryButtonText: `Войти`,
       events: {
         '.entry': {
-          click: async () => AuthController.signup(getInputsData()),
+          click: async () => {
+            await AuthController.signup(getInputsData());
+            Router.go('/messenger');
+          },
         },
         'input': {
           blur: checkInputField,

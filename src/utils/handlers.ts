@@ -5,6 +5,16 @@ const getInputsData = () => {
   return data;
 };
 
+const getAvatarFormData = (): FormData | null => {
+  // @ts-ignore
+  const avatarForm: HTMLFormElement | null = document.querySelector('.avatar-wrapper form');
+  console.log(avatarForm);
+  if (avatarForm !== null) {
+    return new FormData(avatarForm);
+  }
+  return null;
+};
+
 const getSendMessage = () => {
   const message: HTMLInputElement | null = document.querySelector(`input[name=message]`);
   if (message) console.log(message.value);
@@ -92,4 +102,19 @@ const checkInputField = (event: Event) => {
   }
 };
 
-export {getInputsData, getSendMessage, isValidInput, checkInputField};
+const changeAvatar = function() {
+  const avatarImage = this.previousElementSibling.getElementsByTagName('img')[0];
+  console.log('Avatar changed', this.previousElementSibling.getElementsByTagName('img')[0]);
+  if (this.files && this.files[0]) {
+    console.log(avatarImage.attributes.src.value = URL.createObjectURL(this.files[0]));
+  }
+};
+
+export {
+  getInputsData,
+  getSendMessage,
+  isValidInput,
+  checkInputField,
+  changeAvatar,
+  getAvatarFormData,
+};

@@ -29,12 +29,13 @@ export default class Block<P = any> {
   constructor(props?: P) {
     const eventBus = new EventBus<Events>();
     if (props) {
-      this._meta = Object.assign(this._meta, {props});
+      Object.assign(this._meta, {props});
     }
     this.props = this._makePropsProxy(this._meta.props);
-    this.state = this._makePropsProxy(this.state);
+    // this.props = this._meta.props;
+    // this.state = this._makePropsProxy(this.state);
 
-    this.getStateFromProps();
+    // this.getStateFromProps();
     this.eventBus = () => eventBus;
 
     this._registerEvents(eventBus);
@@ -51,7 +52,9 @@ export default class Block<P = any> {
   _createResources(tagName?: string) {
     this._element = this._createContainerElement(tagName);
   }
-
+  _clearElement() {
+    this._element = null;
+  }
   _addEvents() {
     const events: Record<string, () => void> = (this.props as any).events || {};
     Object.keys(events).forEach((selector) =>
@@ -99,12 +102,11 @@ export default class Block<P = any> {
     }
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     // @ts-ignore
-    // TODO Too much stranger
-    this.props.router.currentPage.render();
+    this.props.router?.currentPage.render();
   }
 
   // @ts-ignore
-  componentDidUpdate(oldProps: P, newProps: P) {
+  async componentDidUpdate(oldProps: P, newProps: P) {
     return true;
   }
 
@@ -116,23 +118,18 @@ export default class Block<P = any> {
     this.eventBus().emit(Block.EVENTS.FLOW_CDU);
   };
 
-  setState = (nextState: any) => {
-    if (!nextState) {
-      return;
-    }
-    Object.assign(this.state, nextState);
-  };
-
   get element(): Nullable<DocumentFragment | HTMLElement> {
     return this._element;
   }
 
   _render() {
     this._removeEvents();
+    this._createResources();
     const fragments = new Templator(this.render().trim()).compile(this.props);
-    Array.from(fragments).forEach((element) => this._element!.appendChild(element));
+    Array.from(fragments).forEach((element) => {
+      this._element!.appendChild(element);
+    });
     this._addEvents();
-    this.render();
   }
 
   render(): string {

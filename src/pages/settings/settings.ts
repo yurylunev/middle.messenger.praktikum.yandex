@@ -1,17 +1,20 @@
 import Block from '../../utils/block';
 import Avatar from '../../components/avatar/avatar';
-import Inputs from '../../components/inputs/inputs';
+import InfoField from '../../components/info-field/info-field';
 import ControlField from '../../components/control-field/control-field';
 import settingsPageTemplate from './settings.tmpl';
 import AuthController from '../../controllers/auth-controller';
 import Router from '../../utils/router';
 
 class SettingsPage extends Block {
-  async getStateFromProps() {
+  async componentDidMount() {
     AuthController.getUserInfo().then((userInfo) => {
       this.setProps({
         headerText: userInfo.display_name || '',
-        avatar: new Avatar({avatarUrl: `icon-image-placeholder.svg`, name: `avatar`}).element,
+        avatar: new Avatar({
+          avatarUrl: userInfo.avatar || ``,
+          name: `avatar`,
+        }).element,
         inputs: [
           {
             name: `email`,
@@ -43,11 +46,11 @@ class SettingsPage extends Block {
             label: `Телефон`,
             value: userInfo.phone,
           },
-        ].map((item) => new Inputs(item).element),
+        ].map((item) => new InfoField(item).element),
         controls: [
           {
             label: `Изменить данные`,
-            style: `edit-profile`,
+            style: `edit-profile border-none`,
           },
           {
             label: `Изменить пароль`,

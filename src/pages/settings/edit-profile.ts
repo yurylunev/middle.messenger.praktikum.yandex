@@ -1,20 +1,29 @@
 import Block from '../../utils/block';
 import Avatar from '../../components/avatar/avatar';
 import Inputs from '../../components/inputs/inputs';
-import ControlsButton from '../../components/controls-button/controls-button';
-import {checkInputField, getInputsData} from '../../utils/handlers';
+import ControlField from '../../components/control-field/control-field';
+import {
+  changeAvatar,
+  checkInputField,
+  getAvatarFormData,
+  getInputsData,
+} from '../../utils/handlers';
 import Router from '../../utils/router';
 import editProfileTemplate from './settings.tmpl';
 import {withRouter} from '../../utils/router';
 import {connect} from '../../store';
 import AuthController from '../../controllers/auth-controller';
+import UsersController from '../../controllers/users-controller';
 
 class EditProfilePage extends Block {
-  async getStateFromProps() {
+  async componentDidMount() {
     AuthController.getUserInfo().then((userInfo) => {
       this.setProps({
         headerText: userInfo.display_name || '',
-        avatar: new Avatar({avatarUrl: `icon-image-placeholder.svg`, name: `avatar`}).element,
+        avatar: new Avatar({
+          avatarUrl: userInfo.avatar || ``,
+          name: `avatar`,
+        }).element,
         style: `editable`,
         inputs: [
           {
@@ -57,15 +66,26 @@ class EditProfilePage extends Block {
             label: `Отмена`,
             style: `transparent-button`,
           },
-        ].map((item) => new ControlsButton(item).element),
+          {
+            style: `invisible`,
+          },
+        ].map((item) => new ControlField(item).element),
         events: {
           'button.back': {
             click: () => Router.back(),
           },
           '.yellow-button': {
-            click: () => {
-              getInputsData();
-              Router.go('/settings');
+            click: async () => {
+              const avatarData = getAvatarFormData();
+              const inputsData = getInputsData();
+              if (avatarData) {
+                console.log(avatarData);
+                await UsersController.updateUserAvatar(avatarData);
+              }
+              if (inputsData) {
+                await UsersController.updateUserProfile(inputsData);
+              }
+              // Router.go('/settings');
             },
           },
           '.transparent-button': {
@@ -73,6 +93,9 @@ class EditProfilePage extends Block {
           },
           'input': {
             blur: checkInputField,
+          },
+          '.avatar-wrapper input': {
+            change: changeAvatar,
           },
         },
       });

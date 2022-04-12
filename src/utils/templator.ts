@@ -52,7 +52,7 @@ class Templator {
         outerElements.push({rule, contextObject});
         return template;
       } else {
-        if (contextObject.constructor.name === 'Object') {
+        if (contextObject?.constructor?.name === 'Object') {
           return template.replace(rule, '');
         }
       }

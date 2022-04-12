@@ -10,7 +10,7 @@ import ErrorPage404 from './pages/errors/404';
 import './css/palette.pcss';
 import AuthController from './controllers/auth-controller';
 
-AuthController.checkAuth()
+AuthController.getUserInfo()
     .then(() => {
       Router
           .use('/', SignInPage, false)

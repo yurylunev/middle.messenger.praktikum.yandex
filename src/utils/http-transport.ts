@@ -88,6 +88,7 @@ class HTTPTransport {
       if (isJSON) {
         xhr.responseType = 'json';
       }
+      console.log(options, {isJSON});
       xhr.onreadystatechange = () => {
         if (xhr.readyState === XMLHttpRequest.DONE) {
           if (xhr.status < 400) {

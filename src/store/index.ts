@@ -27,4 +27,4 @@ export function connect(stateToProps: (state: any) => any, Component: typeof Blo
 }
 
 // @ts-ignore
-window['store'] = store;
+// window['store'] = store;

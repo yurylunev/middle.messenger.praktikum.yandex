@@ -47,6 +47,7 @@ class Route {
 
   leave() {
     if (this._block) {
+      this._block = null;
     }
   }
 
@@ -70,9 +71,7 @@ class Route {
     if (!this._block) {
       this._block = new this._blockClass();
     } else {
-      if (!this.getInstance?.element?.childNodes.length) {
-        this._block._render();
-      }
+      this._block._render();
     }
     render(this._block, this._props.rootQuery);
     return;

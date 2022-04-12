@@ -34,7 +34,7 @@ const createMessage = (item: TMessages) => {
 };
 
 class MessengerPage extends Block {
-  async getStateFromProps() {
+  async componentDidMount() {
     AuthController.getUserInfo().then((userInfo) => {
       this.setProps({
         chats: [
