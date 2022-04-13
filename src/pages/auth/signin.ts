@@ -28,7 +28,7 @@ class SignInPage extends Block {
         '.entry': {
           'click': async () =>
             AuthController.signin(getInputsData())
-                .then(() => Router.go('/settings'))
+                .then(() => Router.go('/messenger'))
                 .catch((e) => console.error(e)),
         },
         'input': {
