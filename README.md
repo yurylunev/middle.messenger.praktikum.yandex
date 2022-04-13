@@ -1,5 +1,11 @@
 # Веб-приложение «Чат»
-В разработке 3 спринт. Последний пулл реквест:
+
+http://messenger.xalt.ru
+-
+
+В разработке.
+
+3 спринт. Последний пулл реквест:
 https://github.com/yurylunev/middle.messenger.praktikum.yandex/pull/7
 
 
