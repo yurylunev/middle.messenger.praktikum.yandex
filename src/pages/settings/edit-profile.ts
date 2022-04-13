@@ -84,7 +84,7 @@ class EditProfilePage extends Block {
               if (inputsData) {
                 await UsersController.updateUserProfile(inputsData);
               }
-              // Router.go('/settings');
+              Router.go('/settings');
             },
           },
           '.transparent-button': {
