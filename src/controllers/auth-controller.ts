@@ -23,7 +23,7 @@ class AuthController {
       await this.api.signin(data);
       await this.getUserInfo();
     } catch (e) {
-      console.log(e);
+      throw e;
     }
   }
 

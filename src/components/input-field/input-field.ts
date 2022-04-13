@@ -11,7 +11,11 @@ class InputField extends Block {
   }
 
   render() {
-    return inputFieldTemplate;
+    // @ts-ignore
+    return this.props.errorMessage ?
+      inputFieldTemplate :
+      inputFieldTemplate
+          .split('\n').filter((line) => line.indexOf('error-message') === -1).join('\n');
   }
 }
 
