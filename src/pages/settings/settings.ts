@@ -14,6 +14,7 @@ class SettingsPage extends Block {
         avatar: new Avatar({
           avatarUrl: userInfo.avatar || ``,
           name: `avatar`,
+          noEdit: true,
         }).element,
         inputs: [
           {
