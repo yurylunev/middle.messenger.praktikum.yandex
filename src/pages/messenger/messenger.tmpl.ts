@@ -21,13 +21,20 @@ export default `<div class="chat-list">
                 <img src="{{avatarUrl}}" height="34px"
                     width="34px" class="avatar">
                 <div class="username">{{username}}</div>
-                <div class="time">
+                <div class="more-action">
                     <svg width="3" height="16" viewBox="0 0 3 16" fill="none" 
                          xmlns="http://www.w3.org/2000/svg">
                         <circle cx="1.5" cy="2" r="1.5" fill="#565856"/>
                         <circle cx="1.5" cy="8" r="1.5" fill="#565856"/>
                         <circle cx="1.5" cy="14" r="1.5" fill="#565856"/>
                     </svg>
+                </div>
+                <div class="more-action-window hidden">
+                    <ul>
+                        <li data-action="add-user">Добавить пользователя</li>
+                        <li data-action="del-user">Удалить пользователя</li>
+                        <li data-action="remove-chat">Удалить чат</li>
+                    </ul>
                 </div>
             </div>
             <div class="conversation">

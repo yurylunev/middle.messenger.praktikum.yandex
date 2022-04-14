@@ -89,9 +89,24 @@ body {
       margin: 12px;
     }
 
-    .time {
+    .more-action {
+      cursor: pointer;
       flex-basis: 10px;
-      margin: 12px;
+      padding: 12px;
+      display: flex;
+      border-radius: var(--main-border-radius);
+
+      svg {
+        margin: auto;
+      }
+    }
+
+    .more-action:hover {
+      background-color: var(--main-stroke-color);
+
+      circle {
+        fill: var(--window-stroke-color);
+      }
     }
   }
 
@@ -145,6 +160,7 @@ body {
         button {
           padding-top: 4px;
         }
+
         svg {
           vertical-align: middle;
         }
@@ -163,6 +179,31 @@ body {
       text-align: right;
       font-size: 9px;
       color: var(--window-stroke-color);
+    }
+  }
+}
+
+.more-action-window {
+  position: absolute;
+  right: 20px;
+  top: 50px;
+  background-color: var(--window-background-color);
+  border-radius: var(--main-border-radius);
+  border: 2px solid var(--input-stroke-color);
+
+  ul {
+    margin: 10px 0;
+    padding-left: 0;
+
+    li {
+      padding: 10px 40px;
+      list-style-type: none;
+      cursor: pointer;
+    }
+
+
+    li:hover {
+      background-color: var(--main-stroke-color);
     }
   }
 }

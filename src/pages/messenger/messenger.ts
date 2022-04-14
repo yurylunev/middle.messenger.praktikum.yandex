@@ -86,6 +86,14 @@ class MessengerPage extends Block {
                 .createChat(getInputText(e))
                 .then(() => Router.go('/messenger')),
           },
+          '.more-action': {
+            click: () => document.querySelector('.more-action-window')?.classList
+                .toggle('hidden'),
+          },
+          '.conversation': {
+            click: () => document.querySelector('.more-action-window')?.classList
+                .add('hidden'),
+          },
         },
       });
     });
