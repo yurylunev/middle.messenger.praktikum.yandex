@@ -2,7 +2,7 @@ import './chat.pcss';
 
 export default `
 <li class="chat">
-    <img src="/static/images/{{ avatarUrl }}" height="47px"
+    <img src="{{ avatarUrl }}" height="47px"
          width="47px" class="avatar">
     <div class="message-info">
         <div class="message-header">

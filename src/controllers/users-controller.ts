@@ -31,7 +31,6 @@ class UsersController {
   public async updateUserProfile(userRequest: TUserRequest) {
     try {
       const userProfile = await this.api.updateUserProfile(userRequest);
-      // const userAvatar = await this.api.updateUserAvatar();
       if (userProfile) {
         store.dispatch({
           type: 'user/SET',

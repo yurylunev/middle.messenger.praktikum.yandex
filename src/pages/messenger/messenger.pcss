@@ -114,31 +114,40 @@ body {
     margin: 0 20px;
     border-top: 1px solid var(--main-stroke-color);
 
-    .input-message {
+    form {
+      display: flex;
       flex: 1;
-      border: 1px solid var(--input-stroke-color);
-      background-color: var(--input-background-color);
-      color: var(--input-text-color);
-      height: 32px;
-      margin: 10px;
-      padding-left: 20px;
 
-      &::placeholder {
-        color: var(--placeholder-color);
-        font-size: 12px;
+      .input-message {
+        flex: 1;
+        border: 1px solid var(--input-stroke-color);
+        background-color: var(--input-background-color);
+        color: var(--input-text-color);
+        height: 32px;
+        margin: 10px;
+        padding-left: 20px;
+
+        &::placeholder {
+          color: var(--placeholder-color);
+          font-size: 12px;
+        }
       }
-    }
 
-    .send-message {
-      flex-basis: 57px;
-      height: 32px;
-      background-color: var(--button-background-color);
-      box-sizing: border-box;
-      border: none;
-      border-radius: var(--main-border-radius);
+      .send-message {
+        flex-basis: 60px;
+        height: 36px;
+        background-color: var(--button-background-color);
+        box-sizing: border-box;
+        border: none;
+        margin: 10px;
+        border-radius: var(--main-border-radius);
 
-      svg {
-        vertical-align: middle;
+        button {
+          padding-top: 4px;
+        }
+        svg {
+          vertical-align: middle;
+        }
       }
     }
   }

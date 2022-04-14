@@ -17,6 +17,18 @@ export class ChatsAPI extends BaseAPI {
     });
   }
 
+  getChatsList() {
+    return this.read('');
+  }
+
+  createChat(title: string) {
+    return this.create('', {title});
+  }
+
+  sendMessage(msg: string) {
+    console.log('ChatsAPI.sendMessage', msg);
+    return true;
+  }
 
   read(url: string): Promise<TChatsList | TChatsFile | TChatsError> {
     return this.http.get(url);
@@ -32,7 +44,7 @@ export class ChatsAPI extends BaseAPI {
 
   create(url: string, data: object):
     Promise<TChatsResponse | TChatData | TChatsTokenList | TChatsError> {
-    return this.http.post(url, data);
+    return this.http.post(url, {data});
   };
 }
 

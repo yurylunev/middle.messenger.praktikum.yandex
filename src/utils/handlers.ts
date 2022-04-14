@@ -14,9 +14,10 @@ const getAvatarFormData = (): FormData | null => {
   return null;
 };
 
-const getSendMessage = () => {
-  const message: HTMLInputElement | null = document.querySelector(`input[name=message]`);
-  if (message) console.log(message.value);
+const getInputText = (e: any): string => {
+  e.preventDefault();
+  const message: HTMLInputElement | null = e.target.querySelector(`input[type=text]`);
+  return message?.value || '';
 };
 
 const isValidInput = (event: Event): any => {
@@ -110,7 +111,7 @@ const changeAvatar = function() {
 
 export {
   getInputsData,
-  getSendMessage,
+  getInputText,
   isValidInput,
   checkInputField,
   changeAvatar,

@@ -6,7 +6,10 @@ export default `<div class="chat-list">
                 <button>Профиль</button>
             </div>
             <div class="search">
-                <input type="text" name="search" id="search" placeholder="Поиск">
+            <form>
+                <input type="text" name="search" id="search" 
+                    placeholder="Введите название нового чата">
+            </form>
             </div>
         </div>
         <ul class="chats-area">
@@ -32,11 +35,12 @@ export default `<div class="chat-list">
             </div>
             <div class="sending-area">
                 <img src="/static/images/icon-attach.svg">
-                <input type="text" class="input-message" name="message" placeholder="Сообщение">
-                <button class="send-message">
-                    <img src="/static/images/icon-rocket.svg">
-                </button>
-    
+                <form>
+                  <input type="text" class="input-message" name="message" placeholder="Сообщение">
+                  <button class="send-message" type="submit">
+                      <img src="/static/images/icon-rocket.svg">
+                  </button>
+                </form>
             </div>
         </div>
     </div>`;

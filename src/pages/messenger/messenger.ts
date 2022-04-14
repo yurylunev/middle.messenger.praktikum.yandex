@@ -1,13 +1,13 @@
 import Block from '../../utils/block';
 import Chat from '../../components/chat/chat';
-import {getSendMessage} from '../../utils/handlers';
+import {getInputText} from '../../utils/handlers';
 import messengerTemplate from './messenger.tmpl';
 import DateHeader from '../../components/date-header/date-header';
 import MyMessage from '../../components/my-message/my-message';
 import ForeignMessage from '../../components/foreign-message/foreign-message';
 import ForeignImage from '../../components/foreign-image/foreign-image';
-import AuthController from '../../controllers/auth-controller';
 import Router from '../../utils/router';
+import ChatsController from '../../controllers/chats-controller';
 
 type TMessages = {
   messageType: string;
@@ -35,19 +35,10 @@ const createMessage = (item: TMessages) => {
 
 class MessengerPage extends Block {
   async componentDidMount() {
-    AuthController.getUserInfo().then((userInfo) => {
+    ChatsController.getChatList().then((chatList) => {
       this.setProps({
-        chats: [
-          {
-            avatarUrl: `avatar_placeholder.png`,
-            username: userInfo.login,
-            lastMessage: `Друзья, у меня для вас особенный выпуск новостей...`,
-            messageTime: `Чт`,
-            unreadCount: ``,
-
-          },
-        ].map((item) => new Chat(item).element),
-        username: userInfo.login,
+        chats: chatList.map((chat) => new Chat(chat).element),
+        username: 'userInfo.login',
         avatarUrl: '/static/images/avatar_placeholder.png',
         messages: [
           {
@@ -56,12 +47,12 @@ class MessengerPage extends Block {
           },
           {
             messageType: `foreignMessage`,
-            textMessage: `Привет! Смотри, тут всплыл интересный кусок лунной космической истории 
-          — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на 
-          Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, 
-          все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой 
-          забрали только кассеты с пленкой. Хассельблад в итоге адаптировал SWC для космоса, 
-          но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 
+            textMessage: `Привет! Смотри, тут всплыл интересный кусок лунной космической истории
+          — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на
+          Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря,
+          все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой
+          забрали только кассеты с пленкой. Хассельблад в итоге адаптировал SWC для космоса,
+          но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено
           25 штук, одну из них недавно продали на аукционе за 45000 евро.`,
             timeMessage: `11:00`,
           },
@@ -72,23 +63,28 @@ class MessengerPage extends Block {
           },
           {
             messageType: `myMessage`,
-            textMessage: `Привет! Смотри, тут всплыл интересный кусок лунной космической истории — 
-      НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. 
-      Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки 
-      этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали 
-      только кассеты с пленкой. Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло 
-      не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну 
+            textMessage: `Привет! Смотри, тут всплыл интересный кусок лунной космической истории —
+      НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну.
+      Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки
+      этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали
+      только кассеты с пленкой. Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло
+      не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну
       из них недавно продали на аукционе за 45000 евро.`,
             timeMessage: `11:00`,
             statusMessage: `read`,
           },
         ].map(createMessage),
         events: {
-          '.send-message': {
-            click: getSendMessage,
+          '.sending-area form': {
+            submit: (e: any) => ChatsController.sendMessage(getInputText(e)),
           },
           '.profile-edit button': {
             click: () => Router.go('/settings'),
+          },
+          '.search-wrapper form': {
+            submit: (e: any) => ChatsController
+                .createChat(getInputText(e))
+                .then(() => Router.go('/messenger')),
           },
         },
       });
