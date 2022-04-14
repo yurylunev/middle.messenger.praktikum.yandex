@@ -1,6 +1,6 @@
 # Веб-приложение «Чат»
 
-http://messenger.xalt.ru
+https://messenger.xalt.ru
 -
 
 В разработке.
