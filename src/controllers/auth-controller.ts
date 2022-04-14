@@ -38,23 +38,6 @@ class AuthController {
     }
   }
 
-  public async checkAuth(): Promise<boolean> {
-    try {
-      store.dispatch({
-        type: 'user/SET',
-        payload: await this.getUserInfo(),
-      });
-    } catch (e) {
-      store.dispatch({
-        type: 'user/SET_ERROR',
-        payload: e,
-      });
-      return false;
-    }
-
-    return true;
-  }
-
   public async getUserInfo(): Promise<TUserInfo> {
     let userInfo: TUserInfo = store.getState().user.profile;
     if (!userInfo) {

@@ -33,7 +33,7 @@ export default `<div class="chat-list">
                     <ul>
                         <li data-action="add-user">Добавить пользователя</li>
                         <li data-action="del-user">Удалить пользователя</li>
-                        <li data-action="remove-chat">Удалить чат</li>
+                        <li data-action="delete-chat">Удалить чат</li>
                     </ul>
                 </div>
             </div>

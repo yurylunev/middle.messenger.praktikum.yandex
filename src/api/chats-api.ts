@@ -25,6 +25,10 @@ export class ChatsAPI extends BaseAPI {
     return this.create('', {title});
   }
 
+  deleteChat(chatId: number) {
+    return this.delete('', {chatId});
+  }
+
   sendMessage(msg: string) {
     console.log('ChatsAPI.sendMessage', msg);
     return true;
@@ -39,7 +43,7 @@ export class ChatsAPI extends BaseAPI {
   };
 
   delete(url: string, data: object): Promise<TChatsResponse | TChatsError> {
-    return this.http.delete(url, data);
+    return this.http.delete(url, {data});
   };
 
   create(url: string, data: object):

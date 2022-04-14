@@ -1,12 +1,11 @@
 import user from './user';
+import chats from './chats';
 import {Store} from './store';
 import Block from '../utils/Block';
 
-
 export const store = new Store({
-  user,
+  user, chats,
 });
-
 
 export function connect(stateToProps: (state: any) => any, Component: typeof Block) {
   return class WithStore extends Component {
@@ -25,6 +24,3 @@ export function connect(stateToProps: (state: any) => any, Component: typeof Blo
     }
   };
 }
-
-// @ts-ignore
-// window['store'] = store;
