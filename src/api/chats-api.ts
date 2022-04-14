@@ -1,18 +1,39 @@
-import HTTPTransport from '../utils/http-transport';
+import {
+  TChatsList,
+  TChatData,
+  TChatsError,
+  TChatsFile,
+  TChatsResponse,
+  TChatsTokenList,
+} from './chats-api.d';
 
-const chatsAPIInstance = new HTTPTransport('/chats', {
-  headers: {'Content-Type': 'application/json'},
-  withCredentials: true,
-});
+import BaseAPI from './base-api';
 
-class ChatsAPI {
-  public signup = (data: object) => chatsAPIInstance.post('/signup', {data});
+export class ChatsAPI extends BaseAPI {
+  constructor() {
+    super('/chats', {
+      withCredentials: true,
+      headers: {'Content-Type': 'application/json'},
+    });
+  }
 
-  public signIn = (data: object) => chatsAPIInstance.post('/signin', {data});
 
-  public getUserInfo = () => chatsAPIInstance.get('/user');
+  read(url: string): Promise<TChatsList | TChatsFile | TChatsError> {
+    return this.http.get(url);
+  };
 
-  public logout = () => chatsAPIInstance.post('/logout');
+  update(url: string, data: object): Promise<TChatData | TChatsError> {
+    return this.http.put(url, data);
+  };
+
+  delete(url: string, data: object): Promise<TChatsResponse | TChatsError> {
+    return this.http.delete(url, data);
+  };
+
+  create(url: string, data: object):
+    Promise<TChatsResponse | TChatData | TChatsTokenList | TChatsError> {
+    return this.http.post(url, data);
+  };
 }
 
 export default ChatsAPI;
