@@ -17,7 +17,17 @@ export class ChatsAPI extends BaseAPI {
     });
   }
 
-  async getChatsList(): Promise<TChatsList> {
+  public async getChatToken(chatId: number) {
+    try {
+      const response: { token: string } = await this.http.post(`/token/${chatId}`);
+      return response.token;
+    } catch (e) {
+      console.error(e);
+    }
+    return null;
+  }
+
+  public async getChatsList(): Promise<TChatsList> {
     const chatsList = await this.read('');
     return (chatsList instanceof Array) ? chatsList : [];
   }
@@ -26,11 +36,11 @@ export class ChatsAPI extends BaseAPI {
     return await this.read(`/${id}/users`);
   }
 
-  public async addUserToChat(data: {chatId: number, users: number[]}) {
+  public async addUserToChat(data: { chatId: number, users: number[] }) {
     return await this.update('/users', {data});
   }
 
-  public async deleteUsersFromChat(data: {chatId: number, users: number[]}) {
+  public async deleteUsersFromChat(data: { chatId: number, users: number[] }) {
     console.log(data);
     return await this.delete('/users', data);
   }

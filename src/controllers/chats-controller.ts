@@ -7,6 +7,7 @@ import UsersAPI from '../api/users-api';
 class ChatsController {
   private api: ChatsAPI;
   private userAPI: UsersAPI;
+  private socket: any;
 
   constructor() {
     this.api = new ChatsAPI();
@@ -81,6 +82,34 @@ class ChatsController {
     const selectedChat = store.getState().chats.chatsList
         .find((chat: { id: number }) => chat.id === +chatId);
     store.dispatch(setCurrentChat(selectedChat));
+    const tokenValue = await this.api.getChatToken(selectedChat.id);
+    const userId = store.getState().user.profile.id;
+    const socketURL = `wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${tokenValue}`;
+    console.log(socketURL);
+    this.socket = new WebSocket(socketURL);
+
+    this.socket.addEventListener('open', () => {
+      console.log('Соединение установлено');
+    });
+
+    this.socket.addEventListener('close', (event: any) => {
+      if (event.wasClean) {
+        console.log('Соединение закрыто чисто');
+      } else {
+        console.log('Обрыв соединения');
+      }
+
+      console.log(`Код: ${event.code} | Причина: ${event.reason}`);
+    });
+
+    this.socket.addEventListener('message', (event: any) => {
+      console.log('Получены данные', event.data);
+    });
+
+    this.socket.addEventListener('error', (event: any) => {
+      console.log('Ошибка', event.message);
+    });
+
     return true;
   }
 
@@ -123,12 +152,10 @@ class ChatsController {
 
   public async sendMessage(msg: string) {
     console.log(msg);
-    try {
-      return this.api.sendMessage(msg);
-    } catch (e) {
-      console.error(e);
-    }
-    return false;
+    this.socket.send(JSON.stringify({
+      content: msg,
+      type: 'message',
+    }));
   }
 }
 
