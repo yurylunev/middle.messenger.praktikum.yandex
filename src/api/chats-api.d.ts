@@ -27,6 +27,7 @@ export type TChatData = {
   last_message?: TChatsLastMessage
   time?: string;
   content?: string;
+  users?: TChatsUser[]
 }
 
 type TResourceTypes = ['file'];
@@ -53,7 +54,7 @@ export type TChatsFile = {
 
 export type TChatsList = TChatData[]
 
-export type TUsersInChat = {
+export type TChatUsers = {
   chatId: number;
   users?: number[];
 }

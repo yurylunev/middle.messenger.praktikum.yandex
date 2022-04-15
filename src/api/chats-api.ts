@@ -2,9 +2,9 @@ import {
   TChatsList,
   TChatData,
   TChatsError,
-  TChatsFile,
   TChatsResponse,
   TChatsTokenList,
+  TChatsUser,
 } from './chats-api.d';
 
 import BaseAPI from './base-api';
@@ -17,8 +17,22 @@ export class ChatsAPI extends BaseAPI {
     });
   }
 
-  getChatsList() {
-    return this.read('');
+  async getChatsList(): Promise<TChatsList> {
+    const chatsList = await this.read('');
+    return (chatsList instanceof Array) ? chatsList : [];
+  }
+
+  public async getChatUsers(id: number): Promise<TChatsUser[]> {
+    return await this.read(`/${id}/users`);
+  }
+
+  public async addUserToChat(data: {chatId: number, users: number[]}) {
+    return await this.update('/users', {data});
+  }
+
+  public async deleteUsersFromChat(data: {chatId: number, users: number[]}) {
+    console.log(data);
+    return await this.delete('/users', data);
   }
 
   createChat(title: string) {
@@ -34,7 +48,7 @@ export class ChatsAPI extends BaseAPI {
     return true;
   }
 
-  read(url: string): Promise<TChatsList | TChatsFile | TChatsError> {
+  read(url: string): Promise<any> {
     return this.http.get(url);
   };
 

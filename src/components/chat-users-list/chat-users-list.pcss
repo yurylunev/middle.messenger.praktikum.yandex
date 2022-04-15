@@ -1,0 +1,78 @@
+.chat-users {
+  display: flex;
+  flex-direction: row;
+  color: white;
+  padding: 0 10px;
+  border-bottom: 1px solid var(--main-stroke-color);
+  cursor: pointer;
+
+  .avatar {
+    box-sizing: border-box;
+    border: 1px solid var(--input-stroke-color);
+    border-radius: var(--main-border-radius);
+    margin: 12px 0;
+  }
+
+  .message-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin: 12px 0 12px 12px;
+
+    .message-header {
+      display: flex;
+      flex-direction: row;
+
+      .user-login {
+        flex: 1;
+        font-size: 13px;
+        font-weight: bold;
+      }
+    }
+
+    .message-short {
+      display: flex;
+      flex-direction: row;
+      flex-shrink: 0;
+      font-size: 9px;
+      margin-top: 2px;
+
+      .user-name {
+        flex: 1;
+        font-size: 12px;
+        color: var(--placeholder-color);
+      }
+    }
+  }
+
+  .delete-user {
+    flex-basis: 10px;
+    display: flex;
+    margin: auto;
+
+    & > div {
+      display: none;
+    }
+  }
+}
+
+.chat-users:hover {
+  background-color: var(--main-stroke-color);
+
+  .delete-user {
+    & > div {
+      width: 25px;
+      height: 20px;
+      color: white;
+      rotate: 45deg;
+      padding-bottom: 5px;
+      font-size: 19px;
+      text-align: center;
+      background-color: red;
+      border-radius: 13px;
+      display: block;
+      margin: 0;
+    }
+  }
+
+}

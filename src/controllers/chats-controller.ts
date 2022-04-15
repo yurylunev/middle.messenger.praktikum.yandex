@@ -2,12 +2,15 @@ import ChatsAPI from '../api/chats-api';
 import {TChatsList} from '../api/chats-api.d';
 import {store} from '../store';
 import {setChatsList, setCurrentChat} from '../store/chats';
+import UsersAPI from '../api/users-api';
 
 class ChatsController {
   private api: ChatsAPI;
+  private userAPI: UsersAPI;
 
   constructor() {
     this.api = new ChatsAPI();
+    this.userAPI = new UsersAPI();
   }
 
   private mockMessages = () => {
@@ -51,7 +54,7 @@ class ChatsController {
 
   public async init() {
     await this.getChatList();
-    await this.getCurrentChat();
+    await this.setCurrentChat();
     this.mockMessages();
     return store.getState().chats;
   }
@@ -64,6 +67,10 @@ class ChatsController {
     try {
       // @ts-ignore
       chatsList = await this.api.getChatsList();
+      for (const chat of chatsList) {
+        chat.users = await this.api.getChatUsers(chat.id);
+      }
+
       store.dispatch(setChatsList(chatsList));
     } catch (e) {
       console.error(e);
@@ -71,9 +78,30 @@ class ChatsController {
     return chatsList;
   }
 
-  public async getCurrentChat() {
+  public async setCurrentChat() {
     store.dispatch(setCurrentChat(store.getState().chats.chatsList[0]));
     return true;
+  }
+
+  private getChatUsers() {
+    const currentChat = store.getState().chats.currentChat;
+    const chatId = currentChat.id;
+    const users = currentChat.users.map((user: { id: number }) => user.id);
+    return {chatId, users};
+  }
+
+  public async addUserToChat(username: string) {
+    const foundUsers = await this.userAPI.searchUser(username);
+    if (foundUsers instanceof Array && foundUsers.length) {
+      const {chatId, users} = this.getChatUsers();
+      users.push(foundUsers[0].id);
+      return await this.api.addUserToChat({chatId, users});
+    }
+  }
+
+  public async deleteUserFromChat(userId: number) {
+    const chatId: number = store.getState().chats.currentChat.id;
+    return await this.api.deleteUsersFromChat({chatId, users: [+userId]});
   }
 
   public async createChat(title: string) {
@@ -81,17 +109,15 @@ class ChatsController {
   }
 
   public async deleteChat() {
-    const chatsList: TChatsList = store.getState().chats.chatsList;
-    console.log(store);
-    if (chatsList instanceof Array && chatsList.length) {
+    const chatId = store.getState().chats.currentChat?.id;
+    if (chatId) {
       try {
-        await this.api.deleteChat(chatsList[0].id);
+        return await this.api.deleteChat(chatId);
       } catch (e) {
         console.error(e);
         return false;
       }
     }
-    return true;
   }
 
   public async sendMessage(msg: string) {

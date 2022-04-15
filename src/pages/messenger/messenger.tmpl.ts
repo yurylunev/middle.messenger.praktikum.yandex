@@ -30,11 +30,12 @@ export default `<div class="chat-list">
                     </svg>
                 </div>
                 <div class="more-action-window hidden">
-                    <ul>
-                        <li data-action="add-user">Добавить пользователя</li>
-                        <li data-action="del-user">Удалить пользователя</li>
-                        <li data-action="delete-chat">Удалить чат</li>
-                    </ul>
+                    <form>
+                        <input type="text" name="user-search" id="user-search" 
+                        placeholder="Введите имя пользователя">
+                    </form>
+                    {{chatUsers}}
+                    <div data-action="delete-chat">Удалить чат</div>
                 </div>
             </div>
             <div class="conversation">

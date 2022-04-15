@@ -10,6 +10,10 @@ export class UsersAPI extends BaseAPI {
     });
   }
 
+  public async searchUser(login: string) {
+    return this.http.post('/search', {data: {login}});
+  }
+
   updateUserProfile(userData: TUserRequest) {
     return this.update('/profile', {
       data: userData,
@@ -25,7 +29,7 @@ export class UsersAPI extends BaseAPI {
   updateUserAvatar(avatar: FormData) {
     return this.update('/profile/avatar', {
       data: avatar,
-      headers: { },
+      headers: {},
     });
   };
 
@@ -37,7 +41,7 @@ export class UsersAPI extends BaseAPI {
     return this.http.get(url);
   };
 
-  update(url:string, data: object): Promise<TUserProfile> {
+  update(url: string, data: object): Promise<TUserProfile> {
     return this.http.put(url, data);
   };
 
