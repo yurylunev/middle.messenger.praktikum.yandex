@@ -79,13 +79,18 @@ class MessengerPage extends Block {
           },
           '.delete-user': {
             click: (e: any) => ChatsController
-                .deleteUserFromChat(e.target.parentNode.getAttribute('data-user_id'))
+                .deleteUserFromChat(+e.target.parentNode.getAttribute('data-user_id'))
                 .then(() => Router.go('/messenger')),
           },
           'div[data-action=delete-chat]': {
             click: () => ChatsController
                 .deleteChat()
                 .then(() => Router.go('/messenger')),
+          },
+          'li.chat': {
+            click: (e: any) => ChatsController
+                .setCurrentChat(e.currentTarget.getAttribute('data-chat_id'))
+                .then(()=>Router.go('/messenger')),
           },
         },
       })

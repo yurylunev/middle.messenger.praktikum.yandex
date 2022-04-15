@@ -4,6 +4,7 @@ import chatTemplate from './chat.tmpl';
 class Chat extends Block {
   constructor(props: any) {
     super({
+      chatId: props.id,
       avatarUrl: props.avatar || '/static/images/avatar_placeholder.png',
       username: props.title || '',
       messageTime: props.last_message?.time || '',

@@ -54,7 +54,6 @@ class ChatsController {
 
   public async init() {
     await this.getChatList();
-    await this.setCurrentChat();
     this.mockMessages();
     return store.getState().chats;
   }
@@ -78,8 +77,10 @@ class ChatsController {
     return chatsList;
   }
 
-  public async setCurrentChat() {
-    store.dispatch(setCurrentChat(store.getState().chats.chatsList[0]));
+  public async setCurrentChat(chatId: number) {
+    const selectedChat = store.getState().chats.chatsList
+        .find((chat: { id: number }) => chat.id === +chatId);
+    store.dispatch(setCurrentChat(selectedChat));
     return true;
   }
 
