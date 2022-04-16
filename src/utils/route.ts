@@ -2,7 +2,7 @@ import render from './renderDOM';
 import {isEqual} from './helpers';
 import SignInPage from '../pages/auth/signin';
 import SignupPage from '../pages/auth/signup';
-import MessengerPage from '../pages/messenger/messenger';
+import {MessengerPage} from '../pages/messenger/messenger';
 import SettingsPage from '../pages/settings/settings';
 import ChangePasswordPage from '../pages/settings/change-password';
 import {EditProfilePage} from '../pages/settings/edit-profile';
@@ -68,6 +68,7 @@ class Route {
   }
 
   render() {
+    // console.log('Render', this.getInstance);
     if (!this._block) {
       this._block = new this._blockClass();
     } else {

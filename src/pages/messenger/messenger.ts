@@ -9,7 +9,7 @@ import ForeignImage from '../../components/foreign-image/foreign-image';
 import Router from '../../utils/router';
 import ChatsController from '../../controllers/chats-controller';
 import {withRouter} from '../../utils/router';
-import {connect} from '../../store';
+import {connect, store} from '../../store';
 import ChatUsersList from '../../components/chat-users-list/chat-users-list';
 
 type TMessages = {
@@ -37,6 +37,13 @@ const createMessage = (item: TMessages) => {
 };
 
 class MessengerPage extends Block {
+  private static addMessages(message: any) {
+    const newMessage = createMessage(message[0]);
+    console.log('Add Message', message, newMessage);
+    // @ts-ignore
+    document.querySelector('.conversation')?.prepend(newMessage);
+  }
+
   async componentDidMount() {
     ChatsController.init().then((chatsStore) => {
       this.setProps({
@@ -90,11 +97,15 @@ class MessengerPage extends Block {
           'li.chat': {
             click: (e: any) => ChatsController
                 .setCurrentChat(e.currentTarget.getAttribute('data-chat_id'))
-                .then(()=>Router.go('/messenger')),
+                .then(() => Router.go('/messenger')),
           },
         },
       })
       ;
+    });
+    store.on('messages:changed', () => {
+      console.log('Messenger: messages:changed');
+      MessengerPage.addMessages(store.getState().chats.messages);
     });
   }
 

@@ -1,7 +1,7 @@
 import ChatsAPI from '../api/chats-api';
 import {TChatsList} from '../api/chats-api.d';
 import {store} from '../store';
-import {setChatsList, setCurrentChat} from '../store/chats';
+import {addMessages, setChatsList, setCurrentChat} from '../store/chats';
 import UsersAPI from '../api/users-api';
 
 class ChatsController {
@@ -14,48 +14,57 @@ class ChatsController {
     this.userAPI = new UsersAPI();
   }
 
-  private mockMessages = () => {
-    store.dispatch({
-      type: 'messages/SET', payload: [
-        {
-          messageType: `dateHeader`,
-          date: `20 июля 2022`,
-        },
-        {
-          messageType: `foreignMessage`,
-          textMessage: `Привет! Смотри, тут всплыл интересный кусок лунной космической истории
-          — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на
-          Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря,
-          все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой
-          забрали только кассеты с пленкой. Хассельблад в итоге адаптировал SWC для космоса,
-          но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено
-          25 штук, одну из них недавно продали на аукционе за 45000 евро.`,
-          timeMessage: `11:00`,
-        },
-        {
-          messageType: `foreignImage`,
-          imageURL: `image.png`,
-          timeMessage: `11:00`,
-        },
-        {
-          messageType: `myMessage`,
-          textMessage: `Привет! Смотри, тут всплыл интересный кусок лунной космической истории —
-      НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну.
-      Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки
-      этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали
-      только кассеты с пленкой. Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло
-      не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну
-      из них недавно продали на аукционе за 45000 евро.`,
-          timeMessage: `11:00`,
-          statusMessage: `read`,
-        },
-      ],
-    });
+  private loadMessages = async () => {
+    if (this.socket) {
+
+    }
+    // store.dispatch(addMessages(messages));
   };
+
+  private async initSocket(socketURL: string) {
+    this.socket = await new WebSocket(socketURL);
+
+    this.socket.addEventListener('open', () => {
+      console.log('Соединение установлено');
+      this.socket.send(JSON.stringify({content: '0', type: 'get old'}));
+    });
+
+    this.socket.addEventListener('close', (event: any) => {
+      if (event.wasClean) {
+        console.log('Соединение закрыто чисто');
+      } else {
+        console.log('Обрыв соединения');
+      }
+
+      console.log(`Код: ${event.code} | Причина: ${event.reason}`);
+    });
+
+    this.socket.addEventListener('message', (event: any) => {
+      const data = JSON.parse(event.data);
+      console.log('Получены данные', data);
+      if (data instanceof Array) {
+        console.log('LOAD MESSAGES');
+        store.dispatch(addMessages(data, store.getState().user.profile.id));
+      }
+      if (data.type === 'message') {
+        console.log('ADD MESSAGES');
+        store.dispatch(addMessages([data], store.getState().user.profile.id));
+      }
+    });
+
+    this.socket.addEventListener('error', (event: any) => {
+      console.log('Ошибка', event.message);
+    });
+
+    setInterval(() => {
+      this.socket.send(JSON.stringify({
+        type: 'ping',
+      }));
+    }, 20000);
+  }
 
   public async init() {
     await this.getChatList();
-    this.mockMessages();
     return store.getState().chats;
   }
 
@@ -84,36 +93,14 @@ class ChatsController {
     store.dispatch(setCurrentChat(selectedChat));
     const tokenValue = await this.api.getChatToken(selectedChat.id);
     const userId = store.getState().user.profile.id;
-    const socketURL = `wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${tokenValue}`;
-    console.log(socketURL);
-    this.socket = new WebSocket(socketURL);
 
-    this.socket.addEventListener('open', () => {
-      console.log('Соединение установлено');
-    });
-
-    this.socket.addEventListener('close', (event: any) => {
-      if (event.wasClean) {
-        console.log('Соединение закрыто чисто');
-      } else {
-        console.log('Обрыв соединения');
-      }
-
-      console.log(`Код: ${event.code} | Причина: ${event.reason}`);
-    });
-
-    this.socket.addEventListener('message', (event: any) => {
-      console.log('Получены данные', event.data);
-    });
-
-    this.socket.addEventListener('error', (event: any) => {
-      console.log('Ошибка', event.message);
-    });
+    this.initSocket(`wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${tokenValue}`)
+        .then(() => this.loadMessages());
 
     return true;
   }
 
-  private getChatUsers() {
+  private static getChatUsers() {
     const currentChat = store.getState().chats.currentChat;
     const chatId = currentChat.id;
     const users = currentChat.users.map((user: { id: number }) => user.id);
@@ -123,7 +110,7 @@ class ChatsController {
   public async addUserToChat(username: string) {
     const foundUsers = await this.userAPI.searchUser(username);
     if (foundUsers instanceof Array && foundUsers.length) {
-      const {chatId, users} = this.getChatUsers();
+      const {chatId, users} = ChatsController.getChatUsers();
       users.push(foundUsers[0].id);
       return await this.api.addUserToChat({chatId, users});
     }

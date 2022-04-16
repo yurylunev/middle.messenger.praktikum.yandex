@@ -32,10 +32,7 @@ export default class Block<P = any> {
       Object.assign(this._meta, {props});
     }
     this.props = this._makePropsProxy(this._meta.props);
-    // this.props = this._meta.props;
-    // this.state = this._makePropsProxy(this.state);
 
-    // this.getStateFromProps();
     this.eventBus = () => eventBus;
 
     this._registerEvents(eventBus);
@@ -130,6 +127,7 @@ export default class Block<P = any> {
       this._element!.appendChild(element);
     });
     this._addEvents();
+    // console.log(this._element?.textContent?.trim().replaceAll('\n', ''));
   }
 
   render(): string {
@@ -141,7 +139,7 @@ export default class Block<P = any> {
   }
 
   _makePropsProxy(props: any): ProxyHandler<any> {
-    // const self = this;
+    const self = this;
     if (props) {
       return new Proxy(props, {
         get(target: Record<string, unknown>, prop: string) {
@@ -150,7 +148,7 @@ export default class Block<P = any> {
         },
         set(target: Record<string, unknown>, prop: string, value: any) {
           target[prop] = value;
-          // self.eventBus().emit(Block.EVENTS.FLOW_CDU, {...target}, target);
+          self.eventBus().emit(Block.EVENTS.FLOW_CDU, {...target}, target);
           return true;
         },
       }) as P;

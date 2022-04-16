@@ -5,6 +5,7 @@ const SET_CURRENT_CHAT = 'currentChat/SET';
 const SET_CHATS_LIST = 'chatsList/SET';
 const DELETE_CHAT = 'currentChat/DELETE';
 const SET_MESSAGES_MOCK = 'messages/SET';
+const ADD_MESSAGES = 'messages/ADD';
 const SET_ERROR = 'chats/SET_ERROR';
 
 export const setCurrentChat = (chatData: TChatData) => ({
@@ -15,6 +16,22 @@ export const setCurrentChat = (chatData: TChatData) => ({
 export const setChatsList = (chatsList: TChatsList) => ({
   type: SET_CHATS_LIST,
   payload: chatsList,
+});
+
+// eslint-disable-next-line camelcase
+export const addMessages = (messages: { user_id: number; content: string; time: string }[],
+    userId: number) => ({
+  type: ADD_MESSAGES,
+  payload: messages.map((message) => ({
+    messageType: message.user_id === userId ?
+      'myMessage' : 'foreignMessage',
+    textMessage: message.content,
+    statusMessage: 'read',
+    timeMessage: new Date(message.time)
+        .toLocaleString()
+        .split(' ')[1]
+        .substring(0, 5),
+  })),
 });
 
 export const deleteChat = () => ({
@@ -35,6 +52,8 @@ export default (state = {currentChat: null, chatsList: [], messages: []}, action
     case DELETE_CHAT:
       return {};
     case SET_MESSAGES_MOCK:
+      return {...state, messages: action.payload};
+    case ADD_MESSAGES:
       return {...state, messages: action.payload};
     case SET_ERROR:
       return {error: action.payload};

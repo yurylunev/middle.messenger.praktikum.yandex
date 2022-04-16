@@ -9,7 +9,9 @@ export default class EventBus<E extends string = string,
         this.listeners[event] = [];
       }
 
-      this.listeners[event]!.push(callback);
+      if (!this.listeners[event]?.length) {
+        this.listeners[event]!.push(callback);
+      }
     }
 
     off(event: E, callback: Listener<M[E]>) {
