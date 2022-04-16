@@ -38,9 +38,11 @@ const createMessage = (item: TMessages) => {
 
 class MessengerPage extends Block {
   private static addMessages(message: any) {
-    // @ts-ignore
     // TODO Need give a reference to Conversation object
-    document.querySelector('.conversation')?.prepend(createMessage(message[0]));
+    if (message instanceof Array && message.length) {
+    // @ts-ignore
+      document.querySelector('.conversation')?.prepend(createMessage(message[0]));
+    }
   }
 
   async componentDidMount() {
