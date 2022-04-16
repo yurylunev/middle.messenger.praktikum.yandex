@@ -59,7 +59,11 @@ class Route {
     return this._props.isSecure;
   }
 
-  get getInstance() {
+  createInstance() {
+    this._block = new this._blockClass();
+  }
+
+  get Instance() {
     return this._block;
   }
 
@@ -68,9 +72,8 @@ class Route {
   }
 
   render() {
-    // console.log('Render', this.getInstance);
     if (!this._block) {
-      this._block = new this._blockClass();
+      this.createInstance();
     } else {
       this._block._render();
     }
