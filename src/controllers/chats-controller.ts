@@ -34,7 +34,6 @@ class ChatsController {
         store.dispatch(addMessages(data, store.getState().user.profile.id));
       }
       if (data.type === 'message') {
-        console.log('ADD MESSAGES');
         store.dispatch(addMessages([data], store.getState().user.profile.id));
       }
     });
@@ -125,7 +124,6 @@ class ChatsController {
   }
 
   public async sendMessage(msg: string) {
-    console.log(msg);
     this.socket.send(JSON.stringify({
       content: msg,
       type: 'message',
