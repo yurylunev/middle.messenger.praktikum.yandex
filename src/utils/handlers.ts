@@ -17,7 +17,11 @@ const getAvatarFormData = (): FormData | null => {
 const getInputText = (e: any): string => {
   e.preventDefault();
   const message: HTMLInputElement | null = e.target.querySelector(`input[type=text]`);
-  return message?.value || '';
+  const inputText = message?.value || '';
+  if (message) {
+    message.value = '';
+  }
+  return inputText;
 };
 
 const isValidInput = (event: Event): any => {
