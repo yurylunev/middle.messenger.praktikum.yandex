@@ -7,9 +7,9 @@ class Chat extends Block {
       chatId: props.id,
       avatarUrl: props.avatar || '/static/images/avatar_placeholder.png',
       username: props.title || '',
-      messageTime: props.last_message?.time || '',
+      messageTime: new Date(props.last_message?.time).toLocaleTimeString() || '',
       lastMessage: props.last_message?.content || '',
-      unreadCount: props.unread_count || 0,
+      unreadCount: props.unread_count || '',
     });
   }
 

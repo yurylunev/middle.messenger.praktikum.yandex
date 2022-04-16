@@ -21,9 +21,7 @@ export class Store extends EventBus {
 
   public dispatch(action: Action) {
     this.state = this.reducer(this.state, action);
-    console.log(action);
     if (action.type === 'messages/ADD') {
-      console.log('Emit: "messages:changed"');
       this.emit('messages:changed');
     }
   }

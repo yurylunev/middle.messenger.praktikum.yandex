@@ -38,10 +38,9 @@ const createMessage = (item: TMessages) => {
 
 class MessengerPage extends Block {
   private static addMessages(message: any) {
-    const newMessage = createMessage(message[0]);
-    console.log('Add Message', message, newMessage);
     // @ts-ignore
-    document.querySelector('.conversation')?.prepend(newMessage);
+    // TODO Need give a reference to Conversation object
+    document.querySelector('.conversation')?.prepend(createMessage(message[0]));
   }
 
   async componentDidMount() {
@@ -104,7 +103,6 @@ class MessengerPage extends Block {
       ;
     });
     store.on('messages:changed', () => {
-      console.log('Messenger: messages:changed');
       MessengerPage.addMessages(store.getState().chats.messages);
     });
   }
