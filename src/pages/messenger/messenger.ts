@@ -56,7 +56,12 @@ class MessengerPage extends Block {
             .map((user: any) => new ChatUsersList(user).element),
         events: {
           '.sending-area form': {
-            submit: (e: any) => ChatsController.sendMessage(getInputText(e)),
+            submit: (e: any) => {
+              const message = getInputText(e);
+              if (message !== '') {
+                ChatsController.sendMessage(message);
+              }
+            },
           },
           '.profile-edit button': {
             click: () => Router.go('/settings'),
