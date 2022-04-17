@@ -24,7 +24,7 @@ class Templator {
         return f(currentObject, _cursor + 1);
       } else {
         return defaultValue;
-      } // TODO Does not work!
+      }
     };
     return f(obj);
   }
