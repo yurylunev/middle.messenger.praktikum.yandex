@@ -37,14 +37,14 @@ describe('Components tests:', async () => {
     expect(state.after.property).to.equal('/avatar2.png');
   });
 
-  it('SignIn Page should have login/password', () => {
+  it('SignIn Page should have login/password', async () => {
     const root = new SignInPage().element;
     expect(root?.querySelector('h2')).to.have.text('Вход');
     expect(root?.querySelector('button.entry')).to.have.text('Авторизоваться');
     expect(root?.querySelector('button.noEntry')).to.have.text('Нет аккаунта');
   });
 
-  it('Messenger Page should have createChat/sendMessage fields', () => {
+  it('Messenger Page should have createChat/sendMessage fields', async () => {
     const root = new MessengerPage().element;
     expect(root?.querySelector('.profile-edit button')).to.have.text('Профиль');
     expect(root?.querySelector('.chat-list input[name=search]')).to.exist;
