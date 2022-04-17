@@ -3,7 +3,7 @@ import controlsButtonTemplate from './controls-button.tmpl';
 
 class ControlsButton extends Block {
   constructor(props: object) {
-    super(undefined, props);
+    super(props);
   }
 
   render(): string {

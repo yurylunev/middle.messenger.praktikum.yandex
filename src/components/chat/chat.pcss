@@ -1,9 +1,14 @@
+.chats-area {
+  padding: 0;
+}
+
 .chat {
   display: flex;
   flex-direction: row;
   color: white;
-  margin: 0 10px;
+  padding: 0 10px;
   border-bottom: 1px solid var(--main-stroke-color);
+  cursor: pointer;
 
   .avatar {
     box-sizing: border-box;
@@ -65,4 +70,8 @@
       }
     }
   }
+}
+
+.chat:hover {
+  background-color: var(--main-stroke-color);
 }

@@ -4,12 +4,18 @@
   display: flex;
   margin: 0 auto;
   box-sizing: border-box;
-  border: 1px solid var(--input-stroke-color);
-  border-radius: calc(2 * var(--main-border-radius));
   background-color: var(--avatar-background-color);
+  border-radius: calc(2 * var(--main-border-radius));
 
   label {
     cursor: pointer;
+
+    img {
+      border: 1px solid var(--input-stroke-color);
+      border-radius: calc(2 * var(--main-border-radius));
+      height: 130px;
+      width: 130px;
+    }
   }
 
   input {

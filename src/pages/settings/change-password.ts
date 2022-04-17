@@ -1,18 +1,15 @@
 import Block from '../../utils/block';
-import Avatar from '../../components/avatar/avatar';
 import Inputs from '../../components/inputs/inputs';
 import ControlsButton from '../../components/controls-button/controls-button';
 import {getInputsData} from '../../utils/handlers';
 import Router from '../../utils/router';
 import changePasswordTemplate from './change-password.tmpl';
-
-const router = new Router();
+import UsersController from '../../controllers/users-controller';
 
 class ChangePasswordPage extends Block {
-  constructor() {
-    super(undefined, {
+  async componentDidMount() {
+    this.setProps({
       headerText: `Сменить пароль`,
-      avatar: new Avatar({avatarUrl: `icon-image-placeholder.svg`, name: `avatar`}).element,
       style: `editable`,
       inputs: [
         {
@@ -43,16 +40,16 @@ class ChangePasswordPage extends Block {
       ].map((item) => new ControlsButton(item).element),
       events: {
         'button.back': {
-          click: () => router.go('/settings'),
+          click: () => Router.back(),
         },
         '.yellow-button': {
           click: () => {
-            getInputsData();
-            router.go('/settings');
+            UsersController.changeUserPassword(getInputsData());
+            Router.go('/settings');
           },
         },
         '.transparent-button': {
-          click: () => router.go('/settings'),
+          click: () => Router.go('/settings'),
         },
       },
     });

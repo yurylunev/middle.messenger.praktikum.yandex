@@ -37,30 +37,33 @@ class HTTPTransport {
     this.options = options || {};
   }
 
-  get = (url = '', options: TOptions = {}) => {
+  public get<Response>(url = '', options: TOptions = {}): Promise<Response> {
     const requestOptions = Object.assign({}, this.options, options);
     const {timeout = 0} = requestOptions;
     return this.request(this._baseURL + url, {...requestOptions, method: METHODS.GET}, timeout);
   };
-  post = (url = '', options: TOptions = {}) => {
+
+  public post<Response>(url = '', options: TOptions = {}): Promise<Response> {
     const requestOptions = Object.assign({}, this.options, options);
     const {timeout = 0} = options;
     return this.request(this._baseURL + url, {...requestOptions, method: METHODS.POST}, timeout);
   };
-  put = (url = '', options: TOptions = {}) => {
+
+  public put<Response>(url = '', options: TOptions = {}): Promise<Response> {
     const requestOptions = Object.assign({}, this.options, options);
     const {timeout = 0} = options;
     return this.request(this._baseURL + url, {...requestOptions, method: METHODS.PUT}, timeout);
   };
-  delete = (url = '', options: TOptions = {}) => {
+
+  public delete<Response>(url = '', options: TOptions = {}): Promise<Response> {
     const requestOptions = Object.assign({}, this.options, options);
     const {timeout = 0} = options;
     return this.request(this._baseURL + url, {...requestOptions, method: METHODS.DELETE}, timeout);
   };
 
-  request = (url: string,
+  private request<Response>(url: string,
       options: TFetchOptions,
-      timeout = 5000): Promise<XMLHttpRequest> => {
+      timeout = 5000): Promise<Response> {
     const {method = 'GET', data, headers = {}, withCredentials = false} = options;
     return new Promise((resolve, reject) => {
       if (!method) {
@@ -75,13 +78,24 @@ class HTTPTransport {
       xhr.open(method, (isGET && !!data) ?
         `${url}${queryStringify(data)}` :
         url);
-
+      let isJSON = false;
       Object.entries(headers).forEach((header) => {
         xhr.setRequestHeader(header[0], header[1]);
+        if (header[0] === 'Content-Type' && header[1] === 'application/json') {
+          isJSON = true;
+        }
       });
-
-      xhr.onload = function() {
-        resolve(xhr);
+      if (isJSON) {
+        xhr.responseType = 'json';
+      }
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status < 400) {
+            resolve(xhr.response);
+          } else {
+            reject(new Error(xhr.response.reason));
+          }
+        }
       };
 
       xhr.onabort = reject;
@@ -94,13 +108,13 @@ class HTTPTransport {
       if (isGET || !data) {
         xhr.send();
       } else {
-        console.log(1111, JSON.stringify(data));
-        xhr.send(JSON.stringify(data));
+        xhr.send(data instanceof FormData ? data : JSON.stringify(data));
       }
     });
   };
 
-  fetchWithRetry(url: string, options: TFetchOptions): Promise<XMLHttpRequest> {
+  // TODO Unused method?
+  fetchWithRetry<Response>(url: string, options: TFetchOptions): Promise<Response | any> {
     const {retries = 2} = options;
     const self = this;
 
@@ -111,7 +125,7 @@ class HTTPTransport {
       if (error.message === 'A server with the specified hostname could not be found.') {
         throw new Error('Сервер не найден');
       }
-      return self.fetchWithRetry(url, Object.assign(options, {retries: retries - 1}));
+      return self.fetchWithRetry(url, Object.assign({}, options, {retries: retries - 1}));
     }
 
     return this.request(url, options).catch(onError);

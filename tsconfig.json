@@ -8,6 +8,7 @@
     "sourceMap": true,
     "strictNullChecks": true,
     "lib": [
+      "es2017",
       "es2020.string",
       "dom",
       "es2015.proxy"

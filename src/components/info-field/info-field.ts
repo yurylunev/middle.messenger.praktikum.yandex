@@ -3,7 +3,7 @@ import infoFieldTemplate from './info-field.tmpl';
 
 class InfoField extends Block {
   constructor(props: object) {
-    super(undefined, props);
+    super(props);
   }
 
   render() {

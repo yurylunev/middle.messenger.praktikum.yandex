@@ -5,9 +5,23 @@ const getInputsData = () => {
   return data;
 };
 
-const getSendMessage = () => {
-  const message: HTMLInputElement | null = document.querySelector(`input[name=message]`);
-  if (message) console.log(message.value);
+const getAvatarFormData = (): FormData | null => {
+  // @ts-ignore
+  const avatarForm: HTMLFormElement | null = document.querySelector('.avatar-wrapper form');
+  if (avatarForm !== null) {
+    return new FormData(avatarForm);
+  }
+  return null;
+};
+
+const getInputText = (e: any): string => {
+  e.preventDefault();
+  const message: HTMLInputElement | null = e.target.querySelector(`input[type=text]`);
+  const inputText = message?.value || '';
+  if (message) {
+    message.value = '';
+  }
+  return inputText;
 };
 
 const isValidInput = (event: Event): any => {
@@ -92,4 +106,18 @@ const checkInputField = (event: Event) => {
   }
 };
 
-export {getInputsData, getSendMessage, isValidInput, checkInputField};
+const changeAvatar = function() {
+  const avatarImage = this.previousElementSibling.getElementsByTagName('img')[0];
+  if (this.files && this.files[0]) {
+    avatarImage.attributes.src.value = URL.createObjectURL(this.files[0]);
+  }
+};
+
+export {
+  getInputsData,
+  getInputText,
+  isValidInput,
+  checkInputField,
+  changeAvatar,
+  getAvatarFormData,
+};

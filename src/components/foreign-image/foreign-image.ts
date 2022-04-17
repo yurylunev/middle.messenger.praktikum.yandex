@@ -3,7 +3,7 @@ import foreignImageTemplate from './foreign-image.tmpl';
 
 class ForeignImage extends Block {
   constructor(props: object) {
-    super(undefined, props);
+    super(props);
   }
 
   render(): string {

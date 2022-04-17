@@ -1,78 +1,103 @@
 import Block from '../../utils/block';
 import Avatar from '../../components/avatar/avatar';
 import Inputs from '../../components/inputs/inputs';
-import ControlsButton from '../../components/controls-button/controls-button';
-import {checkInputField, getInputsData} from '../../utils/handlers';
+import ControlField from '../../components/control-field/control-field';
+import {
+  changeAvatar,
+  checkInputField,
+  getAvatarFormData,
+  getInputsData,
+} from '../../utils/handlers';
 import Router from '../../utils/router';
-import editProfileTemplate from './edit-profile.tmpl';
-
-const router = new Router();
+import editProfileTemplate from './settings.tmpl';
+import {withRouter} from '../../utils/router';
+import {connect} from '../../store';
+import AuthController from '../../controllers/auth-controller';
+import UsersController from '../../controllers/users-controller';
 
 class EditProfilePage extends Block {
-  constructor() {
-    super(undefined, {
-      headerText: `Иван`,
-      avatar: new Avatar({avatarUrl: `icon-image-placeholder.svg`, name: `avatar`}).element,
-      style: `editable`,
-      inputs: [
-        {
-          name: `email`,
-          label: `Почта`,
-          value: `pochta@yandex.ru`,
-        },
-        {
-          name: `login`,
-          label: `Логин`,
-          value: `ivanivanov`,
-        },
-        {
-          name: `first_name`,
-          label: `Имя`,
-          value: `Иван`,
-        },
-        {
-          name: `second_name`,
-          label: `Фамилия`,
-          value: `Иванов`,
-        },
-        {
-          name: `display_name`,
-          label: `Имя в чате`,
-          value: `Иван`,
-        },
-        {
-          name: `phone`,
-          label: `Телефон`,
-          value: `+7 (909) 967 30 30`,
-        },
-      ].map((item) => new Inputs(item).element),
-      controls: [
-        {
-          label: `Сохранить`,
-          style: `yellow-button`,
-        },
-        {
-          label: `Отмена`,
-          style: `transparent-button`,
-        },
-      ].map((item) => new ControlsButton(item).element),
-      events: {
-        'button.back': {
-          click: () => router.go('/settings'),
-        },
-        '.yellow-button': {
-          click: () => {
-            getInputsData();
-            router.go('/settings');
+  async componentDidMount() {
+    AuthController.getUserInfo().then((userInfo) => {
+      this.setProps({
+        headerText: userInfo.display_name || '',
+        avatar: new Avatar({
+          avatarUrl: userInfo.avatar || ``,
+          name: `avatar`,
+        }).element,
+        style: `editable`,
+        inputs: [
+          {
+            name: `email`,
+            label: `Почта`,
+            value: userInfo.email,
+          },
+          {
+            name: `login`,
+            label: `Логин`,
+            value: userInfo.login,
+          },
+          {
+            name: `first_name`,
+            label: `Имя`,
+            value: userInfo.first_name,
+          },
+          {
+            name: `second_name`,
+            label: `Фамилия`,
+            value: userInfo.second_name,
+          },
+          {
+            name: `display_name`,
+            label: `Имя в чате`,
+            value: userInfo.display_name || '',
+          },
+          {
+            name: `phone`,
+            label: `Телефон`,
+            value: userInfo.phone,
+          },
+        ].map((item) => new Inputs(item).element),
+        controls: [
+          {
+            label: `Сохранить`,
+            style: `yellow-button`,
+          },
+          {
+            label: `Отмена`,
+            style: `transparent-button`,
+          },
+          {
+            style: `invisible`,
+          },
+        ].map((item) => new ControlField(item).element),
+        events: {
+          'button.back': {
+            click: () => Router.back(),
+          },
+          '.yellow-button': {
+            click: async () => {
+              const avatarData = getAvatarFormData();
+              const inputsData = getInputsData();
+              if (avatarData) {
+                await UsersController.updateUserAvatar(avatarData);
+              }
+              if (inputsData) {
+                await UsersController.updateUserProfile(inputsData);
+              }
+              Router.go('/settings');
+            },
+          },
+          '.transparent-button': {
+            click: () => Router.go('/settings'),
+          },
+          'input': {
+            blur: checkInputField,
+          },
+          '.avatar-wrapper input': {
+            change: changeAvatar,
           },
         },
-        '.transparent-button': {
-          click: () => router.go('/settings'),
-        },
-        'input': {
-          blur: checkInputField,
-        },
-      },
+      });
     });
   }
 
@@ -81,4 +106,5 @@ class EditProfilePage extends Block {
   }
 }
 
-export default EditProfilePage;
+export {EditProfilePage};
+export default withRouter(connect((state) => ({user: state.user}), EditProfilePage));

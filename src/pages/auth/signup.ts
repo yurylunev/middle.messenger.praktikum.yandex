@@ -5,11 +5,9 @@ import {checkInputField, getInputsData} from '../../utils/handlers';
 import signupTemplate from './signup.tmpl';
 import AuthController from '../../controllers/auth-controller';
 
-const router = new Router();
-
 class SignupPage extends Block {
   constructor() {
-    super(undefined, {
+    super({
       headerText: `Регистрация`,
       inputFields: [
         {
@@ -54,13 +52,16 @@ class SignupPage extends Block {
       noEntryButtonText: `Войти`,
       events: {
         '.entry': {
-          click: async () => new AuthController().signup(getInputsData(), '/messenger'),
+          click: async () => {
+            await AuthController.signup(getInputsData());
+            Router.go('/messenger');
+          },
         },
         'input': {
           blur: checkInputField,
         },
         '.noEntry': {
-          click: () => router.go('/'),
+          click: () => Router.go('/'),
         },
       },
     });

@@ -1,12 +1,16 @@
 import Block from '../../utils/block';
 import Chat from '../../components/chat/chat';
-import {getSendMessage} from '../../utils/handlers';
-import Router from '../../utils/router';
+import {getInputText} from '../../utils/handlers';
 import messengerTemplate from './messenger.tmpl';
 import DateHeader from '../../components/date-header/date-header';
 import MyMessage from '../../components/my-message/my-message';
 import ForeignMessage from '../../components/foreign-message/foreign-message';
 import ForeignImage from '../../components/foreign-image/foreign-image';
+import Router from '../../utils/router';
+import ChatsController from '../../controllers/chats-controller';
+import {withRouter} from '../../utils/router';
+import {connect, store} from '../../store';
+import ChatUsersList from '../../components/chat-users-list/chat-users-list';
 
 type TMessages = {
   messageType: string;
@@ -16,8 +20,6 @@ type TMessages = {
   imageURL?: string;
   statusMessage?: string;
 }
-
-const router = new Router();
 
 const createMessage = (item: TMessages) => {
   switch (item.messageType) {
@@ -33,63 +35,82 @@ const createMessage = (item: TMessages) => {
       return '';
   }
 };
-class MessengerPage extends Block {
-  constructor() {
-    super(undefined, {
-      chats: [
-        {
-          avatarUrl: `avatar_placeholder.png`,
-          username: `Илья`,
-          lastMessage: `Друзья, у меня для вас особенный выпуск новостей...`,
-          messageTime: `Чт`,
-          unreadCount: ``,
 
+class MessengerPage extends Block {
+  private static addMessages(message: any) {
+    // TODO Need give a reference to Conversation object
+    if (message instanceof Array && message.length) {
+    // @ts-ignore
+      document.querySelector('.conversation')?.prepend(createMessage(message[0]));
+    }
+  }
+
+  async componentDidMount() {
+    ChatsController.init().then((chatsStore) => {
+      this.setProps({
+        chats: chatsStore.chatsList.map((chat: any) => new Chat(chat).element),
+        username: chatsStore.currentChat?.title,
+        avatarUrl: '/static/images/avatar_placeholder.png',
+        messages: chatsStore.messages.map(createMessage),
+        chatUsers: chatsStore.currentChat?.users
+            .map((user: any) => new ChatUsersList(user).element),
+        events: {
+          '.sending-area form': {
+            submit: (e: any) => {
+              const message = getInputText(e);
+              if (message !== '') {
+                ChatsController.sendMessage(message);
+              }
+            },
+          },
+          '.profile-edit button': {
+            click: () => Router.go('/settings'),
+          },
+          '.search-wrapper form': {
+            submit: (e: any) => ChatsController
+                .createChat(getInputText(e))
+                .then(() => Router.go('/messenger')),
+          },
+          '.more-action-window form': {
+            submit: (e: any) => ChatsController
+                .addUserToChat(getInputText(e))
+                .then(() => Router.go('/messenger')),
+          },
+          '.more-action': {
+            click: () => document.querySelector('.more-action-window')?.classList
+                .toggle('hidden'),
+          },
+          '.conversation': {
+            click: () => document.querySelector('.more-action-window')?.classList
+                .add('hidden'),
+          },
+          'li[data-action=delete-chat]': {
+            click: () => {
+              ChatsController.deleteChat();
+              Router.go('/messenger');
+            },
+          },
+          '.delete-user': {
+            click: (e: any) => ChatsController
+                .deleteUserFromChat(+e.target.parentNode.getAttribute('data-user_id'))
+                .then(() => Router.go('/messenger')),
+          },
+          'div[data-action=delete-chat]': {
+            click: () => ChatsController
+                .deleteChat()
+                .then(() => Router.go('/messenger')),
+          },
+          'li.chat': {
+            click: (e: any) => ChatsController
+                .setCurrentChat(e.currentTarget.getAttribute('data-chat_id'))
+                .then(() => Router.go('/messenger')),
+          },
         },
-      ].map((item) => new Chat(item).element),
-      username: 'Колян',
-      avatarUrl: '/static/images/avatar_placeholder.png',
-      messages: [
-        {
-          messageType: `dateHeader`,
-          date: `20 июля 2022`,
-        },
-        {
-          messageType: `foreignMessage`,
-          textMessage: `Привет! Смотри, тут всплыл интересный кусок лунной космической истории 
-          — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на 
-          Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, 
-          все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой 
-          забрали только кассеты с пленкой. Хассельблад в итоге адаптировал SWC для космоса, 
-          но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 
-          25 штук, одну из них недавно продали на аукционе за 45000 евро.`,
-          timeMessage: `11:00`,
-        },
-        {
-          messageType: `foreignImage`,
-          imageURL: `image.png`,
-          timeMessage: `11:00`,
-        },
-        {
-          messageType: `myMessage`,
-          textMessage: `Привет! Смотри, тут всплыл интересный кусок лунной космической истории — 
-      НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. 
-      Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки 
-      этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали 
-      только кассеты с пленкой. Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло 
-      не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну 
-      из них недавно продали на аукционе за 45000 евро.`,
-          timeMessage: `11:00`,
-          statusMessage: `read`,
-        },
-      ].reverse().map(createMessage),
-      events: {
-        '.send-message': {
-          click: getSendMessage,
-        },
-        '.profile-edit button': {
-          click: () => router.go('/settings'),
-        },
-      },
+      })
+      ;
+    });
+    store.on('messages:changed', () => {
+      MessengerPage.addMessages(store.getState().chats.messages);
     });
   }
 
@@ -98,4 +119,5 @@ class MessengerPage extends Block {
   }
 }
 
-export default MessengerPage;
+export {MessengerPage};
+export default withRouter(connect((state) => ({chats: state.chats}), MessengerPage));

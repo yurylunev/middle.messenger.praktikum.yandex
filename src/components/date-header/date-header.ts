@@ -3,7 +3,7 @@ import dateHeaderTemplate from './date-header.tmpl';
 
 class DateHeader extends Block {
   constructor(props: object) {
-    super(undefined, props);
+    super(props);
   }
 
   render(): string {

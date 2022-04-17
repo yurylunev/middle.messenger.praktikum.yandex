@@ -2,12 +2,12 @@ import render from './renderDOM';
 import {isEqual} from './helpers';
 import SignInPage from '../pages/auth/signin';
 import SignupPage from '../pages/auth/signup';
-import MessengerPage from '../pages/messenger/messenger';
+import {MessengerPage} from '../pages/messenger/messenger';
 import SettingsPage from '../pages/settings/settings';
 import ChangePasswordPage from '../pages/settings/change-password';
-import EditProfilePage from '../pages/settings/edit-profile';
+import {EditProfilePage} from '../pages/settings/edit-profile';
 
-type TBlock = SignInPage |
+export type TBlock = SignInPage |
   SignupPage |
   MessengerPage |
   SettingsPage |
@@ -25,12 +25,13 @@ class Route {
 
   private _block: null | TBlock;
   private _props: {
-    rootQuery: string
+    rootQuery: string;
+    isSecure: boolean;
   };
 
   constructor(pathname: string,
       view: TBlockConstructor,
-      props: { rootQuery: string }) {
+      props: { rootQuery: string; isSecure: boolean }) {
     this._pathname = pathname;
     this._blockClass = view;
     this._block = null;
@@ -46,7 +47,7 @@ class Route {
 
   leave() {
     if (this._block) {
-      // this._block.hide();
+      this._block = null;
     }
   }
 
@@ -54,18 +55,30 @@ class Route {
     return isEqual(pathname, this._pathname);
   }
 
-  get getInstance() {
+  get isSecure(): boolean {
+    return this._props.isSecure;
+  }
+
+  createInstance() {
+    this._block = new this._blockClass();
+  }
+
+  get Instance() {
     return this._block;
+  }
+
+  get pathname() {
+    return this._pathname;
   }
 
   render() {
     if (!this._block) {
-      this._block = new this._blockClass();
-      render(this._block, this._props.rootQuery);
-      return;
+      this.createInstance();
+    } else {
+      this._block._render();
     }
-    this._block = new this._blockClass();
     render(this._block, this._props.rootQuery);
+    return;
   }
 }
 

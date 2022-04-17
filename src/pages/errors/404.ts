@@ -1,17 +1,16 @@
 import Block from '../../utils/block';
-import Router from '../../utils/router';
+import Router, {withRouter} from '../../utils/router';
 import './errors.pcss';
-
-const router = new Router();
+import {connect} from '../../store';
 
 class ErrorPage404 extends Block {
   constructor() {
-    super(undefined, {
+    super({
       statusCode: 404,
       statusText: `Не нашлось такого`,
       events: {
         '.back-text': {
-          click: () => router.go('/messenger'),
+          click: () => Router.go('/messenger'),
         },
       },
     });
@@ -27,4 +26,7 @@ class ErrorPage404 extends Block {
   }
 }
 
-export default ErrorPage404;
+export default withRouter(connect((state) => ({
+  user: state.user.profile,
+}), ErrorPage404));
+export {ErrorPage404};

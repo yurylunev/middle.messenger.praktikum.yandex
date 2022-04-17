@@ -1,18 +1,79 @@
-import HTTPTransport from '../utils/http-transport';
+import {
+  TChatsList,
+  TChatData,
+  TChatsError,
+  TChatsResponse,
+  TChatsTokenList,
+  TChatsUser,
+} from './chats-api.d';
 
-const chatsAPIInstance = new HTTPTransport('/chats', {
-  headers: {'Content-Type': 'application/json'},
-  withCredentials: true,
-});
+import BaseAPI from './base-api';
 
-class ChatsAPI {
-  public signup = (data: object) => chatsAPIInstance.post('/signup', {data});
+export class ChatsAPI extends BaseAPI {
+  constructor() {
+    super('/chats', {
+      withCredentials: true,
+      headers: {'Content-Type': 'application/json'},
+    });
+  }
 
-  public signIn = (data: object) => chatsAPIInstance.post('/signin', {data});
+  public async getChatToken(chatId: number) {
+    try {
+      const response: { token: string } = await this.http.post(`/token/${chatId}`);
+      return response.token;
+    } catch (e) {
+      console.error(e);
+    }
+    return null;
+  }
 
-  public getUserInfo = () => chatsAPIInstance.get('/user');
+  public async getChatsList(): Promise<TChatsList> {
+    const chatsList = await this.read('');
+    return (chatsList instanceof Array) ? chatsList : [];
+  }
 
-  public logout = () => chatsAPIInstance.post('/logout');
+  public async getChatUsers(id: number): Promise<TChatsUser[]> {
+    return await this.read(`/${id}/users`);
+  }
+
+  public async addUserToChat(data: { chatId: number, users: number[] }) {
+    return await this.update('/users', {data});
+  }
+
+  public async deleteUsersFromChat(data: { chatId: number, users: number[] }) {
+    console.log(data);
+    return await this.delete('/users', data);
+  }
+
+  createChat(title: string) {
+    return this.create('', {title});
+  }
+
+  deleteChat(chatId: number) {
+    return this.delete('', {chatId});
+  }
+
+  sendMessage(msg: string) {
+    console.log('ChatsAPI.sendMessage', msg);
+    return true;
+  }
+
+  read(url: string): Promise<any> {
+    return this.http.get(url);
+  };
+
+  update(url: string, data: object): Promise<TChatData | TChatsError> {
+    return this.http.put(url, data);
+  };
+
+  delete(url: string, data: object): Promise<TChatsResponse | TChatsError> {
+    return this.http.delete(url, {data});
+  };
+
+  create(url: string, data: object):
+    Promise<TChatsResponse | TChatData | TChatsTokenList | TChatsError> {
+    return this.http.post(url, {data});
+  };
 }
 
 export default ChatsAPI;

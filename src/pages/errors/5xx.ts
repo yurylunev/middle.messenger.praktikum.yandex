@@ -2,16 +2,14 @@ import Block from '../../utils/block';
 import Router from '../../utils/router';
 import './errors.pcss';
 
-const router = new Router();
-
 class ErrorPage500 extends Block {
   constructor() {
-    super(undefined, {
+    super({
       statusCode: 500,
       statusText: `Капец какой-то на сервере`,
       events: {
         '.back-text': {
-          click: () => router.go('/messenger'),
+          click: () => Router.go('/messenger'),
         },
       },
     });

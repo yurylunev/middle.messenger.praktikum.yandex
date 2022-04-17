@@ -1,50 +1,61 @@
 import AuthAPI from '../api/auth-api';
-import Router from '../utils/router';
+import {TSignup, TSignin, TUserInfo} from '../api/auth-api.d';
+import {store} from '../store';
 
 class AuthController {
-  public getUserInfo() {
-    new AuthAPI().getUserInfo().then((response) => {
-      console.log(response);
-      if (response.status === 200) {
-        localStorage.setItem('userData', JSON.stringify(JSON.parse(response.response)));
-        localStorage.setItem('userId', JSON.stringify(JSON.parse(response.response).id));
-      } else {
-        console.log(response.response);
-      }
-    }).catch((err) => {
-      new Router().go(`/`);
-      console.log(err);
-    });
+  private api: AuthAPI;
+
+  constructor() {
+    this.api = new AuthAPI();
   }
 
-  public signIn(data: JSON, link: string) {
-    new AuthAPI().signIn(data).then(
-        (response) => {
-          console.log(response);
-          new Router().go(link);
-        },
-    ).catch((error) => console.log(error));
+  public async signup(data: TSignup) {
+    try {
+      await this.api.signup(data);
+      await this.getUserInfo();
+    } catch (e) {
+      console.log(e);
+    }
   }
 
-  public signup(data: JSON, link: string) {
-    new AuthAPI().signup(data).then((response) => {
-      if (response.status === 200) {
-        localStorage.setItem('userId', JSON.parse(response.response).id);
-        new Router().go(link);
-      } else {
-        console.log(response.response);
-      }
-    }).catch((err) => console.log(err));
+  public async signin(data: TSignin) {
+    try {
+      await this.api.signin(data);
+      await this.getUserInfo();
+    } catch (e) {
+      throw e;
+    }
   }
 
-  public logout() {
-    new AuthAPI().logout().then((response) => {
-      if (response.status === 200) {
-        localStorage.setItem('userData', '');
-        localStorage.setItem('userId', '');
+  public async logout() {
+    try {
+      await this.api.logout();
+      store.dispatch({
+        type: 'user/DELETE',
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  public async getUserInfo(): Promise<TUserInfo> {
+    let userInfo: TUserInfo = store.getState().user.profile;
+    if (!userInfo) {
+      try {
+        userInfo = await this.api.getUserInfo();
+        store.dispatch({
+          type: 'user/SET',
+          payload: userInfo,
+        });
+      } catch (e) {
+        store.dispatch({
+          type: 'user/SET_ERROR',
+          payload: e,
+        });
       }
-    }).catch((error) => console.log(error));
+    }
+    return userInfo;
   }
 }
 
-export default AuthController;
+export default new AuthController();
