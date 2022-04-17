@@ -11,7 +11,7 @@ class Templator {
     return document.createElement('div');
   }
 
-  _getObjectFromContext(obj: object, path: string, defaultValue: object) {
+  _getObjectFromContext(obj: object, path: string, defaultValue: any) {
     const keys = path.split(`.`);
     // @ts-ignore
     const f = (obj: object, _cursor: number = 0) => {
