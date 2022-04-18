@@ -1,19 +1,21 @@
 import Block from '../../utils/block';
+import inputFieldTemplate from './input-field.tmpl';
+import Inputs from '../inputs/inputs';
 
 class InputField extends Block {
-  constructor(props: object) {
-    super(undefined, props);
+  constructor(props: { errorMessage?: string }) {
+    super({
+      inputs: new Inputs(props).getContent(),
+      errorMessage: props.errorMessage,
+    });
   }
 
-  render(): string {
-    return `
-<div class="login-window_input-field">
-        <div class="input-field">
-            <label for="{{name}}">{{label}}</label>
-            <input type="{{type}}" placeholder="{{label}}" id="{{name}}" name="{{name}}"/>
-        </div>
-        <div class="error-message hidden">{{errorMessage}}</div>
-</div>`;
+  render() {
+    // @ts-ignore
+    return this.props.errorMessage ?
+      inputFieldTemplate :
+      inputFieldTemplate
+          .split('\n').filter((line) => line.indexOf('error-message') === -1).join('\n');
   }
 }
 

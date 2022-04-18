@@ -1,19 +1,21 @@
 import Block from '../../utils/block';
+import avatarTemplate from './avatar.tmpl';
 
 class Avatar extends Block {
-  constructor(props: object) {
-    super(undefined, props);
+  constructor(props: { avatarUrl: string; name: string; noEdit?: boolean }) {
+    let {avatarUrl} = props;
+    avatarUrl = avatarUrl ?
+      `https://ya-praktikum.tech/api/v2/resources${avatarUrl}` :
+      '/static/images/icon-image-placeholder.svg';
+    super({...props, avatarUrl});
   }
 
   render(): string {
-    return `
-<div class="avatar-wrapper">
-    <label for="{{name}}">
-        <img src="/static/images/{{avatarUrl}}">
-    </label>
-    <input type="file" id="{{name}}" name="{{name}}" class="invisible position-absolute">
-</div>
-`;
+    // @ts-ignore
+    return this.props.noEdit ?
+      avatarTemplate
+          .split('\n').filter((line) => line.indexOf('input') === -1).join('\n') :
+      avatarTemplate;
   }
 }
 
