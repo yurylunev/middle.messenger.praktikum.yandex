@@ -5,7 +5,7 @@ https://messenger.xalt.ru
 
 В разработке.
 
-3 спринт. Последний пулл реквест:
+4 спринт. Последний пулл реквест:
 https://github.com/yurylunev/middle.messenger.praktikum.yandex/pull/9
 
 
