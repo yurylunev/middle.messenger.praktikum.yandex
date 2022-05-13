@@ -7,7 +7,7 @@ export const store = new Store({
   user, chats,
 });
 
-export function connect(stateToProps: (state: any) => any, Component: typeof Block) {
+export function connect(stateToProps: (state: any) => any, Component: typeof Block): typeof Block {
   return class WithStore extends Component {
     constructor(props: BlockProps) {
       super({...props, ...stateToProps(store.getState())});
