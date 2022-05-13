@@ -8,12 +8,12 @@ export const store = new Store({
 });
 
 export function connect(stateToProps: (state: any) => any, Component: typeof Block) {
-  return class WithStore extends Component {
-    constructor(props: any) {
+  return class WithStore<P = any> extends Component {
+    constructor(props: P) {
       super({...props, ...stateToProps(store.getState())});
     }
 
-    componentDidMount(props: any) {
+    componentDidMount(props: P) {
       super.componentDidMount(props);
       store.on('store:changed', () => {
         this.setProps({
