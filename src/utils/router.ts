@@ -1,6 +1,7 @@
 import Route from './route';
 import {store} from '../store';
-import Block, {BlockProps} from './block';
+import Block from './block';
+import {BlockProps} from './block.d';
 
 class Router {
   private static __instance: Router;
