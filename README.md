@@ -6,7 +6,7 @@ https://messenger.xalt.ru
 В разработке.
 
 4 спринт. Последний пулл реквест:
-https://github.com/yurylunev/middle.messenger.praktikum.yandex/pull/9
+https://github.com/yurylunev/middle.messenger.praktikum.yandex/pull/15
 
 
 ## Запуск приложения
@@ -40,11 +40,22 @@ npm run build
 
 https://cranky-blackwell-f477f2.netlify.app
 
+### Версия 1:
+- Свёрстаны макеты
+- Разработан собственный шаблонизатор
+
 ### Версия 2:
 - Добавлен TypeScript
-- Компонентный подход и переработан шаблонизатор
-- Сбор данных из форм и их валидация
+- Созданы компоненты для всего приложения
+- Добавлен функционал сбора данных из форм и их валидация
+- Разработана событийная модель, хранилище данных  
+- Добавлены вебсокеты в чаты
 - Добавлены линтеры для кода и стилей
 
+### Версия 3:
+- Добавлена сборка на webpack 5
+- Добавлена сборка приложения в Docker с помощью docker-compose
+- Приложение [развёрнуто](https://messenger.xalt.ru) на собственном хостинге
+
 ### Pull request:
-https://github.com/yurylunev/middle.messenger.praktikum.yandex/pull/9
+https://github.com/yurylunev/middle.messenger.praktikum.yandex/pull/15
