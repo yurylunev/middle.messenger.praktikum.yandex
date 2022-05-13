@@ -1,19 +1,19 @@
 import user from './user';
 import chats from './chats';
 import {Store} from './store';
-import Block from '../utils/Block';
+import Block, {BlockProps} from '../utils/Block';
 
 export const store = new Store({
   user, chats,
 });
 
 export function connect(stateToProps: (state: any) => any, Component: typeof Block) {
-  return class WithStore<P = any> extends Component {
-    constructor(props: P) {
+  return class WithStore extends Component {
+    constructor(props: BlockProps) {
       super({...props, ...stateToProps(store.getState())});
     }
 
-    componentDidMount(props: P) {
+    componentDidMount(props: BlockProps) {
       super.componentDidMount(props);
       store.on('store:changed', () => {
         this.setProps({

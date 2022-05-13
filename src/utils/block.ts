@@ -6,13 +6,14 @@ interface BlockMeta<P = any> {
   props: P;
   tagName: string;
 }
+export type BlockProps = any;
 
 type Nullable<T> = T | null;
 type Keys<T extends Record<string, unknown>> = keyof T;
 type Values<T extends Record<string, unknown>> = T[Keys<T>];
 type Events = Values<typeof Block.EVENTS>;
 
-export default class Block<P = any> {
+export default class Block {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -26,7 +27,7 @@ export default class Block<P = any> {
   protected eventBus: () => EventBus<Events>;
   protected state: any = {};
 
-  constructor(props?: P) {
+  constructor(props?: BlockProps) {
     const eventBus = new EventBus<Events>();
     if (props) {
       Object.assign(this._meta, {props});
@@ -72,17 +73,12 @@ export default class Block<P = any> {
     );
   }
 
-  // @ts-ignore
-  protected getStateFromProps(props: P = {}): void {
-    this.state = {};
-  }
-
   init() {
     this._createResources();
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
-  async _componentDidMount(props: P) {
+  async _componentDidMount(props: BlockProps) {
     this.componentDidMount(props);
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
@@ -92,7 +88,7 @@ export default class Block<P = any> {
     return;
   }
 
-  _componentDidUpdate(oldProps: P, newProps: P) {
+  _componentDidUpdate(oldProps: BlockProps, newProps: BlockProps) {
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
@@ -103,7 +99,7 @@ export default class Block<P = any> {
   }
 
   // @ts-ignore
-  async componentDidUpdate(oldProps: P, newProps: P) {
+  async componentDidUpdate(oldProps: BlockProps, newProps: BlockProps) {
     return true;
   }
 
@@ -127,7 +123,6 @@ export default class Block<P = any> {
       this._element!.appendChild(element);
     });
     this._addEvents();
-    // console.log(this._element?.textContent?.trim().replaceAll('\n', ''));
   }
 
   render(): string {
@@ -151,7 +146,7 @@ export default class Block<P = any> {
           self.eventBus().emit(Block.EVENTS.FLOW_CDU, {...target}, target);
           return true;
         },
-      }) as P;
+      }) as BlockProps;
     } else {
       return props;
     }
