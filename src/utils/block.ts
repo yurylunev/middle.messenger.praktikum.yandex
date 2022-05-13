@@ -1,17 +1,6 @@
 import EventBus from './event-bus';
 import Templator from './templator';
-
-
-interface BlockMeta<P = any> {
-  props: P;
-  tagName: string;
-}
-export type BlockProps = any;
-
-type Nullable<T> = T | null;
-type Keys<T extends Record<string, unknown>> = keyof T;
-type Values<T extends Record<string, unknown>> = T[Keys<T>];
-type Events = Values<typeof Block.EVENTS>;
+import {BlockProps, BlockMeta, Nullable, Events} from './block.d';
 
 export default class Block {
   static EVENTS = {
@@ -50,9 +39,11 @@ export default class Block {
   _createResources(tagName?: string) {
     this._element = this._createContainerElement(tagName);
   }
+
   _clearElement() {
     this._element = null;
   }
+
   _addEvents() {
     const events: Record<string, () => void> = (this.props as any).events || {};
     Object.keys(events).forEach((selector) =>
@@ -133,7 +124,7 @@ export default class Block {
     return this.element;
   }
 
-  _makePropsProxy(props: any): ProxyHandler<any> {
+  _makePropsProxy(props: BlockProps): ProxyHandler<BlockProps> {
     const self = this;
     if (props) {
       return new Proxy(props, {

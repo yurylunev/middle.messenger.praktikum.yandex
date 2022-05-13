@@ -1,7 +1,8 @@
 import user from './user';
 import chats from './chats';
 import {Store} from './store';
-import Block, {BlockProps} from '../utils/Block';
+import Block from '../utils/block';
+import {BlockProps} from '../utils/block.d';
 
 export const store = new Store({
   user, chats,
