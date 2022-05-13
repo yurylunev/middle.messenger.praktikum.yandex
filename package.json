@@ -62,7 +62,7 @@
     "webpack-dev-server": "4.9.0"
   },
   "dependencies": {
-    "@babel/core": "^7.17.9",
+    "@babel/core": "7.17.10",
     "express": "4.18.1",
     "express-history-api-fallback": "2.2.1",
     "regenerator-runtime": "^0.13.9"
