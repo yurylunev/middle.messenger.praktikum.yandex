@@ -5,8 +5,8 @@ https://messenger.xalt.ru
 
 В разработке.
 
-3 спринт. Последний пулл реквест:
-https://github.com/yurylunev/middle.messenger.praktikum.yandex/pull/9
+4 спринт. Последний пулл реквест:
+https://github.com/yurylunev/middle.messenger.praktikum.yandex/pull/15
 
 
 ## Запуск приложения
@@ -47,4 +47,4 @@ https://cranky-blackwell-f477f2.netlify.app
 - Добавлены линтеры для кода и стилей
 
 ### Pull request:
-https://github.com/yurylunev/middle.messenger.praktikum.yandex/pull/9
+https://github.com/yurylunev/middle.messenger.praktikum.yandex/pull/15
