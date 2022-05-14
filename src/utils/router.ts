@@ -1,6 +1,7 @@
 import Route from './route';
 import {store} from '../store';
 import Block from './block';
+import {BlockProps} from './block.d';
 
 class Router {
   private static __instance: Router;
@@ -87,7 +88,7 @@ export default new Router();
 
 export function withRouter(Component: typeof Block) {
   return class WithRouter extends Component {
-    constructor(props: any) {
+    constructor(props: BlockProps) {
       const router = new Router();
 
       super({...props, router});
